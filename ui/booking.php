@@ -94,7 +94,7 @@
                 <div>
                     
                     <select id="consultationType" class="form-control-file dropdown_item">
-                        <option disabled selected>Select Type Consultation...</option>
+                        <option disabled selected value="">Select Type Consultation...</option>
                         <option value="Appointment">Appointment</option>
                         <option value="Exam">Exam</option>
                         <option value="Teleconsultation">Teleconsultation</option>
@@ -103,16 +103,16 @@
             
                 <div>
                     <select id="specialities" class="form-control-file dropdown_item">
-                        <option disabled selected>Select Speciality...</option>
+                        <option disabled selected value="">Select Speciality...</option>
                         <option value="Cardiology">Cardiology</option>
-                        <option value="Oncology">Oncology</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Psychiatry">Psychiatry</option>
-                        <option value="Dermatology">Dermatology</option>
+                        <option value="Nephrology">Nephrology</option>
                         <option value="Gastroenterology">Gastroenterology</option>
-                        <option value="Pediatrics">Pediatrics</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Urology">Urology</option>
+                        <option value="Gynecology">Gynecology</option>
+                        <option value="Obstetriciology">Obstetriciology</option>
+                        <option value="Dentist">Dentist</option>
+                        <option value="Rheumatology">Rheumatology</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Family Medicine">Family Medicine</option>
                     </select>
                 </div>
             
