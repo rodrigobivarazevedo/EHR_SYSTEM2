@@ -8,10 +8,7 @@ function get_appointmentInfo() {
             // Add any code to run before the request is sent (optional)
         },
         success: function(response) {
-            // Log the response to the console for debugging
-            let x = JSON.stringify(response)
-            console.log(response);
-            alert(x);
+            updateCardUI(response)
             
         },
         error: function(xhr) {
@@ -36,20 +33,23 @@ function updateCardUI(data) {
     // Create and append new cards based on the data from the backend
     data.forEach(appointment => {
         const card = `
-            <div class="col">
+        <div class="col" >
                 <div class="card shadow-sm">
-                    <!-- Customize the card content based on the appointment data -->
-                    <div class="card-body">
-                        <p class="card-text">${appointment.clinic}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointment</button>
-                            </div>
-                        </div>
+                  <div class="card-body">
+                    <h5 class="card-title">${appointment.speciality}</h5>
+                      <p class="card-text">${appointment.consultation_type} ${appointment.clinic}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button>
+               
+                      </div>
+                      
                     </div>
+                  </div>
                 </div>
-            </div>
+              </div>
         `;
+
         $('#content').append(card);
     });
 }

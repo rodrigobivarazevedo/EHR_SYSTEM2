@@ -124,20 +124,16 @@
           </div>
         </section>
       
+        
         <div class="album py-5 bg-light">
           <div class="container">
-
-            <h2>Available Consultations</h2>
-      
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              <div id="content">
-                <!-- Cards will be updated dynamically based on user selections -->
-              </div>
+            <h2>Available Doctors</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
+              <!-- Cards will be updated dynamically  -->
               
             </div>
           </div>
         </div>
-      
     
     
     
@@ -153,47 +149,7 @@
     </main>
 
   <script>
-    const consultationType = document.getElementById('consultationType');
-    const specialities = document.getElementById('specialities');
-
-    // Event Listeners
-    specialities.addEventListener('change', checkAndUpdateCardUI);
-    consultationType.addEventListener('change', checkAndUpdateCardUI);
-
-    function checkAndUpdateCardUI() {
-        const selectedSpeciality = specialities.value;
-        const selectedConsultationType = consultationType.value;
-
-        // Check if both consultation type and speciality have values
-        if (selectedSpeciality && selectedSpeciality !== 'Select Speciality...' && selectedConsultationType) {
-            updateCardUI(selectedSpeciality, selectedConsultationType);
-        }
-    }
-
-    function updateCardUI(selectedSpeciality, selectedConsultationType) {
-        // Clear existing cards
-        $('#content').empty();
-
-        // Create and append new cards based on the data from the backend
-        const card = `
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">${selectedSpeciality}</h5>
-                        <p class="card-text">${selectedSpeciality} ${selectedConsultationType}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View/Book ${selectedConsultationType}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        $('#content').append(card);
-    }
-
+    
 
     
   </script>
