@@ -7,7 +7,7 @@ $pdo=new Appointmentsinfo();
 //$pdo=new Doctorsinfo();
 //$pdo=new Clinicsinfo();
 // Bind parameters
-$speciality = 'Gastroenterologist'; // Example value, replace with user input
+$speciality = ''; // Example value, replace with user input
 $consultation_type = 'Exam'; // Example value, replace with user input
 $clinic = null;
 

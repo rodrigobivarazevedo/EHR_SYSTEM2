@@ -6,17 +6,18 @@ class Appointmentsinfo
     public function get_appointment_info($dbo, $speciality, $consultation_type)
     {
         try {
-            if ($consultation_type !== null && $speciality === null) {
+            if ($consultation_type !== "" && $speciality === "") {
                 $statement = $dbo->conn->prepare("SELECT consultation_type, speciality, clinic FROM appointmentsinfo WHERE consultation_type = :consultation_type");
-            } elseif ($consultation_type !== null && $speciality !== null) {
+            } else if ($consultation_type === "" && $speciality !== "") {
+                $statement = $dbo->conn->prepare("SELECT consultation_type, speciality, clinic FROM appointmentsinfo WHERE speciality = :speciality");
+            }else if ($consultation_type !== "" && $speciality !== "") {
                 $statement = $dbo->conn->prepare("SELECT consultation_type, speciality, clinic FROM appointmentsinfo WHERE speciality = :speciality AND consultation_type = :consultation_type");
             }
-
             // Conditionally bind parameters
-            if ($speciality !== null) {
+            if ($speciality !== "") {
                 $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
             }
-            if ($consultation_type !== null) {
+            if ($consultation_type !== "") {
                 $statement->bindParam(':consultation_type', $consultation_type, PDO::PARAM_STR);
             }
 
@@ -106,7 +107,7 @@ class All_Info
     {
         try {
             // Ensure that $table is a valid table name (to avoid SQL injection)
-            $validTables = ["Doctors", "appointmentsinfo", "Clinics"]; // Add valid table names as needed
+            $validTables = ["Doctors", "appointmentsinfo", "clinics"]; // Add valid table names as needed
 
             if (!in_array($table, $validTables)) {
                 throw new Exception("Invalid table name");

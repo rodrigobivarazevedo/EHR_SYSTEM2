@@ -1,9 +1,9 @@
-function get_appointmentInfo(selectedSpeciality="", selectedConsultationType="",action="get_all") {
+function get_appointmentInfo() {
     $.ajax({
-        url: "/EHR_system/ajax/bookingAJAX.php",
+        url: "/EHR_system/ajax/doctorsAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { speciality: selectedSpeciality, consultationType: selectedConsultationType, action1: action },
+        data: { speciality: "Gastroenterologist", consultationType: "Exam", action1: "get_doctors" },
         beforeSend: function() {
             // Add any code to run before the request is sent (optional)
         },
@@ -23,24 +23,7 @@ function get_appointmentInfo(selectedSpeciality="", selectedConsultationType="",
 
 $(document).ready(function() {
     get_appointmentInfo();
-
 });
-
-    const consultationType = document.getElementById('consultationType');
-    const specialities = document.getElementById('specialities');
-
-    // Event Listeners
-    specialities.addEventListener('change', checkAndUpdateCardUI);
-    consultationType.addEventListener('change', checkAndUpdateCardUI);
-
-    function checkAndUpdateCardUI() {
-        const selectedSpeciality = specialities.value;
-        const selectedConsultationType = consultationType.value;
-
-        get_appointmentInfo(selectedSpeciality, selectedConsultationType, 'get_appointmentsinfo');
-
-        
-    }
 
 
 function updateCardUI(data) {
@@ -48,13 +31,13 @@ function updateCardUI(data) {
     $('#content').empty();
 
     // Create and append new cards based on the data from the backend
-    data.forEach(appointment => {
+    data.forEach(doctor => {
         const card = `
         <div class="col" >
                 <div class="card shadow-sm">
                   <div class="card-body">
-                    <h5 class="card-title">${appointment.speciality}</h5>
-                      <p class="card-text">${appointment.consultation_type} ${appointment.clinic}</p>
+                    <h5 class="card-title">${doctor.FirstName} ${doctor.LastName}</h5>
+                      <p class="card-text">${doctor.Speciality}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button>
