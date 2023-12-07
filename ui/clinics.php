@@ -56,14 +56,14 @@
                 <a class="nav-link" aria-current="page" href="index.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="booking.php">Booking</a>
+                <a class="nav-link" href="booking.php">Booking</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="doctors.php">Doctors</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="clinics.php">Clinics</a>
+                <a class="nav-link active" href="clinics.html">Clinics</a>
               </li>
 
               <li class="nav-item">
@@ -88,19 +88,10 @@
         <section class="py-5 text-center container">
           <div class="container mt-5">
 
-              <h1>MAKE A APPOINTMENT</h1>
+              <h1>FIND A CLINIC</h1>
 
               <div class="findcaredropdowns">
-                <div>
-                    
-                    <select id="consultationType" class="form-control-file dropdown_item">
-                        <option disabled selected>Select Type Consultation...</option>
-                        <option value="Appointment">Appointment</option>
-                        <option value="Exam">Exam</option>
-                        <option value="Teleconsultation">Teleconsultation</option>
-                    </select>
-                </div>
-            
+        
                 <div>
                     <select id="specialities" class="form-control-file dropdown_item">
                         <option disabled selected>Select Speciality...</option>
@@ -115,6 +106,18 @@
                         <option value="Urology">Urology</option>
                     </select>
                 </div>
+
+                <div>
+                    <select class=".form-control-file dropdown_item">
+                        <option disabled selected>Select Clinics...</option>
+                        <option>Rottal In Clinic</option>
+                        <option>Passau Clinic</option>
+                        <option>Eggenfelden Clinic</option>
+                        <option>Munchen Clinic</option>
+                        <option>Mühldorf Clinic</option>
+                        <option>Burghausen Clinic</option>
+                    </select>
+                </div>
             
                 
             </div>
@@ -127,7 +130,7 @@
         
         <div class="album py-5 bg-light">
           <div class="container">
-            <h2>Available Consultations</h2>
+            <h2>Available Clinics</h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
               <!-- Cards will be updated dynamically  -->
               
@@ -156,7 +159,7 @@
     
     
   <script src="/EHR_system/global/jquery.js"></script>
-  <script src="/EHR_system/js/booking.js"></script>
+  <script src="/EHR_system/js/clinics.js"></script>
       
     
 </body>
