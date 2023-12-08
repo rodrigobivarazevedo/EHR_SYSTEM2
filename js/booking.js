@@ -8,7 +8,7 @@ function get_appointmentInfo(selectedSpeciality="", selectedConsultationType="",
             // Add any code to run before the request is sent (optional)
         },
         success: function(response) {
-            updateCardUI(response)
+            updateCardUI(response);
             
         },
         error: function(xhr) {

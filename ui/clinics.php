@@ -92,33 +92,21 @@
 
               <div class="findcaredropdowns">
         
-                <div>
-                    <select id="specialities" class="form-control-file dropdown_item">
-                        <option disabled selected>Select Speciality...</option>
+              <div>
+                    <select id="speciality" class="form-control-file dropdown_item">
+                        <option disabled selected value="">Select Speciality...</option>
                         <option value="Cardiology">Cardiology</option>
-                        <option value="Oncology">Oncology</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Psychiatry">Psychiatry</option>
-                        <option value="Dermatology">Dermatology</option>
+                        <option value="Nephrology">Nephrology</option>
                         <option value="Gastroenterology">Gastroenterology</option>
-                        <option value="Pediatrics">Pediatrics</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Urology">Urology</option>
+                        <option value="Gynecology">Gynecology</option>
+                        <option value="Obstetriciology">Obstetriciology</option>
+                        <option value="Dentistry">Dentistry</option>
+                        <option value="Rheumatology">Rheumatology</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Family Medicine">Family Medicine</option>
                     </select>
                 </div>
 
-                <div>
-                    <select class=".form-control-file dropdown_item">
-                        <option disabled selected>Select Clinics...</option>
-                        <option>Rottal In Clinic</option>
-                        <option>Passau Clinic</option>
-                        <option>Eggenfelden Clinic</option>
-                        <option>Munchen Clinic</option>
-                        <option>Mühldorf Clinic</option>
-                        <option>Burghausen Clinic</option>
-                    </select>
-                </div>
-            
                 
             </div>
             

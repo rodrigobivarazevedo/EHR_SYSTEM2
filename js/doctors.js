@@ -1,14 +1,19 @@
-function get_appointmentInfo() {
+$(document).ready(function() {
+    get_doctorsInfo();
+});
+
+function get_doctorsInfo(selectedspeciality="", selectedclinic="",action="get_all") {
     $.ajax({
         url: "/EHR_system/ajax/doctorsAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { speciality: "Gastroenterologist", consultationType: "Exam", action1: "get_doctors" },
+        data: { speciality: selectedspeciality, clinic: selectedclinic, action1: action },
         beforeSend: function() {
             // Add any code to run before the request is sent (optional)
         },
         success: function(response) {
-            updateCardUI(response)
+            console.log(response);
+            updateCardUI(response);
             
         },
         error: function(xhr) {
@@ -21,9 +26,21 @@ function get_appointmentInfo() {
     });
 }
 
-$(document).ready(function() {
-    get_appointmentInfo();
-});
+    const clinic = document.getElementById('clinic');
+    const speciality = document.getElementById('speciality');
+
+    // Event Listeners
+    speciality.addEventListener('change', checkAndUpdateCardUI);
+    clinic.addEventListener('change', checkAndUpdateCardUI);
+
+    function checkAndUpdateCardUI() {
+        const selectedspeciality = speciality.value;
+        const selectedclinic = clinic.value;
+
+        get_doctorsInfo(selectedspeciality, selectedclinic, 'get_doctors');
+
+        
+    }
 
 
 function updateCardUI(data) {
@@ -38,6 +55,7 @@ function updateCardUI(data) {
                   <div class="card-body">
                     <h5 class="card-title">${doctor.FirstName} ${doctor.LastName}</h5>
                       <p class="card-text">${doctor.Speciality}</p>
+                      <p class="card-text">${doctor.clinic}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button>

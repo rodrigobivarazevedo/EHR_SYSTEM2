@@ -44,17 +44,30 @@ class Doctorsinfo
     public function get_doctors_info($dbo, $speciality, $clinic)
     {
         try {
-            if ($clinic === null) {
-                $statement = $dbo->conn->prepare("SELECT FirstName, LastName, Speciality FROM Doctors WHERE speciality = :speciality");
-            } elseif ($speciality !== null && $clinic !==  null) {
-                $statement = $dbo->conn->prepare("SELECT FirstName, LastName, Speciality FROM Doctors WHERE speciality = :speciality AND clinic = :clinic");
-            }
+            if ($clinic === "") {
+                $statement = $dbo->conn->prepare("SELECT d.FirstName, d.LastName, d.Speciality, c.Name as clinic FROM Doctors d
+                JOIN doctorclinic dc ON dc.DoctorID = d.DoctorID
+                JOIN clinics c ON c.ClinicID = dc.ClinicID
+                WHERE d.Speciality = :speciality");
+
+            } else if ($speciality == "") {
+                $statement = $dbo->conn->prepare("SELECT d.FirstName, d.LastName, d.Speciality, c.Name as clinic FROM Doctors d
+                JOIN doctorclinic dc ON dc.DoctorID = d.DoctorID
+                JOIN clinics c ON c.ClinicID = dc.ClinicID
+                WHERE c.Name = :clinic");
+
+            } else if ($speciality !== "" && $clinic !==  "") {
+                $statement = $dbo->conn->prepare("select d.FirstName, d.LastName, d.Speciality, c.Name as clinic from Doctors d
+                join doctorclinic dc on dc.DoctorID = d.DoctorID
+                join clinics c on c.clinicID = dc.clinicID
+                where c.Name = :clinic AND d.Speciality = :speciality");
+            } 
 
             // Conditionally bind parameters
-            if ($speciality !== null) {
+            if ($speciality !== "") {
                 $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
             }
-            if ($clinic !== null) {
+            if ($clinic !== "") {
                 $statement->bindParam(':clinic', $clinic, PDO::PARAM_STR);
             }
 
@@ -80,11 +93,19 @@ class Clinicsinfo
     public function get_clinic_info($dbo, $speciality)
     {
         try {
-            
-            $statement = $dbo->conn->prepare("SELECT clinic FROM Clinics WHERE speciality = :speciality");
-            
+            if ($speciality !== "") {
+                $statement = $dbo->conn->prepare("SELECT c.Name, c.location FROM clinics c
+                JOIN clinicspecialities cs ON cs.ClinicID = c.ClinicID
+                JOIN specialities s ON s.SpecialityID = cs.SpecialityID
+                WHERE s.name = :speciality;"
+                );
+            } 
+
             // Conditionally bind parameters
+            
             $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
+            
+           
             // Execute statement
             $statement->execute();
 
@@ -113,8 +134,14 @@ class All_Info
                 throw new Exception("Invalid table name");
             }
 
-            $sql = "SELECT * FROM $table";
-            $statement = $dbo->conn->prepare($sql);
+            if ($table === "Doctors") {
+                $statement = $dbo->conn->prepare("SELECT D.FirstName, D.LastName, D.Speciality, C.Name AS clinic FROM Doctors D
+                LEFT JOIN DoctorClinic DC ON D.DoctorID = DC.DoctorID
+                LEFT JOIN Clinics C ON DC.ClinicID = C.ClinicID");
+            } else {
+                $statement = $dbo->conn->prepare("SELECT * FROM $table");
+
+            } 
 
             // Execute statement
             $statement->execute();

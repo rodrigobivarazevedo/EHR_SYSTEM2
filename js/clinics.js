@@ -1,15 +1,17 @@
-function get_appointmentInfo() {
+$(document).ready(function() {
+    get_clinics();
+
+});
+
+function get_clinics(selectedSpeciality="",action="get_all") {
     $.ajax({
         url: "/EHR_system/ajax/clinicsAJAX.php",
         type: "POST",
-        dataType: "json", // Changed "JSON" to "json"
-        data: { speciality: "Gastroenterologist", consultationType: "Exam", action1: "get_clinics" },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
+        dataType: "json", 
+        data: { speciality: selectedSpeciality, action1: action },
         success: function(response) {
-            updateCardUI(response)
-            
+            updateCardUI(response);
+            console.log(response);
         },
         error: function(xhr) {
             // Log detailed error information to the console
@@ -21,9 +23,16 @@ function get_appointmentInfo() {
     });
 }
 
-$(document).ready(function() {
-    get_appointmentInfo();
-});
+    const speciality = document.getElementById('speciality');
+
+    // Event Listeners
+    speciality.addEventListener('change', checkAndUpdateCardUI);
+
+    function checkAndUpdateCardUI() {
+        const selectedSpeciality = speciality.value;
+        
+        get_clinics(selectedSpeciality, 'get_clinics');  
+    }
 
 
 function updateCardUI(data) {
