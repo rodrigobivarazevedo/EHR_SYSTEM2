@@ -108,7 +108,7 @@
               </li>
             </ul>
             <div class="text-end">
-              <a href="booking.html"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
+              <a href="../booking.php"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
               </div>
            
           </div>

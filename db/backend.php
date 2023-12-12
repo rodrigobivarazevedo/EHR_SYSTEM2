@@ -35,22 +35,57 @@ class Appointmentsinfo
         }
     }
 
-        public function post_appointment_info($dbo, $UserID, $DoctorID, $ClinicID, $AppointmentDateTime, $ConsultationType, $Speciality)
+    public function checK__availabLe_timeslots($dbo, $DoctorID, $ClinicID, $AppointmentDate)
     {
         try {
             // Use placeholders in the SQL query
-            $statement = $dbo->conn->prepare("INSERT INTO Appointments (UserID, DoctorID, ClinicID, AppointmentDateTime, ConsultationType, Speciality) VALUES (:UserID, :DoctorID, :ClinicID, :AppointmentDateTime, :ConsultationType, :Speciality)");
+            $statement = $dbo->conn->prepare("SELECT * FROM TimeSlots
+            WHERE DoctorID = :DoctorID
+              AND ClinicID = :ClinicID
+              AND Date = :AppointmentDate
+              AND AvailabilityStatus = 'Available'");
+
+            // Bind parameters
+            $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT); 
+            $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
+            $statement->bindParam(':$AppointmentDate', $AppointmentDate	, PDO::PARAM_STR);
+    
+            // Execute statement
+            $statement->execute();
+
+           // Fetch results
+           $returned_value = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+           // Encode the array as JSON and return it
+           return json_encode($returned_value);
+        } catch (PDOException $e) {
+            // Handle exceptions, log errors, or return an error message
+            echo json_encode(["error" => "Error inserting appointment: " . $e->getMessage()]);
+        }
+    }
+
+
+        public function post_appointment_info($dbo, $UserID, $DoctorID, $ClinicID, $TimeSlotID, $ConsultationType, $Speciality)
+    {
+        try {
+            // Use placeholders in the SQL query
+            $statement = $dbo->conn->prepare("INSERT INTO Appointments (UserID, DoctorID, ClinicID, TimeSlotID, ConsultationType, Speciality) VALUES (:UserID, :DoctorID, :ClinicID, :TimeSlotID, :ConsultationType, :Speciality)");
 
             // Bind parameters
             $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
             $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT); 
             $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
-            $statement->bindParam(':AppointmentDateTime', $AppointmentDateTime, PDO::PARAM_STR);
+            $statement->bindParam(':TimeSlotID', $TimeSlotID, PDO::PARAM_INT);
             $statement->bindParam(':ConsultationType', $ConsultationType, PDO::PARAM_STR);
             $statement->bindParam(':Speciality', $Speciality, PDO::PARAM_STR);
 
             // Execute statement
             $statement->execute();
+
+            // Update the availability status of the corresponding time slot
+            $updateStatement = $dbo->conn->prepare("UPDATE TimeSlots SET AvailabilityStatus = 'Booked' WHERE SlotID = :TimeSlotID");
+            $updateStatement->bindParam(':TimeSlotID', $TimeSlotID, PDO::PARAM_INT);
+            $updateStatement->execute();
 
             // Return success message or any other information
             echo json_encode(["message" => "Appointment created successfully"]);
@@ -59,6 +94,7 @@ class Appointmentsinfo
             echo json_encode(["error" => "Error inserting appointment: " . $e->getMessage()]);
         }
     }
+
 
 
 }
@@ -188,5 +224,52 @@ class All_Info
 }
 
 
+class DoctorScheduler {
+    
+        public function createDoctorSchedule($dbo, $DoctorID, $ClinicID, $startDate, $endDate, $workingDays, $startTime, $endTime)
+    {
+        try {
+            $interval = new DateInterval('PT30M'); // 30 minutes interval
 
+            $currentDate = clone $startDate;
+
+            while ($currentDate <= $endDate) {
+                $currentDayOfWeek = $currentDate->format('N'); // 1 (Monday) to 7 (Sunday)
+
+                // Check if the current day is a working day (Monday) (Wednesday) (Friday)
+                if (in_array($currentDayOfWeek, $workingDays)) {
+                    $currentTime = clone $currentDate;
+                    $currentTime->setTime($startTime->format('H'), $startTime->format('i'));
+
+                    // Use a separate clone for setting the end time
+                    $endTimeClone = clone $currentDate;
+                    $endTimeClone->setTime($endTime->format('H'), $endTime->format('i'));
+
+                    while ($currentTime < $endTimeClone) {
+                        $currentDateTime = $currentTime->format('Y-m-d H:i:s');
+                        $endTimeDateTime = $currentTime->add($interval)->format('Y-m-d H:i:s');
+
+                        // Insert time slot with default availability
+                        $insertStatement = $dbo->conn->prepare("INSERT INTO TimeSlots (DoctorID, ClinicID, Date, StartTime, EndTime, AvailabilityStatus) VALUES (:DoctorID, :ClinicID, :Date, :StartTime, :EndTime, 'Available')");
+                        $insertStatement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT);
+                        $insertStatement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT);
+                        $insertStatement->bindParam(':Date', $currentDateTime, PDO::PARAM_STR);
+                        $insertStatement->bindParam(':StartTime', $currentDateTime, PDO::PARAM_STR);
+                        $insertStatement->bindParam(':EndTime', $endTimeDateTime, PDO::PARAM_STR);
+                        $insertStatement->execute();
+                    }
+                }
+
+                $currentDate->add(new DateInterval('P1D')); // Move to the next day
+            }
+
+            return json_encode(["message" => "Doctor schedule created successfully"]);
+        } catch (PDOException $e) {
+            return json_encode(["error" => "Error creating doctor schedule: " . $e->getMessage()]);
+        } catch (Exception $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+}
 ?>

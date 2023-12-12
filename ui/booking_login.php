@@ -12,7 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -74,7 +74,7 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="../FastCARE/index.html">
+          <a class="navbar-brand" href="../index.php">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100px" height="45px" viewBox="0 0 859 420" xml:space="preserve">
               <desc>Created with Fabric.js 3.5.0</desc>
               <defs>
@@ -104,11 +104,11 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" href="booking_login.php">Login</a>
+                <a class="nav-link active" href="">Login</a>
               </li>
             </ul>
             <div class="text-end">
-              <a href="booking.html"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
+              <a href="booking.php"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
               </div>
            
           </div>
@@ -169,4 +169,5 @@
 
 </html>     
             
+          
         

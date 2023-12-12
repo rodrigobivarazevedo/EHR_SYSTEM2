@@ -60,6 +60,19 @@ CREATE TABLE Appointments (
     FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID)
 );
 
+CREATE TABLE TimeSlots (
+    SlotID INT PRIMARY KEY AUTO_INCREMENT,
+    DoctorID INT,
+    ClinicID INT,
+    Date DATE,
+    StartTime TIME,
+    EndTime TIME,
+    AvailabilityStatus VARCHAR(20),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
+    FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID)
+);
+
+
 
 -- Clinics table
 CREATE TABLE Clinics (
