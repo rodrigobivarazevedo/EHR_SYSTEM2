@@ -1,0 +1,145 @@
+.MyFastCARE_header{
+    min-height: 100px;
+
+}
+
+.MyFastCARE_navbar{
+    min-height: 75px;
+    font-size: medium;
+}
+
+body {
+    /*background: #FCFBF4;*/
+    background: #FCFBF4;
+    align-items: center; /* Vertical centering */
+}
+
+.flex-container{
+    display:flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+}
+
+
+/* Style the buttons*/
+.btn-primary{
+    border-radius: 25px;
+    background-color: #025043;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.btn-primary:hover, #dropdownMenuButton:hover {
+    background-color: #048c7f;
+}
+
+#dropdownMenuButton{
+    font-size: 24px;
+    padding: 15px 40px;
+    border-radius: 25px;
+    background-color: #025043;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Horizontal offset, vertical offset, blur radius, and shadow color */
+    width: 200px;
+}
+
+.form-control{
+    font-size: 20px;
+    padding: 15px 40px;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Horizontal offset, vertical offset, blur radius, and shadow color */
+    min-width: 300px;
+}
+
+.findcaredropdowns{
+    display:flex;
+    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
+    margin: 50px;
+}
+
+#bookingButton{
+    border-radius: 25px;
+    background-color: #31004a;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    margin-top: 10px;
+}
+
+.symptomscontainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.insurance-info {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.insurance-info h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.insurance-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.insurance-info li {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+/* Responsive styles */
+/*Extra Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) { 
+    .findcaredropdowns{
+        flex-direction: column;
+       }
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 768px) { 
+   .findcaredropdowns{
+    flex-direction: column;
+   }
+ 
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 768px) and (max-width: 992px) {
+
+}
+
+ @media (min-width: 992px) and (max-width: 1200px) {
+    
+
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { 
+    
+}

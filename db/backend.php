@@ -35,6 +35,32 @@ class Appointmentsinfo
         }
     }
 
+        public function post_appointment_info($dbo, $UserID, $DoctorID, $ClinicID, $AppointmentDateTime, $ConsultationType, $Speciality)
+    {
+        try {
+            // Use placeholders in the SQL query
+            $statement = $dbo->conn->prepare("INSERT INTO Appointments (UserID, DoctorID, ClinicID, AppointmentDateTime, ConsultationType, Speciality) VALUES (:UserID, :DoctorID, :ClinicID, :AppointmentDateTime, :ConsultationType, :Speciality)");
+
+            // Bind parameters
+            $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+            $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT); 
+            $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
+            $statement->bindParam(':AppointmentDateTime', $AppointmentDateTime, PDO::PARAM_STR);
+            $statement->bindParam(':ConsultationType', $ConsultationType, PDO::PARAM_STR);
+            $statement->bindParam(':Speciality', $Speciality, PDO::PARAM_STR);
+
+            // Execute statement
+            $statement->execute();
+
+            // Return success message or any other information
+            echo json_encode(["message" => "Appointment created successfully"]);
+        } catch (PDOException $e) {
+            // Handle exceptions, log errors, or return an error message
+            echo json_encode(["error" => "Error inserting appointment: " . $e->getMessage()]);
+        }
+    }
+
+
 }
 
 
@@ -160,5 +186,7 @@ class All_Info
     }
 
 }
+
+
 
 ?>

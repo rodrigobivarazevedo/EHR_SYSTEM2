@@ -49,7 +49,7 @@ function updateCardUI(data) {
                       <p class="card-text"></p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button>
+                      <a href="booking_login.php"><button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button></a>
                
                       </div>
                       

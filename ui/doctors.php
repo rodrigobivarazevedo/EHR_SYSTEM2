@@ -37,7 +37,7 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100px" height="45px" viewBox="0 0 859 420" xml:space="preserve">
               <desc>Created with Fabric.js 3.5.0</desc>
               <defs>
@@ -53,7 +53,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                <a class="nav-link" aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="booking.php">Booking</a>
@@ -67,11 +67,11 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="../MyFastCARE/login.html">Login</a>
+                <a class="nav-link" href="MyFastCARE/login.php">Login</a>
               </li>
             </ul>
             <div class="text-end">
-              <a href="booking.html"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
+              <a href="booking.php"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
               </div>
            
           </div>

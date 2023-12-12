@@ -35,7 +35,7 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100px" height="45px" viewBox="0 0 859 420" xml:space="preserve">
               <desc>Created with Fabric.js 3.5.0</desc>
               <defs>
@@ -51,25 +51,25 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="booking.html">Booking</a>
+                <a class="nav-link" href="booking.php">Booking</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="doctors.html">Doctors</a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="clinics.html">Clinics</a>
+                <a class="nav-link" href="doctors.php">Doctors</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="../MyFastCARE/login.html">Login</a>
+                <a class="nav-link" href="clinics.php">Clinics</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="MyFastCARE/login.php">Login</a>
               </li>
             </ul>
             <div class="text-end">
-              <a href="booking.html"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
+              <a href="booking.php"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
               </div>
            
           </div>
@@ -174,7 +174,7 @@
             <h2>Booking</h2>
             <p>Search for available booking slots</p>
             <p><!-- appointment button -->
-                <a href="booking.html"><button type="button" class="btn btn-secondary">
+                <a href="booking.php"><button type="button" class="btn btn-secondary">
         
                     Book appointment
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -229,7 +229,7 @@
             <h2>Doctors</h2>
             <p>Find the right doctor for you </p>
             <p><!-- find doctors -->
-                <a href="doctors.html"><button type="button" class="btn btn-secondary">
+                <a href="doctors.php"><button type="button" class="btn btn-secondary">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;stroke:white;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><circle class="cls-1" cx="9.14" cy="9.14" r="7.64"/><line class="cls-1" x1="22.5" y1="22.5" x2="14.39" y2="14.39"/></svg>
                     Find Doctors
                 </button></a> </p>
@@ -275,7 +275,7 @@
             <h2>MyFastCARE</h2>
             <p>Get personalized care </p>
             <p><!-- sign up button -->
-                <a href="../MyFastCARE/login.html"><button type="button" class="btn btn-secondary">
+                <a href="MyFastCARE/login.php"><button type="button" class="btn btn-secondary">
 
                     Sign Up
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,7 +308,7 @@
           <div class="col-md-7 order-md-2" id="services">
             <h2 class="featurette-heading">Services.  <span class="text-muted">See for yourself.</span></h2>
             <p class="lead">At Fast Care, we believe that compassionate healthcare should be easily accessible to everyone. Our mission is to provide you with a seamless experience that prioritizes your well-being, saves your time, and ensures your comfort.</p>
-            <a href="clinics.html"><button type="button" class="btn btn-secondary">
+            <a href="clinics.php"><button type="button" class="btn btn-secondary">
     
                 Clinics
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -499,7 +499,7 @@
                 <div>
   
                   <!-- sign up button -->
-                  <a href="../MyFastCARE/login.html"><button type="button" class="btn btn-secondary" id="signUpButton">
+                  <a href="MyFastCARE/login.php"><button type="button" class="btn btn-secondary" id="signUpButton">
   
                       Sign Up
                       <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

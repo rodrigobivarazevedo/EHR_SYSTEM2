@@ -12,9 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+    <link rel="stylesheet" href="../styles.css">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -29,6 +27,45 @@
           font-size: 3.5rem;
         }
       }
+
+      .card {
+        max-width: 400px;
+        margin: auto;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        background-color: #048c7f; /* Bootstrap primary color */
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+      /* Page Buttons
+  -------------------------------------------------- */
+
+    .btn-secondary:hover, .btn-primary:hover {
+        background-color: #048c7f;
+    }
+
+    /* Style the buttons*/
+    .btn-secondary, .btn-primary{
+        padding: 7px 15px;
+        border-radius: 20px;
+        background-color: #036c5f;
+        color:white
+        /*background-color: #00857a;*/
+    }
     </style>
     
 </head>
@@ -37,7 +74,7 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.php">
+          <a class="navbar-brand" href="../FastCARE/index.html">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100px" height="45px" viewBox="0 0 859 420" xml:space="preserve">
               <desc>Created with Fabric.js 3.5.0</desc>
               <defs>
@@ -56,7 +93,7 @@
                 <a class="nav-link" aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="booking.php">Booking</a>
+                <a class="nav-link" href="booking.php">Booking</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="doctors.php">Doctors</a>
@@ -67,98 +104,69 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="MyFastCARE/login.php">Login</a>
+                <a class="nav-link active" href="booking_login.php">Login</a>
               </li>
             </ul>
             <div class="text-end">
-              <a href="booking.php"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
+              <a href="booking.html"><button type="button" class="btn btn-secondary">Book Appointment</button></a>
               </div>
            
           </div>
         </div>
       </nav>
-
-     
-
-    </div>
     </header>
+
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">MyFastCARE</h1>
+
+        <div class="card">
+            <div class="card-header">
+                User Login
+            </div>
+            <div class="card-body">
+                <form method="post" action="/login">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Login</button>
+                    <!-- Register button -->
+                    <a class="btn btn-primary mt-3" href="registration.html">Register Now</a>
+                </form>
     
-    <main>
-
-        <section class="py-5 text-center container">
-          <div class="container mt-5">
-
-              <h1>MAKE A APPOINTMENT</h1>
-
-              <div class="findcaredropdowns">
-                <div>
-                    
-                    <select id="consultationType" class="form-control-file dropdown_item">
-                        <option disabled selected value="">Select Type Consultation...</option>
-                        <option value="Appointment">Appointment</option>
-                        <option value="Exam">Exam</option>
-                        <option value="Teleconsultation">Teleconsultation</option>
-                    </select>
-                </div>
-            
-                <div>
-                    <select id="specialities" class="form-control-file dropdown_item">
-                        <option disabled selected value="">Select Speciality...</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Nephrology">Nephrology</option>
-                        <option value="Gastroenterology">Gastroenterology</option>
-                        <option value="Gynecology">Gynecology</option>
-                        <option value="Obstetriciology">Obstetriciology</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Rheumatology">Rheumatology</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Family Medicine">Family Medicine</option>
-                    </select>
-                </div>
-            
-                
+                 <!-- Forgot Password Section -->
+                 <hr class="mt-4">
+                 <form method="post" action="/forgot-password">
+                     <h5 class="mb-3">Forgot Password?</h5>
+                     <p>Enter your email address to reset your password.</p>
+                     <div class="form-group">
+                         <label for="forgotEmail">Email Address</label>
+                         <input type="text" class="form-control" id="forgotEmail" name="forgotEmail" placeholder="Enter your email">
+                     </div>
+                     <button type="submit" class="btn btn-primary mt-3">Reset Password</button>
+                 </form>
             </div>
-            
-            
-                   
-          </div>
-        </section>
-      
-        
-        <div class="album py-5 bg-light">
-          <div class="container">
-            <h2>Available Consultations</h2>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
-              <!-- Cards will be updated dynamically  -->
-              
-            </div>
-          </div>
         </div>
-    
-    
-    
-
-     
-      
-      <!-- FOOTER -->
-      
-        <footer class="container">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>© 2023 FastCARE, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-        </footer>
-    </main>
-
-  <script>
+    </div>
     
 
+
     
-  </script>
     
     
-  <script src="/EHR_system/global/jquery.js"></script>
-  <script src="/EHR_system/js/booking.js"></script>
-      
-    
+        
+<!-- JavaScript links for bootstrap functions -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+
 </body>
 
-</html>
+</html>     
+            
+        

@@ -42,6 +42,14 @@ $(document).ready(function() {
         
     }
 
+// Wait for the document to be ready before attaching the event listener
+$(document).ready(function() {
+  // Add an event listener to the document that delegates the click event to .view-book-btn elements
+  $(document).on('click', '#view-book-btn', function() {
+      // Handle button click here, for example, redirect to booking_login.php
+      window.location.href = 'booking_login.php';
+  });
+});
 
 function updateCardUI(data) {
     // Clear existing cards
@@ -57,10 +65,8 @@ function updateCardUI(data) {
                       <p class="card-text">${appointment.consultation_type} ${appointment.clinic}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book</button>
-               
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="view-book-btn">View/Book</button>
                       </div>
-                      
                     </div>
                   </div>
                 </div>
@@ -70,3 +76,4 @@ function updateCardUI(data) {
         $('#content').append(card);
     });
 }
+
