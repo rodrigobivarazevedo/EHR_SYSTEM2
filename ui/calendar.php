@@ -32,52 +32,64 @@
 <div id="calendar" class="container mt-5"></div>
 
 <script>
-    // Sample data from your function response
-    const responseData = [
-        {"SlotID":2,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"09:30:00"},{"SlotID":3,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"10:00:00"},{"SlotID":4,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"10:30:00"},{"SlotID":5,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"11:00:00"},{"SlotID":6,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"11:30:00"},{"SlotID":7,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"12:00:00"},{"SlotID":8,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"12:30:00"},{"SlotID":9,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"13:00:00"},{"SlotID":10,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"13:30:00"},{"SlotID":11,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"14:00:00"},{"SlotID":12,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"14:30:00"},{"SlotID":13,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"15:00:00"},{"SlotID":14,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"15:30:00"},{"SlotID":15,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"16:00:00"},{"SlotID":16,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-01","StartTime":"16:30:00"},{"SlotID":17,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"09:00:00"},{"SlotID":18,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"09:30:00"},{"SlotID":19,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"10:00:00"},{"SlotID":20,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"10:30:00"},{"SlotID":21,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"11:00:00"},{"SlotID":22,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"11:30:00"},{"SlotID":23,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"12:00:00"},{"SlotID":24,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"12:30:00"},{"SlotID":25,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"13:00:00"},{"SlotID":26,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"13:30:00"},{"SlotID":27,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"14:00:00"},{"SlotID":28,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"14:30:00"},{"SlotID":29,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"15:00:00"},{"SlotID":30,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"15:30:00"},{"SlotID":31,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"16:00:00"},{"SlotID":32,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-03","StartTime":"16:30:00"},{"SlotID":33,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"09:00:00"},{"SlotID":34,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"09:30:00"},{"SlotID":35,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"10:00:00"},{"SlotID":36,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"10:30:00"},{"SlotID":37,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"11:00:00"},{"SlotID":38,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"11:30:00"},{"SlotID":39,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"12:00:00"},{"SlotID":40,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"12:30:00"},{"SlotID":41,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"13:00:00"},{"SlotID":42,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"13:30:00"},{"SlotID":43,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"14:00:00"},{"SlotID":44,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"14:30:00"},{"SlotID":45,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"15:00:00"},{"SlotID":46,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"15:30:00"},{"SlotID":47,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"16:00:00"},{"SlotID":48,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-05","StartTime":"16:30:00"},{"SlotID":49,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"09:00:00"},{"SlotID":50,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"09:30:00"},{"SlotID":51,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"10:00:00"},{"SlotID":52,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"10:30:00"},{"SlotID":53,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"11:00:00"},{"SlotID":54,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"11:30:00"},{"SlotID":55,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"12:00:00"},{"SlotID":56,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"12:30:00"},{"SlotID":57,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"13:00:00"},{"SlotID":58,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"13:30:00"},{"SlotID":59,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"14:00:00"},{"SlotID":60,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"14:30:00"},{"SlotID":61,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"15:00:00"},{"SlotID":62,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"15:30:00"},{"SlotID":63,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"16:00:00"},{"SlotID":64,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-08","StartTime":"16:30:00"},{"SlotID":65,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"09:00:00"},{"SlotID":66,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"09:30:00"},{"SlotID":67,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"10:00:00"},{"SlotID":68,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"10:30:00"},{"SlotID":69,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"11:00:00"},{"SlotID":70,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"11:30:00"},{"SlotID":71,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"12:00:00"},{"SlotID":72,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"12:30:00"},{"SlotID":73,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"13:00:00"},{"SlotID":74,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"13:30:00"},{"SlotID":75,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"14:00:00"},{"SlotID":76,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"14:30:00"},{"SlotID":77,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"15:00:00"},{"SlotID":78,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"15:30:00"},{"SlotID":79,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"16:00:00"},{"SlotID":80,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-10","StartTime":"16:30:00"},{"SlotID":81,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"09:00:00"},{"SlotID":82,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"09:30:00"},{"SlotID":83,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"10:00:00"},{"SlotID":84,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"10:30:00"},{"SlotID":85,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"11:00:00"},{"SlotID":86,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"11:30:00"},{"SlotID":87,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"12:00:00"},{"SlotID":88,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"12:30:00"},{"SlotID":89,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"13:00:00"},{"SlotID":90,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"13:30:00"},{"SlotID":91,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"14:00:00"},{"SlotID":92,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"14:30:00"},{"SlotID":93,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"15:00:00"},{"SlotID":94,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"15:30:00"},{"SlotID":95,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"16:00:00"},{"SlotID":96,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-12","StartTime":"16:30:00"},{"SlotID":97,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"09:00:00"},{"SlotID":98,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"09:30:00"},{"SlotID":99,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"10:00:00"},{"SlotID":100,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"10:30:00"},{"SlotID":101,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"11:00:00"},{"SlotID":102,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"11:30:00"},{"SlotID":103,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"12:00:00"},{"SlotID":104,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"12:30:00"},{"SlotID":105,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"13:00:00"},{"SlotID":106,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"13:30:00"},{"SlotID":107,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"14:00:00"},{"SlotID":108,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"14:30:00"},{"SlotID":109,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"15:00:00"},{"SlotID":110,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"15:30:00"},{"SlotID":111,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"16:00:00"},{"SlotID":112,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-15","StartTime":"16:30:00"},{"SlotID":113,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"09:00:00"},{"SlotID":114,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"09:30:00"},{"SlotID":115,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"10:00:00"},{"SlotID":116,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"10:30:00"},{"SlotID":117,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"11:00:00"},{"SlotID":118,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"11:30:00"},{"SlotID":119,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"12:00:00"},{"SlotID":120,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"12:30:00"},{"SlotID":121,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"13:00:00"},{"SlotID":122,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"13:30:00"},{"SlotID":123,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"14:00:00"},{"SlotID":124,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"14:30:00"},{"SlotID":125,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"15:00:00"},{"SlotID":126,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"15:30:00"},{"SlotID":127,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"16:00:00"},{"SlotID":128,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-17","StartTime":"16:30:00"},{"SlotID":129,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"09:00:00"},{"SlotID":130,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"09:30:00"},{"SlotID":131,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"10:00:00"},{"SlotID":132,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"10:30:00"},{"SlotID":133,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"11:00:00"},{"SlotID":134,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"11:30:00"},{"SlotID":135,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"12:00:00"},{"SlotID":136,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"12:30:00"},{"SlotID":137,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"13:00:00"},{"SlotID":138,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"13:30:00"},{"SlotID":139,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"14:00:00"},{"SlotID":140,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"14:30:00"},{"SlotID":141,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"15:00:00"},{"SlotID":142,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"15:30:00"},{"SlotID":143,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"16:00:00"},{"SlotID":144,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-19","StartTime":"16:30:00"},{"SlotID":145,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"09:00:00"},{"SlotID":146,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"09:30:00"},{"SlotID":147,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"10:00:00"},{"SlotID":148,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"10:30:00"},{"SlotID":149,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"11:00:00"},{"SlotID":150,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"11:30:00"},{"SlotID":151,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"12:00:00"},{"SlotID":152,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"12:30:00"},{"SlotID":153,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"13:00:00"},{"SlotID":154,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"13:30:00"},{"SlotID":155,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"14:00:00"},{"SlotID":156,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"14:30:00"},{"SlotID":157,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"15:00:00"},{"SlotID":158,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"15:30:00"},{"SlotID":159,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"16:00:00"},{"SlotID":160,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-22","StartTime":"16:30:00"},{"SlotID":161,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"09:00:00"},{"SlotID":162,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"09:30:00"},{"SlotID":163,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"10:00:00"},{"SlotID":164,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"10:30:00"},{"SlotID":165,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"11:00:00"},{"SlotID":166,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"11:30:00"},{"SlotID":167,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"12:00:00"},{"SlotID":168,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"12:30:00"},{"SlotID":169,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"13:00:00"},{"SlotID":170,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"13:30:00"},{"SlotID":171,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"14:00:00"},{"SlotID":172,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"14:30:00"},{"SlotID":173,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"15:00:00"},{"SlotID":174,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"15:30:00"},{"SlotID":175,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"16:00:00"},{"SlotID":176,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-24","StartTime":"16:30:00"},{"SlotID":177,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"09:00:00"},{"SlotID":178,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"09:30:00"},{"SlotID":179,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"10:00:00"},{"SlotID":180,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"10:30:00"},{"SlotID":181,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"11:00:00"},{"SlotID":182,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"11:30:00"},{"SlotID":183,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"12:00:00"},{"SlotID":184,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"12:30:00"},{"SlotID":185,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"13:00:00"},{"SlotID":186,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"13:30:00"},{"SlotID":187,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"14:00:00"},{"SlotID":188,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"14:30:00"},{"SlotID":189,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"15:00:00"},{"SlotID":190,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"15:30:00"},{"SlotID":191,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"16:00:00"},{"SlotID":192,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-26","StartTime":"16:30:00"},{"SlotID":193,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"09:00:00"},{"SlotID":194,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"09:30:00"},{"SlotID":195,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"10:00:00"},{"SlotID":196,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"10:30:00"},{"SlotID":197,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"11:00:00"},{"SlotID":198,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"11:30:00"},{"SlotID":199,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"12:00:00"},{"SlotID":200,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"12:30:00"},{"SlotID":201,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"13:00:00"},{"SlotID":202,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"13:30:00"},{"SlotID":203,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"14:00:00"},{"SlotID":204,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"14:30:00"},{"SlotID":205,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"15:00:00"},{"SlotID":206,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"15:30:00"},{"SlotID":207,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"16:00:00"},{"SlotID":208,"DoctorID":1,"ClinicID":1,"DATE":"2024-01-29","StartTime":"16:30:00"}
-        // Add more data as needed
-    ];
+      
+    var calendarData = <?php $result; ?>;
 
-    // Function to create the calendar
-     function createCalendar(data) {
-        const calendar = document.getElementById('calendar');
-
-        // Get unique dates from the data
-        const uniqueDates = [...new Set(data.map(item => item.DATE))];
-
-        // Iterate through each date
-        uniqueDates.forEach(date => {
-            const dateObject = new Date(date);
-            const dayOfWeek = dateObject.toLocaleDateString('en-US', { weekday: 'short' });
-            const day = dateObject.getDate();
-            const monthAbbreviation = dateObject.toLocaleDateString('en-US', { month: 'short' });
-            const startTime = data.find(item => item.DATE === date).StartTime;
-            const year = dateObject.getFullYear();
-
-            const dayElement = document.createElement('button');
-            dayElement.classList.add('day');
-
-            // Check if the date has available time slots
-            const availableSlots = data.filter(item => item.DATE === date);
-            if (availableSlots.length > 0) {
-                dayElement.classList.add('available');
-            }
-
-            dayElement.textContent = `${dayOfWeek}, ${day} ${monthAbbreviation} ${year}`;
-
-            // Add a click event listener to handle appointment creation
-            dayElement.addEventListener('click', () => {
-                // Replace this with your appointment creation logic
-                alert(`Create appointment for ${dayOfWeek}, ${day} ${monthAbbreviation} ${year}`);
-            });
-
-            calendar.appendChild(dayElement);
-        });
-    } 
-
-    // Create the calendar using the sample data
-    createCalendar(responseData);
+    <script src="/EHR_system/js/calendar.js"></script>
+    
+  
 </script>
 
 </body>
 </html>
+
+
+<?php
+
+$root = $_SERVER["DOCUMENT_ROOT"];
+include_once $root . "/EHR_system/db/database.php";
+include_once $root . "/EHR_system/db/backend.php";
+
+// Handle the incoming GET request
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Retrieve data from the GET request
+    $dbo = new Database();
+    $pdo = new Appointmentsinfo();
+
+    $speciality = $_GET['speciality'];
+    $consultation_type = $_GET['consultation_type'];
+    $clinic = $_GET['clinic'];
+
+    // Fetch ClinicID from the database based on clinic name
+    $statement = $dbo->conn->prepare("SELECT ClinicID FROM clinics WHERE Name = :clinic");
+    $statement->bindParam(':clinic', $clinic, PDO::PARAM_STR);
+            
+    // Execute statement
+    $statement->execute();
+
+    // Fetch results
+    $return = $statement->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$return) {
+        // Clinic not found, handle appropriately (e.g., send an error response)
+        echo json_encode(array('error' => 'Clinic not found'));
+        exit();
+    }
+
+    $clinicID = $return['ClinicID'];
+
+    // Perform database queries and get the result
+    $result = $pdo->check_available_timeslots($dbo, $clinicID, $speciality);
+
+    // Check if the result is an error
+    if (isset($result["error"])) {
+        // Handle the error, for example, send an appropriate response to the client
+        echo json_encode($result);
+    } else {
+        // Handle the success, for example, send the result back to the client
+        echo json_encode($result);
+    }
+    exit();
+}
+
+?>
