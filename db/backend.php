@@ -35,20 +35,18 @@ class Appointmentsinfo
         }
     }
 
-    public function checK__availabLe_timeslots($dbo, $DoctorID, $ClinicID, $AppointmentDate)
+    public function check_available_timeslots($dbo, $ClinicID, $speciality)
     {
         try {
             // Use placeholders in the SQL query
-            $statement = $dbo->conn->prepare("SELECT * FROM TimeSlots
-            WHERE DoctorID = :DoctorID
-              AND ClinicID = :ClinicID
-              AND Date = :AppointmentDate
+            $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID, ClinicID, DATE, StartTime FROM TimeSlots
+              WHERE ClinicID = :ClinicID
+              AND speciality = :speciality
               AND AvailabilityStatus = 'Available'");
 
             // Bind parameters
-            $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT); 
             $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
-            $statement->bindParam(':$AppointmentDate', $AppointmentDate	, PDO::PARAM_STR);
+            $statement->bindParam(':speciality', $speciality	, PDO::PARAM_STR);
     
             // Execute statement
             $statement->execute();
@@ -226,7 +224,7 @@ class All_Info
 
 class DoctorScheduler {
     
-        public function createDoctorSchedule($dbo, $DoctorID, $ClinicID, $startDate, $endDate, $workingDays, $startTime, $endTime)
+        public function createDoctorSchedule($dbo, $DoctorID, $ClinicID, $startDate, $endDate, $workingDays, $startTime, $endTime, $speciality)
     {
         try {
             $interval = new DateInterval('PT30M'); // 30 minutes interval
@@ -250,12 +248,13 @@ class DoctorScheduler {
                         $endTimeDateTime = $currentTime->add($interval)->format('Y-m-d H:i:s');
 
                         // Insert time slot with default availability
-                        $insertStatement = $dbo->conn->prepare("INSERT INTO TimeSlots (DoctorID, ClinicID, Date, StartTime, EndTime, AvailabilityStatus) VALUES (:DoctorID, :ClinicID, :Date, :StartTime, :EndTime, 'Available')");
+                        $insertStatement = $dbo->conn->prepare("INSERT INTO TimeSlots (DoctorID, ClinicID, Date, StartTime, EndTime, AvailabilityStatus, speciality) VALUES (:DoctorID, :ClinicID, :Date, :StartTime, :EndTime, 'Available', :speciality)");
                         $insertStatement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT);
                         $insertStatement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT);
                         $insertStatement->bindParam(':Date', $currentDateTime, PDO::PARAM_STR);
                         $insertStatement->bindParam(':StartTime', $currentDateTime, PDO::PARAM_STR);
                         $insertStatement->bindParam(':EndTime', $endTimeDateTime, PDO::PARAM_STR);
+                        $insertStatement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
                         $insertStatement->execute();
                     }
                 }
