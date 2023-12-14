@@ -11,9 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = new Appointmentsinfo();
 
     $speciality = $_POST['speciality'];
-    $consultation_type = $_POST['consultation_type'];
     $clinic = $_POST['clinic'];
-
     // Fetch ClinicID from the database based on clinic name
     $statement = $dbo->conn->prepare("SELECT ClinicID FROM clinics WHERE Name = :clinic");
     $statement->bindParam(':clinic', $clinic, PDO::PARAM_STR);
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($result);
     } else {
         // Handle the success, for example, send the result back to the client
-        echo json_encode($result);
+        echo ($result);
     }
     exit();
 }

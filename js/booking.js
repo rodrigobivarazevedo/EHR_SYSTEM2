@@ -24,11 +24,28 @@ function get_appointmentInfo(selectedSpeciality="", selectedConsultationType="",
 $(document).ready(
   function() {
   get_appointmentInfo();  
+
+  // Variable to keep track of the selected card
+  let selectedCard = null;
   // Add event listener to the button
   $(document).on('click', '#view-book-btn', function() {
+
+    if (selectedCard !== null) {
+        selectedCard.removeClass('selected-card');
+    }
+
+    // Add the green color to the parent card of the clicked button
+    const card1 = $(this).closest('.card');
+    card1.addClass('selected-card');
+
+    // Update the selected card
+    selectedCard = card1;
+
     const card = $(this).closest('.card');
     const speciality = card.find('.card-title').text().trim();
-    const clinic = card.find('.card-text').text().trim();
+    // Extract only the first two words from the string
+    const clinic = card.find('.card-text').text().trim().split(',').slice(0, 1).join(',');
+
     // Make the POST request
     $.ajax({
         url: "/EHR_system/ajax/calendarAJAX.php",
@@ -81,7 +98,8 @@ $(document).ready(
                   <div class="card shadow-sm">
                       <div class="card-body">
                           <h5 class="card-title">${appointment.speciality}</h5>
-                          <p class="card-text">${appointment.consultation_type} ${appointment.clinic}</p>
+                          <p class="card-text">${appointment.clinic}, ${appointment.consultation_type}</p>
+                        
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
                                   <button type="button" class="btn btn-sm btn-outline-secondary" id="view-book-btn">View/Book</button>
@@ -97,19 +115,18 @@ $(document).ready(
           content.appendChild(cardElement);
       });
   }
-  
-             
+      
 
- // Function to create the calendar
- function createCalendar(data) {
-  // Clear existing cards
-  const content = document.getElementById('content');
-  content.innerHTML = '';
+// Function to create the calendar
+function createCalendar(data) {
+  const calendarDiv = document.getElementById('calendar'); // Change this to your actual div ID
+  calendarDiv.innerHTML = ''; // Clear existing content
 
-  const calendar = document.getElementById('calendar');
+  // Convert JSON object to an array
+  const dataArray = Object.values(data);
 
   // Get unique dates from the data
-  const uniqueDates = [...new Set(data.map(item => item.DATE))];
+  const uniqueDates = Array.from(new Set(dataArray.map(item => item.DATE)));
 
   // Iterate through each date
   uniqueDates.forEach(date => {
@@ -117,28 +134,36 @@ $(document).ready(
       const dayOfWeek = dateObject.toLocaleDateString('en-US', { weekday: 'short' });
       const day = dateObject.getDate();
       const monthAbbreviation = dateObject.toLocaleDateString('en-US', { month: 'short' });
-      const startTime = data.find(item => item.DATE === date).StartTime;
-      const year = dateObject.getFullYear();
 
+      // Create a button for each date
       const dayElement = document.createElement('button');
-      dayElement.classList.add('day');
-
-      // Check if the date has available time slots
-      const availableSlots = data.filter(item => item.DATE === date);
-      if (availableSlots.length > 0) {
-          dayElement.classList.add('available');
-      }
-
-      dayElement.textContent = `${dayOfWeek}, ${day} ${monthAbbreviation} ${year}`;
-
-      // Add a click event listener to handle appointment creation
+      dayElement.classList.add('day', 'btn', 'btn-secondary', 'mb-2');
+      dayElement.textContent = `${dayOfWeek}, ${day} ${monthAbbreviation}`;
       dayElement.addEventListener('click', () => {
-          // Replace this with your appointment creation logic
-          get_timeslots(date);
+          // Replace this with your logic to handle date selection
+          // In this example, I'm logging the selected date to the console
+          // Open the calendar modal
+          timeslots(date);
+          console.log('Selected date:', date);
       });
 
-      calendar.appendChild(dayElement);
+      // Append the button to the calendar div
+      calendarDiv.appendChild(dayElement);
   });
+}
+
+
+function timeslots(date) {
+  const calendarModal = document.getElementById('timeslots');
+  const modalContent = calendarModal.querySelector('.modal-body');
+  modalContent.innerHTML = ''; // Clear existing content
+   // Open the calendar modal
+  const bootstrapModal = new bootstrap.Modal(calendarModal);
+  modalContent.innerHTML = `Selected date: ${date}`; // Clear existing content
+  bootstrapModal.show();
+
+
+
 }
 
  

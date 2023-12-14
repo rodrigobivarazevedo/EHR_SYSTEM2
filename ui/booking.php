@@ -30,11 +30,6 @@
         }
       }
 
-      
-        body {
-            font-family: Arial, sans-serif;
-        }
-
         #calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -51,7 +46,17 @@
         .available {
             background-color: lightgreen;
         }
-   
+
+        .selected-card {
+            background-color: #036c5f; /* Change this to your desired background color */
+            color: white; /* Set text color to white */
+            /* Add any other styling as needed */
+        }
+        .selected-card .btn {
+            color: white; /* Set button text color to white */
+            /* Add any other styling as needed */
+        }
+
     </style>
     
 </head>
@@ -151,18 +156,34 @@
         <div class="album py-5 bg-light">
           <div class="container">
             <h2>Available Consultations</h2>
+            <div id="calendar" class="container mt-5 mb-3"> </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
               <!-- Cards will be updated dynamically  -->
               
+            
             </div>
           </div>
         </div>
     
-    
-    
 
-     
-        <div id="calendar" class="container mt-5"></div>
+        <div id="timeslots" class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Available TimeSlots</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary">Book Appointment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       
       <!-- FOOTER -->
       
