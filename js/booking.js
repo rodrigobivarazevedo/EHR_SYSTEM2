@@ -45,7 +45,7 @@ $(document).ready(
     const speciality = card.find('.card-title').text().trim();
     // Extract only the first two words from the string
     const clinic = card.find('.card-text').text().trim().split(',').slice(0, 1).join(',');
-
+    const type_consultation = card.find('.card-text').text().trim().split(',').slice(2).join(',');
     // Make the POST request
     $.ajax({
         url: "/EHR_system/ajax/calendarAJAX.php",
@@ -53,7 +53,7 @@ $(document).ready(
         dataType: "json",
         data: { speciality: speciality, clinic: clinic },
         success: function (response) {
-            createCalendar(response);
+            createCalendar(response, type_consultation, speciality, clinic);
         },
         error: function (xhr) {
             // Log detailed error information to the console
@@ -64,6 +64,8 @@ $(document).ready(
         }
     });
   });
+
+    
 
 });
 
@@ -120,7 +122,7 @@ $(document).ready(
       
 
 // Function to create the calendar
-function createCalendar(data) {
+function createCalendar(data, type_consultation, speciality, clinic) {
   const calendarDiv = document.getElementById('calendar'); // Change this to your actual div ID
   calendarDiv.innerHTML = ''; // Clear existing content
 
@@ -145,7 +147,7 @@ function createCalendar(data) {
           // Replace this with your logic to handle date selection
           // In this example, I'm logging the selected date to the console
           // Open the calendar modal
-          timeslots(date,dataArray);
+          timeslots(date, dataArray, type_consultation, speciality, clinic);
           console.log('Selected date:', date);
       });
 
@@ -155,7 +157,7 @@ function createCalendar(data) {
 }
 
 
-function timeslots(date, dataArray) {
+function timeslots(date, dataArray, type_consultation, speciality, clinic) {
   const calendarModal = document.getElementById('timeslots');
   const modalContent = calendarModal.querySelector('.modal-body');
   modalContent.innerHTML = ''; // Clear existing content
@@ -163,6 +165,9 @@ function timeslots(date, dataArray) {
   // Open the calendar modal
   const bootstrapModal = new bootstrap.Modal(calendarModal);
   bootstrapModal.show();
+
+  // Variable to keep track of the selected timeslot
+  let selectedTimeslot = null;
 
   // Filter timeslots for the given date
   const timeslotsForDate = dataArray.filter(item => item.DATE === date);
@@ -194,26 +199,35 @@ function timeslots(date, dataArray) {
               modalContent.appendChild(groupHeader);
 
               group.forEach(item => {
-                
-                   // Extract hours and minutes from the StartTime
+
+                  // Extract hours and minutes from the StartTime
                   const [hours, minutes] = item.StartTime.split(':');
 
                   // Determine whether it's AM or PM
                   const ampm = hours >= 12 ? 'PM' : 'AM';
 
                   // Convert to 12-hour format and format the time
-                  const formattedHours = hours % 12 || 12;
-                  const startTime = `${formattedHours}:${minutes} ${ampm}`;
-
+                  const startTime = `${hours}:${minutes} ${ampm}`;
 
                   // Create a button for each timeslot
                   const timeslotElement = document.createElement('button');
                   timeslotElement.classList.add('timeslot', 'btn', 'btn-light', 'mb-3', 'mr-3', 'ml-3');
                   timeslotElement.textContent = `${startTime}`;
                   timeslotElement.addEventListener('click', () => {
-                      // Replace this with your logic to handle timeslot selection
-                      // In this example, I'm logging the selected timeslot to the console
-                      console.log('Selected timeslot:', startTime);
+                      // Remove 'selected' class from the previously selected timeslot
+                      if (selectedTimeslot !== null) {
+                          selectedTimeslot.classList.remove('selected');
+                      }
+
+                      // Toggle the 'selected' class on the clicked timeslot button
+                      timeslotElement.classList.toggle('selected');
+
+                      // Update the selected timeslot
+                      selectedTimeslot = timeslotElement;
+
+                      // Get the selected timeslot's start time
+                      console.log('Selected timeslot:', `${hours}:${minutes}`, date, type_consultation, speciality, clinic);
+                      book_appointement(`${hours}:${minutes}`, date, type_consultation, speciality, clinic)
                   });
 
                   // Append the button to the modal body
@@ -231,4 +245,22 @@ function timeslots(date, dataArray) {
 
 
 
- 
+function book_appointement(startTime, date, type_consultation, speciality, clinic){
+  $.ajax({
+    url: "/EHR_system/ajax/appointementsAJAX.php",
+    type: "POST",
+    dataType: "json",
+    data: { speciality: speciality, clinic: clinic, type_consultation: type_consultation, date: date, startTime: startTime, action: "action1"},
+    success: function (response) {
+        alert(response)
+    },
+    error: function (xhr) {
+        // Log detailed error information to the console
+        console.log(xhr.responseText);
+  
+        // Display a user-friendly error message
+        alert("AJAX request failed. Check the console for details.");
+    }
+  });
+}
+

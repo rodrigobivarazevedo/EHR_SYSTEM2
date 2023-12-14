@@ -57,6 +57,11 @@
             /* Add any other styling as needed */
         }
 
+        .timeslot.selected {
+            background-color: black; /* Change this to the desired color */
+            color: white; /* Change this to the desired text color */
+        }
+
     </style>
     
 </head>
@@ -198,6 +203,7 @@
             </div>
         </div>
 
+        
       
       <!-- FOOTER -->
       
