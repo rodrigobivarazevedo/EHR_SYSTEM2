@@ -167,23 +167,37 @@
     
 
         <div id="timeslots" class="modal" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Available TimeSlots</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Modal body text goes here.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary">Book Appointment</button>
-              </div>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Available TimeSlots</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Available TimeSlots:</p>
+                        <!-- Timeslots will be dynamically added here by JavaScript -->
+
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="citizenID" class="form-label">Citizen ID:</label>
+                            <input type="text" class="form-control" id="citizenID" placeholder="Enter your citizen ID">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" id="bookAppointmentBtn">Book Appointment</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        
+
       
       <!-- FOOTER -->
       
