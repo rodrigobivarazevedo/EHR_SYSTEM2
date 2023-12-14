@@ -1,49 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Calendar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        #calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-
-        .day {
-            padding: 10px;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .available {
-            background-color: lightgreen;
-        }
-    </style>
-</head>
-<body>
-
-<div id="calendar" class="container mt-5"></div>
-
-<script>
-      
-    var calendarData = <?php $result; ?>;
-
-    <script src="/EHR_system/js/calendar.js"></script>
-    
-  
-</script>
-
-</body>
-</html>
-
-
 <?php
 
 $root = $_SERVER["DOCUMENT_ROOT"];
@@ -51,14 +5,14 @@ include_once $root . "/EHR_system/db/database.php";
 include_once $root . "/EHR_system/db/backend.php";
 
 // Handle the incoming GET request
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Retrieve data from the GET request
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve data from the POST request
     $dbo = new Database();
     $pdo = new Appointmentsinfo();
 
-    $speciality = $_GET['speciality'];
-    $consultation_type = $_GET['consultation_type'];
-    $clinic = $_GET['clinic'];
+    $speciality = $_POST['speciality'];
+    $consultation_type = $_POST['consultation_type'];
+    $clinic = $_POST['clinic'];
 
     // Fetch ClinicID from the database based on clinic name
     $statement = $dbo->conn->prepare("SELECT ClinicID FROM clinics WHERE Name = :clinic");

@@ -145,6 +145,35 @@ class Doctorsinfo
         }
     }
 
+    public function check_available_timeslots($dbo, $DoctorID, $ClinicID, $speciality)
+    {
+        try {
+            // Use placeholders in the SQL query
+            $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID, ClinicID, DATE, StartTime FROM TimeSlots
+              WHERE DoctorID = :DoctorID
+              AND speciality = :speciality
+              AND ClinicID = :ClinicID
+              AND AvailabilityStatus = 'Available'");
+
+            // Bind parameters
+            $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT); 
+            $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
+            $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
+    
+            // Execute statement
+            $statement->execute();
+
+           // Fetch results
+           $returned_value = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+           // Encode the array as JSON and return it
+           return json_encode($returned_value);
+        } catch (PDOException $e) {
+            // Handle exceptions, log errors, or return an error message
+            echo json_encode(["error" => "Error inserting appointment: " . $e->getMessage()]);
+        }
+    }
+
 }
 
 
