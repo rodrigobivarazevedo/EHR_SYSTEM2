@@ -78,6 +78,8 @@ $(document).ready(
     consultationType.addEventListener('change', checkAndUpdateCardUI);
 
     function checkAndUpdateCardUI() {
+        const calendar = document.getElementById('calendar');
+        calendar.innerHTML = '';
         const selectedSpeciality = specialities.value;
         const selectedConsultationType = consultationType.value;
 
