@@ -181,19 +181,6 @@
                     <div class="modal-body">
                         <p>Available TimeSlots:</p>
                         <!-- Timeslots will be dynamically added here by JavaScript -->
-
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number:</label>
-                            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="citizenID" class="form-label">Citizen ID:</label>
-                            <input type="text" class="form-control" id="citizenID" placeholder="Enter your citizen ID">
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

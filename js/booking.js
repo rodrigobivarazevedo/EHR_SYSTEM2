@@ -157,6 +157,9 @@ function createCalendar(data, type_consultation, speciality, clinic) {
 }
 
 
+// Variable to keep track of the selected timeslot
+let selectedTimeslot = null;
+
 function timeslots(date, dataArray, type_consultation, speciality, clinic) {
   const calendarModal = document.getElementById('timeslots');
   const modalContent = calendarModal.querySelector('.modal-body');
@@ -166,103 +169,114 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
   const bootstrapModal = new bootstrap.Modal(calendarModal);
   bootstrapModal.show();
 
-  // Variable to keep track of the selected timeslot
-  let selectedTimeslot = null;
-
   // Filter timeslots for the given date
   const timeslotsForDate = dataArray.filter(item => item.DATE === date);
 
   if (timeslotsForDate.length === 0) {
-      modalContent.innerHTML = 'No available timeslots for the selected date.';
+    modalContent.innerHTML = 'No available timeslots for the selected date.';
   } else {
-      // Group timeslots into morning, afternoon, and evening
-      const morningTimeslots = timeslotsForDate.filter(item => {
-          const startTime = parseInt(item.StartTime.split(':')[0]);
-          return startTime >= 9 && startTime < 12;
-      });
+    // Group timeslots into morning, afternoon, and evening
+    const morningTimeslots = timeslotsForDate.filter(item => {
+      const startTime = parseInt(item.StartTime.split(':')[0]);
+      return startTime >= 9 && startTime < 12;
+    });
 
-      const afternoonTimeslots = timeslotsForDate.filter(item => {
-          const startTime = parseInt(item.StartTime.split(':')[0]);
-          return startTime >= 12 && startTime < 17;
-      });
+    const afternoonTimeslots = timeslotsForDate.filter(item => {
+      const startTime = parseInt(item.StartTime.split(':')[0]);
+      return startTime >= 12 && startTime < 17;
+    });
 
-      const eveningTimeslots = timeslotsForDate.filter(item => {
-          const startTime = parseInt(item.StartTime.split(':')[0]);
-          return startTime >= 17;
-      });
+    const eveningTimeslots = timeslotsForDate.filter(item => {
+      const startTime = parseInt(item.StartTime.split(':')[0]);
+      return startTime >= 17;
+    });
 
-      // Function to create a group of timeslots
-      const createTimeslotGroup = (group, groupName) => {
-          if (group.length > 0) {
-              const groupHeader = document.createElement('h6');
-              groupHeader.textContent = `${groupName} Timeslots`;
-              modalContent.appendChild(groupHeader);
+    // Function to create a group of timeslots
+    const createTimeslotGroup = (group, groupName) => {
+      if (group.length > 0) {
+        const groupHeader = document.createElement('h6');
+        groupHeader.textContent = `${groupName} Timeslots`;
+        modalContent.appendChild(groupHeader);
 
-              group.forEach(item => {
+        group.forEach(item => {
+          // Extract hours and minutes from the StartTime
+          const [hours, minutes] = item.StartTime.split(':');
 
-                  // Extract hours and minutes from the StartTime
-                  const [hours, minutes] = item.StartTime.split(':');
+          // Determine whether it's AM or PM
+          const ampm = hours >= 12 ? 'PM' : 'AM';
 
-                  // Determine whether it's AM or PM
-                  const ampm = hours >= 12 ? 'PM' : 'AM';
+          // Convert to 12-hour format and format the time
+          const startTime = `${hours}:${minutes} ${ampm}`;
 
-                  // Convert to 12-hour format and format the time
-                  const startTime = `${hours}:${minutes} ${ampm}`;
+          // Create a button for each timeslot
+          const timeslotElement = document.createElement('button');
+          timeslotElement.classList.add('timeslot', 'btn', 'btn-light', 'mb-3', 'mr-3', 'ml-3');
+          timeslotElement.textContent = `${startTime}`;
+          timeslotElement.addEventListener('click', () => {
+            handleTimeslotSelection(timeslotElement, `${hours}:${minutes}`, date, dataArray, type_consultation, speciality, clinic);
+          });
 
-                  // Create a button for each timeslot
-                  const timeslotElement = document.createElement('button');
-                  timeslotElement.classList.add('timeslot', 'btn', 'btn-light', 'mb-3', 'mr-3', 'ml-3');
-                  timeslotElement.textContent = `${startTime}`;
-                  timeslotElement.addEventListener('click', () => {
-                      // Remove 'selected' class from the previously selected timeslot
-                      if (selectedTimeslot !== null) {
-                          selectedTimeslot.classList.remove('selected');
-                      }
+          // Append the button to the modal body
+          modalContent.appendChild(timeslotElement);
+        });
+      }
+    };
 
-                      // Toggle the 'selected' class on the clicked timeslot button
-                      timeslotElement.classList.toggle('selected');
-
-                      // Update the selected timeslot
-                      selectedTimeslot = timeslotElement;
-
-                      // Get the selected timeslot's start time
-                      console.log('Selected timeslot:', `${hours}:${minutes}`, date, type_consultation, speciality, clinic);
-                      book_appointement(`${hours}:${minutes}`, date, dataArray, type_consultation, speciality, clinic)
-                  });
-
-                  // Append the button to the modal body
-                  modalContent.appendChild(timeslotElement);
-              });
-          }
-      };
-
-      // Create timeslot groups
-      createTimeslotGroup(morningTimeslots, 'Morning');
-      createTimeslotGroup(afternoonTimeslots, 'Afternoon');
-      createTimeslotGroup(eveningTimeslots, 'Evening');
+    // Create timeslot groups
+    createTimeslotGroup(morningTimeslots, 'Morning');
+    createTimeslotGroup(afternoonTimeslots, 'Afternoon');
+    createTimeslotGroup(eveningTimeslots, 'Evening');
   }
 }
 
+function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, type_consultation, speciality, clinic) {
+  // Remove 'selected' class from the previously selected timeslot
+  if (selectedTimeslot !== null) {
+    selectedTimeslot.classList.remove('selected');
+  }
+
+  // Toggle the 'selected' class on the clicked timeslot button
+  timeslotElement.classList.toggle('selected');
+
+  // Update the selected timeslot
+  selectedTimeslot = timeslotElement;
+
+  // Get the selected timeslot's start time
+  console.log('Selected timeslot:', startTime, date, dataArray, type_consultation, speciality, clinic);
 
 
-function book_appointement(startTime, date, dataArray, type_consultation, speciality, clinic){
-  $.ajax({
-    url: "/EHR_system/ajax/appointementsAJAX.php",
-    type: "POST",
-    dataType: "json",
-    data: { speciality: speciality, clinic: clinic, type_consultation: type_consultation, date: date, startTime: startTime, action: "action1"},
-    success: function (response) {
-        //timeslots(date, dataArray, type_consultation, speciality, clinic)
-        alert(response)
-
-    },
-    error: function (xhr) {
-        // Log detailed error information to the console
-        console.log(xhr.responseText);
-  
-        // Display a user-friendly error message
-        alert("AJAX request failed. Check the console for details.");
-    }
-  });
+document.getElementById('bookAppointmentBtn').addEventListener('click', () => {
+  const selectedTimeslotElement = document.querySelector('.timeslot.selected');
+  if (selectedTimeslotElement) {
+    const startTime = selectedTimeslotElement.textContent.trim();
+    book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic);
+  } else {
+    alert("Please select a timeslot before booking.");
+  }
+});
 }
+
+function book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic) {
+  if (selectedTimeslot !== null) {
+    $.ajax({
+      url: "/EHR_system/ajax/appointementsAJAX.php",
+      type: "POST",
+      dataType: "json",
+      data: { speciality, clinic, type_consultation, date, startTime, action: "action1" },
+      success: function (response) {
+
+        // Reload the current page
+        alert(response.message);
+        location.reload();
+      },
+      error: function (xhr) {
+        console.log(xhr.responseText);
+        alert("AJAX request failed. Check the console for details.");
+      }
+    });
+  } else {
+    alert("Please select a timeslot before booking.");
+  }
+}
+
 
