@@ -45,7 +45,7 @@ $(document).ready(
     const speciality = card.find('.card-title').text().trim();
     // Extract only the first two words from the string
     const clinic = card.find('.card-text').text().trim().split(',').slice(0, 1).join(',');
-    const type_consultation = card.find('.card-text').text().trim().split(',').slice(2).join(',');
+    const type_consultation = card.find('.card-text').text().trim().split(',').slice(1).join('');;
     // Make the POST request
     $.ajax({
         url: "/EHR_system/ajax/calendarAJAX.php",
@@ -148,7 +148,7 @@ function createCalendar(data, type_consultation, speciality, clinic) {
           // In this example, I'm logging the selected date to the console
           // Open the calendar modal
           timeslots(date, dataArray, type_consultation, speciality, clinic);
-          console.log('Selected date:', date);
+          console.log('Selected date:', date, type_consultation, speciality, clinic);
       });
 
       // Append the button to the calendar div
@@ -227,7 +227,7 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
 
                       // Get the selected timeslot's start time
                       console.log('Selected timeslot:', `${hours}:${minutes}`, date, type_consultation, speciality, clinic);
-                      book_appointement(`${hours}:${minutes}`, date, type_consultation, speciality, clinic)
+                      book_appointement(`${hours}:${minutes}`, date, dataArray, type_consultation, speciality, clinic)
                   });
 
                   // Append the button to the modal body
@@ -245,14 +245,16 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
 
 
 
-function book_appointement(startTime, date, type_consultation, speciality, clinic){
+function book_appointement(startTime, date, dataArray, type_consultation, speciality, clinic){
   $.ajax({
     url: "/EHR_system/ajax/appointementsAJAX.php",
     type: "POST",
     dataType: "json",
     data: { speciality: speciality, clinic: clinic, type_consultation: type_consultation, date: date, startTime: startTime, action: "action1"},
     success: function (response) {
+        //timeslots(date, dataArray, type_consultation, speciality, clinic)
         alert(response)
+
     },
     error: function (xhr) {
         // Log detailed error information to the console

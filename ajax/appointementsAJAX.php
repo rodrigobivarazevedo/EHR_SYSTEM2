@@ -22,11 +22,11 @@ if ($action === "action1") {
     $statement->execute();
     // Fetch results
     $return = $statement->fetch(PDO::FETCH_ASSOC);
-    echo ($return)
+    
     $clinicID = $return['ClinicID'];
 
     // Fetch TimeSlotID and DoctorID from the timeslots table
-    $statement = $dbo->conn->prepare("SELECT TimeSlotID, DoctorID FROM timeslots WHERE 
+    $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID FROM timeslots WHERE 
         startTime = :startTime AND
         clinicID = :clinicID AND
         Date = :date AND
@@ -42,9 +42,9 @@ if ($action === "action1") {
 
     // Fetch results
     $return = $statement->fetch(PDO::FETCH_ASSOC);
-    echo ($return)
+    
     $DoctorID = $return["DoctorID"];
-    $TimeSlotID = $return["TimeSlotID"];
+    $TimeSlotID = $return["SlotID"];
 
     // Check if TimeSlotID and DoctorID are fetched successfully
     if (!$DoctorID || !$TimeSlotID) {
@@ -52,14 +52,14 @@ if ($action === "action1") {
         exit();
     }
 
-    $result = $pdo->post_appointment_info($dbo, $UserID = "", $DoctorID, $ClinicID, $TimeSlotID, $ConsultationType, $Speciality);
+    $result = $pdo->post_appointment_info($dbo, $UserID = 1, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
 
     // Check if the result is an error
     if (isset($result["error"])) {
         // Handle the error, for example, send an appropriate response to the client
         echo json_encode($result);
     } else {
-        echo "Appointment Created";
+        echo ($result);
     }
     exit();
 }
