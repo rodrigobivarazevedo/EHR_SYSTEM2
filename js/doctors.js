@@ -80,8 +80,7 @@ function updateCardUI(data) {
                 <div class="card shadow-sm">
                   <div class="card-body">
                     <h5 class="card-title">${doctor.FirstName} ${doctor.LastName}</h5>
-                      <p class="card-text">${doctor.Speciality}</p>
-                      <p class="card-text2">${doctor.clinic}</p>
+                      <p class="card-text">${doctor.Speciality}, ${doctor.clinic}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary" id="view-book-btn">View/Book</button>

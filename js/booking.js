@@ -65,8 +65,6 @@ $(document).ready(
     });
   });
 
-    
-
 });
 
 
@@ -213,21 +211,105 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
           timeslotElement.classList.add('timeslot', 'btn', 'btn-light', 'mb-3', 'mr-3', 'ml-3');
           timeslotElement.textContent = `${startTime}`;
           timeslotElement.addEventListener('click', () => {
-            handleTimeslotSelection(timeslotElement, `${hours}:${minutes}`, date, dataArray, type_consultation, speciality, clinic);
+            const startTime = `${hours}:${minutes}`;
+            handleTimeslotSelection(timeslotElement, startTime , date, dataArray, type_consultation, speciality, clinic);
           });
 
           // Append the button to the modal body
           modalContent.appendChild(timeslotElement);
         });
+
+      
       }
     };
 
     // Create timeslot groups
     createTimeslotGroup(morningTimeslots, 'Morning');
     createTimeslotGroup(afternoonTimeslots, 'Afternoon');
-    createTimeslotGroup(eveningTimeslots, 'Evening');
+    
+    // Create input fields for phone number, email, and citizen ID
+    const phoneNumberInput = createInputField('phoneNumberInput',"Phone Number");
+    const emailInput = createInputField("emailInput", 'Email');
+    const citizenIdInput = createInputField("citizenIDInput",'Citizen ID');
+
+    // Append input fields to the modal body
+    modalContent.appendChild(phoneNumberInput);
+    modalContent.appendChild(emailInput);
+    modalContent.appendChild(citizenIdInput);
+
+    document.getElementById('bookAppointmentBtn').addEventListener('click', () => {
+      // Retrieve form values
+      const phoneNumberElement = document.getElementById('phoneNumberInput');
+      const emailElement = document.getElementById('emailInput');
+      const citizenIDElement = document.getElementById('citizenIDInput');
+      const selectedTimeslotElement = document.querySelector('.timeslot.selected');
+    
+      const startTime = selectedTimeslotElement ? selectedTimeslotElement.textContent.trim().split(' ')[0] : '';
+      const phoneNumber = phoneNumberElement ? phoneNumberElement.value.trim() : '';
+      const email = emailElement ? emailElement.value.trim() : '';
+      const citizenID = citizenIDElement ? citizenIDElement.value.trim() : '';
+    
+      // Check if the required elements exist
+      if (citizenID !== '' && email !== '' && phoneNumber !== '' && startTime !== '') {
+        // Proceed with booking appointment or display an error message
+        if (validatePhoneNumber(phoneNumber) && validateEmail(email) && validateCitizenID(citizenID)) {
+          // All values are valid, proceed with booking appointment
+          if (selectedTimeslotElement) {
+            console.log('Selected timeslot:', citizenID, email, phoneNumber, startTime, date, dataArray, type_consultation, speciality, clinic);
+            book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic, phoneNumber, email, citizenID);
+          } else {
+            alert("Please select a timeslot before booking.");
+          }
+        } else {
+          // Display an error message or handle validation errors
+          alert("Invalid input. Please check your information.");
+        }
+      } else {
+        // Handle the case where one or more form elements are empty
+        alert("Please fill in all the information before booking.");
+      }
+    });
+    
+    
+
   }
 }
+
+// Helper function to create input fields
+function createInputField(input_name, placeholder) {
+  const form = document.createElement('input');
+  form.id = input_name;
+  form.type = 'text';
+  form.placeholder = placeholder;
+  form.classList.add('form-control', 'mb-3');
+  return form;
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function validatePhoneNumber(phoneNumber) {
+  const phoneRegex = /^\d{10}$/; // Assumes a 10-digit phone number
+  return phoneRegex.test(phoneNumber);
+}
+
+function validateCitizenID(citizenID) {
+  // Check if the personalausweisNumber is not empty
+  if (!citizenID.trim()) {
+    return false;
+  }
+
+  // German Personalausweis number format: 10 digits
+  // Additional validation rules may apply
+  if (!/^\d{10}$/.test(citizenID)) {
+    return false;
+  }
+  return true;
+}
+
+
 
 function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, type_consultation, speciality, clinic) {
   // Remove 'selected' class from the previously selected timeslot
@@ -244,17 +326,9 @@ function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, ty
   // Get the selected timeslot's start time
   console.log('Selected timeslot:', startTime, date, dataArray, type_consultation, speciality, clinic);
 
-
-document.getElementById('bookAppointmentBtn').addEventListener('click', () => {
-  const selectedTimeslotElement = document.querySelector('.timeslot.selected');
-  if (selectedTimeslotElement) {
-    const startTime = selectedTimeslotElement.textContent.trim();
-    book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic);
-  } else {
-    alert("Please select a timeslot before booking.");
-  }
-});
 }
+
+
 
 function book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic) {
   if (selectedTimeslot !== null) {
@@ -268,6 +342,7 @@ function book_appointment(startTime, date, dataArray, type_consultation, special
         // Reload the current page
         alert(response.message);
         location.reload();
+        
       },
       error: function (xhr) {
         console.log(xhr.responseText);
