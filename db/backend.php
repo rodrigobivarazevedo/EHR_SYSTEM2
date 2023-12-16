@@ -300,4 +300,82 @@ class DoctorScheduler {
     }
 
 }
+
+
+class Users{
+
+    public function create_user($dbo, $Username, $Password, $Email, $ContactNumber)
+        {
+            try {
+
+                $statement = $dbo->conn->prepare("INSERT INTO users (Username, Password, Email, ContactNumber) 
+                VALUES (:Username, :Password, :Email, :ContactNumber)");
+
+                $statement->bindParam(':Username', $Username, PDO::PARAM_STR);
+                $statement->bindParam(':Password', $Password, PDO::PARAM_STR);
+                $statement->bindParam(':Email', $Email, PDO::PARAM_STR);
+                $statement->bindParam(':ContactNumber', $ContactNumber, PDO::PARAM_STR);
+
+                // Execute statement
+                $statement->execute();
+
+                // Return success message or any other information
+                echo json_encode(["message" => "Account created successfully"]);
+            } catch (PDOException $e) {
+                // Handle the exception (e.g., log, display an error message)
+                return json_encode(["error" => $e->getMessage()]);
+            }
+        }
+
+        public function check_user($dbo, $Username, $Password, $Email, $ContactNumber) {
+            try {
+                // Check if the username or email already exists
+                $checkStatement = $dbo->conn->prepare("SELECT * FROM users WHERE Username = :Username OR Email = :Email");
+                $checkStatement->bindParam(':Username', $Username, PDO::PARAM_STR);
+                $checkStatement->bindParam(':Email', $Email, PDO::PARAM_STR);
+                $checkStatement->execute();
+    
+                $existingUser = $checkStatement->fetch(PDO::FETCH_ASSOC);
+    
+                if ($existingUser) {
+                    // User with the same username or email already exists
+                    return json_encode(["error" => "Username or email already exists please login"]);
+                } 
+
+            } catch (PDOException $e) {
+                // Handle the exception (e.g., log, display an error message)
+                return json_encode(["error" => $e->getMessage()]);
+            }
+        }
+
+        public function login($dbo, $UsernameOrEmail, $Password) {
+            try {
+                // Check if the username or email and password combination is valid
+                $loginStatement = $dbo->conn->prepare("SELECT * FROM users WHERE (Username = :UsernameOrEmail OR Email = :UsernameOrEmail) AND Password = :Password");
+                $loginStatement->bindParam(':UsernameOrEmail', $UsernameOrEmail, PDO::PARAM_STR);
+                $loginStatement->bindParam(':Password', $Password, PDO::PARAM_STR);
+                $loginStatement->execute();
+    
+                $user = $loginStatement->fetch(PDO::FETCH_ASSOC);
+    
+                if ($user) {
+                    // User authenticated successfully
+                    return json_encode(["message" => "Login successful", "user" => $user["UserID"], "username"=> $user["Username"]]);
+                } else {
+                    // Invalid username or email and password combination
+                    return json_encode(["error" => "Invalid login credentials"]);
+                }
+            } catch (PDOException $e) {
+                // Handle the exception (e.g., log, display an error message)
+                return json_encode(["error" => $e->getMessage()]);
+            }
+        }
+
+
+
+
+
+
+
+}
 ?>

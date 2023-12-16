@@ -3,6 +3,7 @@ CREATE TABLE Users (
     Username VARCHAR(255) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL UNIQUE,
+    ContactNumber VARCHAR(20) NOT NULL UNIQUE,
     Role VARCHAR(50) NOT NULL DEFAULT 'user' -- Default role is set to 'user'
 );
 
