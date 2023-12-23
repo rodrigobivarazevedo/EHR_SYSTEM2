@@ -257,7 +257,7 @@ function timeslots(date, dataArray, speciality, clinic, DoctorID) {
           // All values are valid, proceed with booking appointment
           if (selectedTimeslotElement) {
             console.log('Selected timeslot:', citizenID, email, phoneNumber, startTime, date, dataArray, speciality, clinic, DoctorID);
-            book_appointment(startTime, date, dataArray, speciality, clinic, phoneNumber, email, citizenID, DoctorID);
+            book_appointment(startTime, date, dataArray, speciality, clinic, DoctorID, phoneNumber, email, citizenID);
           } else {
             alert("Please select a timeslot before booking.");
           }
@@ -331,8 +331,9 @@ function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, sp
 
 
 
-function book_appointment(startTime, date, dataArray, speciality, clinic, DoctorID) {
+function book_appointment(startTime, date, dataArray, speciality, clinic, DoctorID, phoneNumber, email, citizenID) {
   if (selectedTimeslot !== null) {
+    console.log(DoctorID)
     $.ajax({
       url: "/EHR_system/ajax/appointementsAJAX.php",
       type: "POST",
@@ -341,7 +342,7 @@ function book_appointment(startTime, date, dataArray, speciality, clinic, Doctor
       success: function (response) {
 
         // Reload the current page
-        alert(response);
+        alert(response.message);
         location.reload();
         
       },

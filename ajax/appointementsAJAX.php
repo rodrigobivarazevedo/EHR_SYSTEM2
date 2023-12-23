@@ -115,7 +115,7 @@ if ($action === "action2") {
         echo json_encode(["error" => "Invalid TimeSlot or Doctor information"]);
         exit();
     }
-    echo $DoctorID;
+
     $result = $pdo->post_appointment_info($dbo, $UserID = 1, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
 
     // Check if the result is an error
@@ -123,7 +123,7 @@ if ($action === "action2") {
         // Handle the error, for example, send an appropriate response to the client
         echo json_encode($result);
     } else {
-        echo json_encode($result);
+        echo ($result);
     }
     exit();
 
