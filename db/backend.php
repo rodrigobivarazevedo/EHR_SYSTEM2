@@ -35,18 +35,33 @@ class Appointmentsinfo
         }
     }
 
-    public function check_available_timeslots($dbo, $ClinicID, $speciality)
+    public function check_available_timeslots($dbo, $ClinicID, $speciality, $DoctorID)
     {
         try {
-            // Use placeholders in the SQL query
-            $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID, ClinicID, DATE, StartTime FROM TimeSlots
-              WHERE ClinicID = :ClinicID
-              AND speciality = :speciality
-              AND AvailabilityStatus = 'Available'");
+            if ($DoctorID === "") {
+                // Use placeholders in the SQL query
+                $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID, ClinicID, DATE, StartTime FROM TimeSlots
+                WHERE ClinicID = :ClinicID
+                AND speciality = :speciality
+                AND AvailabilityStatus = 'Available'");
 
-            // Bind parameters
-            $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
-            $statement->bindParam(':speciality', $speciality	, PDO::PARAM_STR);
+                // Bind parameters
+                $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
+                $statement->bindParam(':speciality', $speciality	, PDO::PARAM_STR);
+            } else {
+                // Use placeholders in the SQL query
+                $statement = $dbo->conn->prepare("SELECT SlotID, DoctorID, ClinicID, DATE, StartTime FROM TimeSlots
+                WHERE ClinicID = :ClinicID
+                AND DoctorID = :DoctorID
+                AND speciality = :speciality
+                AND AvailabilityStatus = 'Available'");
+
+                // Bind parameters
+                $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT);
+                $statement->bindParam(':ClinicID', $ClinicID, PDO::PARAM_INT); 
+                $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
+
+            }
     
             // Execute statement
             $statement->execute();

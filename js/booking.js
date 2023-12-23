@@ -51,7 +51,7 @@ $(document).ready(
         url: "/EHR_system/ajax/calendarAJAX.php",
         type: "POST",
         dataType: "json",
-        data: { speciality: speciality, clinic: clinic },
+        data: { speciality: speciality, clinic: clinic, action: "booking" },
         success: function (response) {
             createCalendar(response, type_consultation, speciality, clinic);
         },
@@ -336,7 +336,7 @@ function book_appointment(startTime, date, dataArray, type_consultation, special
       url: "/EHR_system/ajax/appointementsAJAX.php",
       type: "POST",
       dataType: "json",
-      data: { speciality, clinic, type_consultation, date, startTime, action: "action1" },
+      data: { speciality: speciality, clinic: clinic, type_consultation : type_consultation, date: date, startTime: startTime, action: "action1" },
       success: function (response) {
 
         // Reload the current page
