@@ -135,7 +135,7 @@
                 </div>
                 <div class="form-group">
                     <label for="contactNumber">Contact Number</label>
-                    <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter your contact number" pattern="\d{10}" title="Enter your contact number">
+                    <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter your contact number">
                 </div>
 
                 <div class="form-group">

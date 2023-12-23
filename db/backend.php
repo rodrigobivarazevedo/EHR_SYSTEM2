@@ -327,8 +327,14 @@ class Users{
             // Return success message or any other information
             return json_encode(["message" => "Registration successful"]);
         } catch (PDOException $e) {
-            // Handle the exception (e.g., log, display an error message)
-            return json_encode(["error" => $e->getMessage()]);
+            // Check for unique constraint violation
+            if ($e->getCode() == 23000 && strpos($e->getMessage(), 'unique_username') !== false) {
+                // Return a custom error message for duplicate username
+                echo json_encode(["error" => "Username already exists. Please choose a different username."]);
+            } else {
+                // Handle other exceptions or return a generic error message
+                echo json_encode(["error" => "An error occurred during registration. Please try again."]);
+            }
         }
     }
     

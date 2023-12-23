@@ -28,6 +28,21 @@ function login() {
     });
 } 
 
+
+// Function to validate email
+function isValidEmail(email) {
+    // Use a regular expression for basic email validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Function to validate contact number
+function isValidContactNumber(contactNumber) {
+    // Use a regular expression for basic contact number validation
+    var contactNumberRegex = /^\d{10}$/;
+    return contactNumberRegex.test(contactNumber);
+}
+
     
 function register() {
     // Prevent multiple submissions
@@ -60,6 +75,20 @@ function register() {
         return;
     }
 
+    // Check if the email is valid
+    if (!isValidEmail(email)) {
+        alert("Invalid email address. Please enter a valid email.");
+        submitButton.disabled = false;  // Re-enable the submit button
+        return;
+    }
+
+    // Check if the contact number is valid
+    if (!isValidContactNumber(contactNumber)) {
+        alert("Invalid contact number. Please enter a valid number.");
+        submitButton.disabled = false;  // Re-enable the submit button
+        return;
+    }
+
     // Perform AJAX call for registration
     $.ajax({
         url: "/EHR_system/ajax/loginAJAX.php",  // Adjust the URL for registration
@@ -79,9 +108,16 @@ function register() {
                 alert("Registration successful! You can now log in.");
                 window.location.href = "login.php";  // Adjust the redirection URL
             } else {
-                // Handle unsuccessful registration (e.g., display an error message)
+                // Handle unsuccessful registration
                 console.log(response.error || response.message);
-                alert("Registration failed. Please check your information and try again.");
+
+                // Check for the specific error message
+                if (response.error && response.error.includes("Username already exists")) {
+                    alert("Username already exists. Please choose a different username.");
+                } else {
+                    // Display a generic error message for other cases
+                    alert("Registration failed. Please check your information and try again.");
+                }
             }
         },
         error: function (xhr) {
@@ -100,10 +136,6 @@ function register() {
 
 
 
-    
-    
-    
-    
     
     
     
