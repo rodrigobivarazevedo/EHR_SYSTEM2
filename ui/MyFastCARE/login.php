@@ -117,41 +117,44 @@
     </header>
 
     <div class="container mt-5">
-        <h1 class="mb-4 text-center">MyFastCARE</h1>
+    <h1 class="mb-4 text-center">MyFastCARE</h1>
 
-        <div class="card">
-            <div class="card-header">
-                User Login
-            </div>
-            <div class="card-body">
-                <form method="post" action="/login">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Login</button>
-                    <!-- Register button -->
-                    <a class="btn btn-primary mt-3" href="registration.html">Register Now</a>
-                </form>
-    
-                 <!-- Forgot Password Section -->
-                 <hr class="mt-4">
-                 <form method="post" action="/forgot-password">
-                     <h5 class="mb-3">Forgot Password?</h5>
-                     <p>Enter your email address to reset your password.</p>
-                     <div class="form-group">
-                         <label for="forgotEmail">Email Address</label>
-                         <input type="text" class="form-control" id="forgotEmail" name="forgotEmail" placeholder="Enter your email">
-                     </div>
-                     <button type="submit" class="btn btn-primary mt-3">Reset Password</button>
-                 </form>
-            </div>
+    <div class="card">
+        <div class="card-header">
+            User Login
+        </div>
+        <div class="card-body">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="UsernameOrEmail">Email or Username</label>
+                    <input type="text" class="form-control" id="UsernameOrEmail" name="UsernameOrEmail" placeholder="Enter your email or username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <button type="button" class="btn btn-primary mt-3" onclick="login()">Login</button>
+                <!-- Register button -->
+                <a class="btn btn-primary mt-3" href="registration.html">Register Now</a>
+            </form>
+
+            <!-- Forgot Password Section -->
+            <hr class="mt-4">
+            <form method="post" action="/forgot-password">
+                <h5 class="mb-3">Forgot Password?</h5>
+                <p>Enter your email address to reset your password.</p>
+                <div class="form-group">
+                    <label for="forgotEmail">Email Address</label>
+                    <input type="text" class="form-control" id="forgotEmail" name="forgotEmail" placeholder="Enter your email">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Reset Password</button>
+            </form>
         </div>
     </div>
+</div>
+
+
+
     
 
 
@@ -163,8 +166,9 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  
 
+<script src="/EHR_system/global/jquery.js"></script>
+<script src="/EHR_system/js/login.js"></script>
 </body>
 
 </html>     

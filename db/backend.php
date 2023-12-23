@@ -348,21 +348,28 @@ class Users{
             }
         }
 
-        public function login($dbo, $UsernameOrEmail, $Password) {
+        public function login($dbo, $UsernameOrEmail, $password) {
             try {
-                // Check if the username or email and password combination is valid
-                $loginStatement = $dbo->conn->prepare("SELECT * FROM users WHERE (Username = :UsernameOrEmail OR Email = :UsernameOrEmail) AND Password = :Password");
-                $loginStatement->bindParam(':UsernameOrEmail', $UsernameOrEmail, PDO::PARAM_STR);
-                $loginStatement->bindParam(':Password', $Password, PDO::PARAM_STR);
-                $loginStatement->execute();
-    
-                $user = $loginStatement->fetch(PDO::FETCH_ASSOC);
-    
+                // Check if the username or email exists
+                $checkUserStatement = $dbo->conn->prepare("SELECT * FROM users WHERE Username = :UsernameOrEmail OR Email = :UsernameOrEmail");
+                $checkUserStatement->bindParam(':UsernameOrEmail', $UsernameOrEmail, PDO::PARAM_STR);
+                $checkUserStatement->execute();
+        
+                $user = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
+        
                 if ($user) {
-                    // User authenticated successfully
-                    return json_encode(["message" => "Login successful", "user" => $user["UserID"], "username"=> $user["Username"]]);
+                    // User exists, now verify the password
+                    $hashed_password = $user['Password'];
+        
+                    if (password_verify($password, $hashed_password)) {
+                        // Password is correct, user authenticated successfully
+                        return json_encode(["message" => "Login successful", "user" => $user["UserID"], "username" => $user["Username"]]);
+                    } else {
+                        // Incorrect password
+                        return json_encode(["error" => "Invalid login credentials"]);
+                    }
                 } else {
-                    // Invalid username or email and password combination
+                    // User not found
                     return json_encode(["error" => "Invalid login credentials"]);
                 }
             } catch (PDOException $e) {
@@ -370,6 +377,7 @@ class Users{
                 return json_encode(["error" => $e->getMessage()]);
             }
         }
+        
 
 }
 ?>
