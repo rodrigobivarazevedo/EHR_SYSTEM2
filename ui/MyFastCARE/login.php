@@ -135,7 +135,7 @@
                 </div>
                 <button type="button" class="btn btn-primary mt-3" onclick="login()">Login</button>
                 <!-- Register button -->
-                <a class="btn btn-primary mt-3" href="registration.html">Register Now</a>
+                <a class="btn btn-primary mt-3" href="registration.php">Register Now</a>
             </form>
 
             <!-- Forgot Password Section -->

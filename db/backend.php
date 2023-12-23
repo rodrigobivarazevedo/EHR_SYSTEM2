@@ -305,27 +305,34 @@ class DoctorScheduler {
 class Users{
 
     public function create_user($dbo, $Username, $Password, $Email, $ContactNumber)
-        {
-            try {
-
-                $statement = $dbo->conn->prepare("INSERT INTO users (Username, Password, Email, ContactNumber) 
-                VALUES (:Username, :Password, :Email, :ContactNumber)");
-
-                $statement->bindParam(':Username', $Username, PDO::PARAM_STR);
-                $statement->bindParam(':Password', $Password, PDO::PARAM_STR);
-                $statement->bindParam(':Email', $Email, PDO::PARAM_STR);
-                $statement->bindParam(':ContactNumber', $ContactNumber, PDO::PARAM_STR);
-
-                // Execute statement
-                $statement->execute();
-
-                // Return success message or any other information
-                echo json_encode(["message" => "Account created successfully"]);
-            } catch (PDOException $e) {
-                // Handle the exception (e.g., log, display an error message)
-                return json_encode(["error" => $e->getMessage()]);
+    {
+        try {
+            // Check if any of the required values are null
+            if (empty($Username) || empty($Password) || empty($Email) || empty($ContactNumber)) {
+                return json_encode(["error" => "All required fields must be provided."]);
             }
+    
+            $hashed_password = password_hash($Password, PASSWORD_DEFAULT);
+            $statement = $dbo->conn->prepare("INSERT INTO users (Username, Password, Email, ContactNumber) 
+                VALUES (:Username, :hashed_password, :Email, :ContactNumber)");
+    
+            $statement->bindParam(':Username', $Username, PDO::PARAM_STR);
+            $statement->bindParam(':hashed_password', $hashed_password, PDO::PARAM_STR);
+            $statement->bindParam(':Email', $Email, PDO::PARAM_STR);
+            $statement->bindParam(':ContactNumber', $ContactNumber, PDO::PARAM_STR);
+    
+            // Execute statement
+            $statement->execute();
+    
+            // Return success message or any other information
+            return json_encode(["message" => "Registration successful"]);
+        } catch (PDOException $e) {
+            // Handle the exception (e.g., log, display an error message)
+            return json_encode(["error" => $e->getMessage()]);
         }
+    }
+    
+
 
         public function check_user($dbo, $Username, $Password, $Email, $ContactNumber) {
             try {
