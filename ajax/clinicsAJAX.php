@@ -18,7 +18,6 @@ if ($action === "get_all") {
         // Handle the error, for example, send an appropriate response to the client
         echo json_encode($result);
     } else {
-        
         echo $result;
     }
     exit();
@@ -35,7 +34,6 @@ if ($action === "get_clinics") {
         // Handle the error, for example, send an appropriate response to the client
         echo json_encode($result);
     } else {
-        
         echo $result;
     }
     exit();

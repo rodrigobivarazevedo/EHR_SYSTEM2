@@ -198,7 +198,7 @@ class Clinicsinfo
     {
         try {
             if ($speciality !== "") {
-                $statement = $dbo->conn->prepare("SELECT c.Name, c.location FROM clinics c
+                $statement = $dbo->conn->prepare("SELECT c.Name, c.Location FROM clinics c
                 JOIN clinicspecialities cs ON cs.ClinicID = c.ClinicID
                 JOIN specialities s ON s.SpecialityID = cs.SpecialityID
                 WHERE s.name = :speciality;"
