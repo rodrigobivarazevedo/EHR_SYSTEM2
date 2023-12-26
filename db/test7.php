@@ -6,12 +6,11 @@ $dbo = new Database();
 $pdo = new Users();
 
 $Username = "rodrigo";
-$Email = "rodrigobivarazevedo@gmail.com";
-$ContactNumber = "";
-$Password = "";
+$UsernameOrEmail = "rodrigobivarazevedo@gmail.com";
+
 
 // Call the method to post appointment information
-$returned_value = $pdo->check_user($dbo, $Username, $Password, $Email, $ContactNumber);
+$returned_value = $pdo->check_user($dbo, $UsernameOrEmail);
 
 echo $returned_value;
 ?>

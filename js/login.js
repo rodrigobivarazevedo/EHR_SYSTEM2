@@ -105,8 +105,8 @@ function register() {
             // Check if the registration was successful
             if (response.message === "Registration successful") {
                 // Redirect to a success page or handle as needed
-                alert("Registration successful! You can now log in.");
-                window.location.href = "login.php";  // Adjust the redirection URL
+                alert("Registration successful!");
+                window.location.href = "/EHR_system/ui/index.php";  // Adjust the redirection URL
             } else {
                 // Handle unsuccessful registration
                 console.log(response.error || response.message);

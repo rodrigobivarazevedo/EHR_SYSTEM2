@@ -3,7 +3,7 @@ function get_appointmentInfo(selectedSpeciality="", selectedConsultationType="",
         url: "/EHR_system/ajax/bookingAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { speciality: selectedSpeciality, consultationType: selectedConsultationType, action1: action },
+        data: { speciality: selectedSpeciality, consultationType: selectedConsultationType, action: action },
         beforeSend: function() {
             // Add any code to run before the request is sent (optional)
         },
@@ -228,50 +228,55 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
     createTimeslotGroup(afternoonTimeslots, 'Afternoon');
     
     // Create input fields for phone number, email, and citizen ID
-    const phoneNumberInput = createInputField('phoneNumberInput',"Phone Number");
     const emailInput = createInputField("emailInput", 'Email');
-    const citizenIdInput = createInputField("citizenIDInput",'Citizen ID');
-
+    
     // Append input fields to the modal body
-    modalContent.appendChild(phoneNumberInput);
     modalContent.appendChild(emailInput);
-    modalContent.appendChild(citizenIdInput);
-
-    document.getElementById('bookAppointmentBtn').addEventListener('click', () => {
-      // Retrieve form values
-      const phoneNumberElement = document.getElementById('phoneNumberInput');
-      const emailElement = document.getElementById('emailInput');
-      const citizenIDElement = document.getElementById('citizenIDInput');
-      const selectedTimeslotElement = document.querySelector('.timeslot.selected');
     
-      const startTime = selectedTimeslotElement ? selectedTimeslotElement.textContent.trim().split(' ')[0] : '';
-      const phoneNumber = phoneNumberElement ? phoneNumberElement.value.trim() : '';
-      const email = emailElement ? emailElement.value.trim() : '';
-      const citizenID = citizenIDElement ? citizenIDElement.value.trim() : '';
+    document.getElementById('bookAppointmentBtn').addEventListener('click', async () => {
+      try {
+        // Retrieve form values
+        const emailElement = document.getElementById('emailInput');
+        const selectedTimeslotElement = document.querySelector('.timeslot.selected');
+        const startTime = selectedTimeslotElement ? selectedTimeslotElement.textContent.trim().split(' ')[0] : '';
+        const email = emailElement ? emailElement.value.trim() : '';
+        
     
-      // Check if the required elements exist
-      if (citizenID !== '' && email !== '' && phoneNumber !== '' && startTime !== '') {
-        // Proceed with booking appointment or display an error message
-        if (validatePhoneNumber(phoneNumber) && validateEmail(email) && validateCitizenID(citizenID)) {
-          // All values are valid, proceed with booking appointment
-          if (selectedTimeslotElement) {
-            console.log('Selected timeslot:', citizenID, email, phoneNumber, startTime, date, dataArray, type_consultation, speciality, clinic);
-            book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic, phoneNumber, email, citizenID);
+        // Check if the required elements exist
+        if (email !== '' && startTime !== '') {
+          const UserID = await check_user(email);
+    
+          if (UserID) {
+            // Proceed with booking appointment or display an error message
+            if (validateEmail(email)) {
+              // All values are valid, proceed with booking appointment
+              if (selectedTimeslotElement) {
+                console.log('Selected timeslot:',  email,startTime, date, dataArray, type_consultation, speciality, clinic, UserID);
+                book_appointment(startTime, date, type_consultation, speciality, clinic, UserID);
+              } else {
+                alert("Please select a timeslot before booking.");
+              }
+            } else {
+              // Display an error message or handle validation errors
+              alert("Invalid input. Please check your information.");
+            }
           } else {
-            alert("Please select a timeslot before booking.");
+            alert("You are not registered. Please create an account before booking.");
+            // Give a direction to the registration.php page
+            window.location.href = "/EHR_system/ui/MyFastCARE/registration.php";
           }
         } else {
-          // Display an error message or handle validation errors
-          alert("Invalid input. Please check your information.");
+          alert("Please fill in all the required information before booking.");
         }
-      } else {
-        // Handle the case where one or more form elements are empty
-        alert("Please fill in all the information before booking.");
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred while checking user registration. Please try again.");
       }
     });
     
+        
     
-
+    
   }
 }
 
@@ -288,25 +293,6 @@ function createInputField(input_name, placeholder) {
 function validateEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
-}
-
-function validatePhoneNumber(phoneNumber) {
-  const phoneRegex = /^\d{10}$/; // Assumes a 10-digit phone number
-  return phoneRegex.test(phoneNumber);
-}
-
-function validateCitizenID(citizenID) {
-  // Check if the personalausweisNumber is not empty
-  if (!citizenID.trim()) {
-    return false;
-  }
-
-  // German Personalausweis number format: 10 digits
-  // Additional validation rules may apply
-  if (!/^\d{10}$/.test(citizenID)) {
-    return false;
-  }
-  return true;
 }
 
 
@@ -328,15 +314,35 @@ function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, ty
 
 }
 
+// Return a promise from the check_user function
+function check_user(email) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "/EHR_system/ajax/loginAJAX.php",
+      type: "POST",
+      dataType: "json",
+      data: { UsernameOrEmail: email, action: "check_user" },
+      success: function (response) {
+        // Resolve the promise with the response
+        resolve(response.UserID);
+      },
+      error: function (xhr) {
+        console.log(xhr.responseText);
+        // Reject the promise with the error message
+        reject("AJAX request failed. Check the console for details.");
+      }
+    });
+  });
+}
 
 
-function book_appointment(startTime, date, dataArray, type_consultation, speciality, clinic) {
+function book_appointment(startTime, date, type_consultation, speciality, clinic, UserID) {
   if (selectedTimeslot !== null) {
     $.ajax({
       url: "/EHR_system/ajax/appointementsAJAX.php",
       type: "POST",
       dataType: "json",
-      data: { speciality: speciality, clinic: clinic, type_consultation : type_consultation, date: date, startTime: startTime, action: "action1" },
+      data: { UserID: UserID , speciality: speciality, clinic: clinic, type_consultation : type_consultation, date: date, startTime: startTime, action: "action1" },
       success: function (response) {
 
         // Reload the current page

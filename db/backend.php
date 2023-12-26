@@ -355,20 +355,16 @@ class Users{
     
 
 
-        public function check_user($dbo, $Username, $Password, $Email, $ContactNumber) {
+        public function check_user($dbo, $UsernameOrEmail) {
             try {
-                // Check if the username or email already exists
-                $checkStatement = $dbo->conn->prepare("SELECT * FROM users WHERE Username = :Username OR Email = :Email");
-                $checkStatement->bindParam(':Username', $Username, PDO::PARAM_STR);
-                $checkStatement->bindParam(':Email', $Email, PDO::PARAM_STR);
-                $checkStatement->execute();
-    
-                $existingUser = $checkStatement->fetch(PDO::FETCH_ASSOC);
-    
-                if ($existingUser) {
-                    // User with the same username or email already exists
-                    return json_encode(["error" => "Username or email already exists please login"]);
-                } 
+                // Check if the username or email exists
+                $checkUserStatement = $dbo->conn->prepare("SELECT UserID FROM users WHERE Username = :UsernameOrEmail OR Email = :UsernameOrEmail");
+                $checkUserStatement->bindParam(':UsernameOrEmail', $UsernameOrEmail, PDO::PARAM_STR);
+                $checkUserStatement->execute();
+        
+                $user = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
+        
+                return json_encode($user);
 
             } catch (PDOException $e) {
                 // Handle the exception (e.g., log, display an error message)

@@ -6,7 +6,7 @@ include_once $root . "/EHR_system/db/backend.php";
 
 $speciality = $_POST["speciality"];
 $consultationType = $_POST["consultationType"];
-$action = $_POST["action1"];
+$action = $_POST["action"];
 
 if ($action === "get_all") {
     $dbo = new Database();

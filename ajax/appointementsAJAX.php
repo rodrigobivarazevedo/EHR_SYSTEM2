@@ -15,6 +15,7 @@ if ($action === "action1") {
     $startTime = $_POST["startTime"];
     $date = $_POST["date"];
     $clinic = $_POST["clinic"];
+    $UserID = $_POST["UserID"];
 
     $dbo = new Database();
     $pdo = new Appointmentsinfo();
@@ -56,7 +57,7 @@ if ($action === "action1") {
         exit();
     }
 
-    $result = $pdo->post_appointment_info($dbo, $UserID = 1, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
+    $result = $pdo->post_appointment_info($dbo, $UserID, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -76,6 +77,7 @@ if ($action === "action2") {
     $startTime = $_POST["startTime"];
     $date = $_POST["date"];
     $clinic = $_POST["clinic"];
+    $UserID = $_POST["UserID"];
 
     $dbo = new Database();
     $pdo = new Appointmentsinfo();
@@ -116,7 +118,7 @@ if ($action === "action2") {
         exit();
     }
 
-    $result = $pdo->post_appointment_info($dbo, $UserID = 1, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
+    $result = $pdo->post_appointment_info($dbo, $UserID, $DoctorID, $clinicID, $TimeSlotID, $consultationType, $speciality);
 
     // Check if the result is an error
     if (isset($result["error"])) {

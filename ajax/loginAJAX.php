@@ -53,4 +53,24 @@ if ($action === "register") {
     exit();
 }
 
+if ($action === "check_user") {
+
+    $UsernameOrEmail = $_POST["UsernameOrEmail"];
+    $action = $_POST["action"];
+
+    $dbo = new Database();
+    $pdo = new Users();
+
+    $result = $pdo->check_user($dbo, $UsernameOrEmail);
+
+    // Check if the result is an error
+    if (isset($result["error"])) {
+        // Handle the error, for example, send an appropriate response to the client
+        echo ($result);
+    } else {
+        echo $result;
+    }
+    exit();
+}
+
 ?>
