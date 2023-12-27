@@ -1,22 +1,23 @@
 $(document).ready(
     function() {
+    
+    // Use AJAX to fetch user data
     loadAppointments();
     loadPrescriptions();  
-    loadMessages();
+    //loadMessages();
   
   });
-
 
 
 // Function to fetch and display appointments
 function loadAppointments() {
     $.ajax({
-        url: '/your-php-endpoint-for-appointments.php',
-        type: 'GET',
+        url: '/EHR_system/ajax/patient_portalAJAX.php',
+        type: 'POST',
         dataType: 'json',
-        success: function (appointments) {
-            const appointmentsTab = document.getElementById('appointmentsTab');
-            renderData(appointments, appointmentsTab);
+        data: {action: "appointments"},
+        success: function (appointmentsData) {
+            renderAppointments(appointmentsData);
         },
         error: function (error) {
             console.error('Error fetching appointments:', error);
@@ -27,38 +28,24 @@ function loadAppointments() {
 // Function to fetch and display prescriptions
 function loadPrescriptions() {
     $.ajax({
-        url: '/your-php-endpoint-for-prescriptions.php',
-        type: 'GET',
+        url: '/EHR_system/ajax/patient_portalAJAX.php',
+        type: 'POST',
         dataType: 'json',
-        success: function (prescriptions) {
-            const medicationTab = document.getElementById('medicationTab');
-            renderData(prescriptions, medicationTab);
+        data: {action: "medications"},
+        success: function (medicationsData) {
+            renderMedications(medicationsData);
         },
         error: function (error) {
-            console.error('Error fetching prescriptions:', error);
+            console.error('Error fetching appointments:', error);
         }
     });
 }
 
-// Function to fetch and display messages
-function loadMessages() {
-    $.ajax({
-        url: '/your-php-endpoint-for-messages.php',
-        type: 'GET',
-        dataType: 'json',
-        success: function (messages) {
-            const messagesTab = document.getElementById('messagesTab');
-            renderData(messages, messagesTab);
-        },
-        error: function (error) {
-            console.error('Error fetching messages:', error);
-        }
-    });
-}
 
-// Helper function to render data in a tab
-function renderData(data, tabElement) {
-    const listGroup = tabElement.querySelector('.list-group');
+// Helper functions to render data in a tab
+function renderAppointments(data) {
+    const appointmentsTab = document.getElementById('appointmentsTab');
+    const listGroup = appointmentsTab.querySelector('.list-group');
     listGroup.innerHTML = '';
 
     data.forEach(item => {
@@ -68,16 +55,53 @@ function renderData(data, tabElement) {
         const contentDiv = document.createElement('div');
 
         const dateParagraph = document.createElement('p');
-        dateParagraph.textContent = item.date; // Replace with the actual property name
+        dateParagraph.textContent = `Date: ${item.DATE}`; // Update property name
         contentDiv.appendChild(dateParagraph);
 
         const titleHeading = document.createElement('h6');
-        titleHeading.textContent = item.title; // Replace with the actual property name
+        titleHeading.textContent = `Appointment Title: ${item.ConsultationType}`; // Update property name
         contentDiv.appendChild(titleHeading);
 
-        const hospitalParagraph = document.createElement('p');
-        hospitalParagraph.textContent = item.hospital; // Replace with the actual property name
-        contentDiv.appendChild(hospitalParagraph);
+        const doctorParagraph = document.createElement('p');
+        doctorParagraph.textContent = `Doctor: ${item.FirstName} ${item.LastName}`; // Update property names
+        contentDiv.appendChild(doctorParagraph);
+
+        listItem.appendChild(contentDiv);
+        listGroup.appendChild(listItem);
+    });
+}
+
+
+function renderMedications(data) {
+    const medicationTab = document.getElementById('medicationTab');
+    const listGroup = medicationTab.querySelector('.list-group');
+    listGroup.innerHTML = '';
+
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+
+        const contentDiv = document.createElement('div');
+
+        const nameParagraph = document.createElement('p');
+        nameParagraph.textContent = `Medication: ${item.MedicationName}`;
+        contentDiv.appendChild(nameParagraph);
+
+        const dosageParagraph = document.createElement('p');
+        dosageParagraph.textContent = `Dosage: ${item.Dosage}`;
+        contentDiv.appendChild(dosageParagraph);
+
+        const frequencyParagraph = document.createElement('p');
+        frequencyParagraph.textContent = `Frequency: ${item.Frequency}`;
+        contentDiv.appendChild(frequencyParagraph);
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = `Prescription Date: ${item.PrescriptionDate}`;
+        contentDiv.appendChild(dateParagraph);
+
+        const instructionsParagraph = document.createElement('p');
+        instructionsParagraph.textContent = `Instructions: ${item.Instructions}`;
+        contentDiv.appendChild(instructionsParagraph);
 
         listItem.appendChild(contentDiv);
         listGroup.appendChild(listItem);

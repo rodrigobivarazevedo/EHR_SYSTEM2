@@ -1,3 +1,4 @@
+
 function login() {
     var UsernameOrEmail = document.getElementById("UsernameOrEmail").value;
     var password = document.getElementById("password").value;
@@ -9,9 +10,10 @@ function login() {
         data: { UsernameOrEmail: UsernameOrEmail, password: password, action: "login"},
         success: function(response) {
             // Check if the login was successful
-            if ("user" in response) {
-                // Redirect to patient_portal.php
-                window.location.href = "patient_portal.php";
+            if (response.user && response.message ==="Login successful") {
+                // Redirect to patient_portal.php with UserID as a query parameter
+                const redirectURL = `/EHR_system/ui/MyFastCARE/patient_portal.php`;
+                window.location.href = redirectURL;
             } else {
                 // Handle unsuccessful login (e.g., display an error message)
                 console.log(response.error || response.message);

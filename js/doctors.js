@@ -4,9 +4,6 @@ function get_doctorsInfo(selectedspeciality="", selectedclinic="",action="get_al
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
         data: { speciality: selectedspeciality, clinic: selectedclinic, action1: action },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
         success: function(response) {
             console.log(response);
             updateCardUI(response);

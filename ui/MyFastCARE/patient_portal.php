@@ -75,7 +75,7 @@
      <!-- Second Navbar for Tabs -->
      <ul class="nav nav-tabs mt-3" id="myTabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#appointmentsTab">Next Appointments</a>
+            <a class="nav-link active" data-toggle="tab" href="#appointmentsTab">Appointments</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#medicationTab">Medication</a>
@@ -88,96 +88,34 @@
 
 
 
-<div class="container mt-3">
+    <div class="container mt-3">
     <div class="tab-content">
         <!-- Appointments Tab Content -->
         <div id="appointmentsTab" class="tab-pane fade show active">
             <h2>Appointments</h2>
-        </br>
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: January 15, 2024</p>
-                        <h6>Appointment Title: Checkup</h6>
-                        <p>Doctor: Dr. Smith</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: February 5, 2024</p>
-                        <h6>Appointment Title: Follow-up</h6>
-                        <p>Doctor: Dr. Johnson</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: February 5, 2024</p>
-                        <h6>Appointment Title: Follow-up</h6>
-                        <p>Doctor: Dr. Johnson</p>
-                    </div>
-                </li>
+                <!-- Data will be populated here dynamically -->
             </ul>
         </div>
-        
+
         <!-- Documentation Tab Content -->
         <div id="medicationTab" class="tab-pane fade">
             <h2>Prescriptions</h2>
-        </br>
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div>
-                        <p>January 15, 2024</p>
-                        <h6>document Title</h6>
-                        <p>hospital name</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>February 5, 2024</p>
-                        <h6>Document Title</h6>
-                        <p>Hospital name</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>February 5, 2024</p>
-                        <h6>Document Title</h6>
-                        <p>Hospital name</p>
-                    </div>
-                </li>
+                <!-- Data will be populated here dynamically -->
             </ul>
         </div>
 
         <!-- Tests/Exams Tab Content -->
         <div id="messagesTab" class="tab-pane fade">
             <h2>Messages</h2>
-        </br>
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div>
-                        <p>January 15, 2024</p>
-                        <h6>Result Title</h6>
-                        <p>Hospital name</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>February 5, 2024</p>
-                        <h6>Exam Title</h6>
-                        <p>Hospital name</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>February 5, 2024</p>
-                        <h6>Exam Title</h6>
-                        <p>Hospital name</p>
-                    </div>
-                </li>
+                <!-- Data will be populated here dynamically -->
             </ul>
         </div>
     </div>
 </div>
+
 
         
       
@@ -247,7 +185,10 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="/EHR_system/js/patient_portal.js"></script>
+  <script src="/EHR_system/global/jquery.js"></script>
   
 </body>
 
 </html>
+
+

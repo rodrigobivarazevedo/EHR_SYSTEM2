@@ -108,7 +108,7 @@ class Appointmentsinfo
         }
     }
 
-        public function get_next_appointments($dbo, $UserID)
+        public function get_appointments($dbo, $UserID)
     {
         try {
             // Use placeholders in the SQL query
@@ -433,4 +433,33 @@ class Users{
         
 
 }
+
+class History{
+
+        public function medication($dbo, $UserID)
+    {
+        try {
+            // Check if the username or email exists
+            $statement = $dbo->conn->prepare("SELECT * FROM medicationprescriptions WHERE UserID = :UserID");
+            $statement->bindParam(':UserID', $UserID, PDO::PARAM_STR);
+            $statement->execute();
+
+            $medications = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($medications) {
+                return json_encode($medications);
+            } else {
+                // No medications found
+                return json_encode(["message" => "No medications found for the user"]);
+            }
+        } catch (PDOException $e) {
+            // Handle the exception (e.g., log, display an error message)
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+
+}
+
+
 ?>

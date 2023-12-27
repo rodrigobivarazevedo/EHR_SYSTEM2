@@ -104,3 +104,20 @@ CREATE TABLE DoctorClinic (
     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
     FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID)
 );
+
+
+CREATE TABLE MedicationPrescriptions (
+    PrescriptionID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    UserID,
+    DoctorID INT,
+    MedicationName VARCHAR(255),
+    Dosage VARCHAR(50),
+    Frequency VARCHAR(50),
+    PrescriptionDate DATE,
+    Instructions TEXT,
+    Duration INT,
+    FOREIGN KEY (UserID) REFERENCES users(UserID),
+    FOREIGN KEY (PatientID) REFERENCES patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);

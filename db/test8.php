@@ -6,9 +6,9 @@ $dbo = new Database();
 $pdo = new Users();
 
 $Username = "";
-$UsernameOrEmail = "kellykhalil048@gmail.com";
+$UsernameOrEmail = "rodrigo";
 $ContactNumber = "";
-$Password = "$2y$10$4I9Aj29KJ4Bw5HlnDPWZwuqyrkl.lHpKKZb2qZdDs0p.FXkDRDrgC";
+$Password = "123";
 
 // Call the method to post appointment information
 $returned_value = $pdo->login($dbo, $UsernameOrEmail, $Password);

@@ -73,10 +73,7 @@
      <!-- Second Navbar for Tabs -->
      <ul class="nav nav-tabs mt-3" id="myTabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#appointmentsTab">Past Appointments</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#documentationTab">Documents</a>
+            <a class="nav-link active" data-toggle="tab" href="#documentationTab">Documents</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#testsTab">Tests/Exams</a>
@@ -88,37 +85,8 @@
 
 <div class="container mt-3">
     <div class="tab-content">
-        <!-- Appointments Tab Content -->
-        <div id="appointmentsTab" class="tab-pane fade show active">
-            <h2>Appointments</h2>
-        </br>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: January 15, 2024</p>
-                        <h6>Appointment Title: Checkup</h6>
-                        <p>Doctor: Dr. Smith</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: February 5, 2024</p>
-                        <h6>Appointment Title: Follow-up</h6>
-                        <p>Doctor: Dr. Johnson</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <p>Date: February 5, 2024</p>
-                        <h6>Appointment Title: Follow-up</h6>
-                        <p>Doctor: Dr. Johnson</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        
         <!-- Documentation Tab Content -->
-        <div id="documentationTab" class="tab-pane fade">
+        <div id="documentationTab" class="tab-pane fade show active">
             <h2>Medical History</h2>
         </br>
             <ul class="list-group">

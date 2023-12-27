@@ -1,5 +1,5 @@
 <?php
-
+session_start(); // Start the session
 $root = $_SERVER["DOCUMENT_ROOT"];
 include_once $root . "/EHR_system/db/database.php";
 include_once $root . "/EHR_system/db/backend.php";
@@ -7,6 +7,7 @@ include_once $root . "/EHR_system/db/backend.php";
 $action = $_POST["action"];
 
 if ($action === "login") {
+    
     $UsernameOrEmail = isset($_POST["UsernameOrEmail"]) ? $_POST["UsernameOrEmail"] : null;
     $password = isset($_POST["password"]) ? $_POST["password"] : null;
 
@@ -19,11 +20,21 @@ if ($action === "login") {
     if (isset($result["error"])) {
         // Handle the error, for example, send an appropriate response to the client
         echo json_encode($result);
-    } else {
-        echo $result;
+        exit();
     }
+
+    // Check if the login was successful
+    if (isset($result["user"])) {
+        // Store user information in session variables
+        $_SESSION["UserID"] = $result["user"]["UserID"];
+        $_SESSION["Username"] = $result["user"]["Username"];
+    }
+
+    // Respond to the client with the result
+    echo json_encode($result);
     exit();
 }
+
 
 if ($action === "register") {
     $dbo = new Database();
