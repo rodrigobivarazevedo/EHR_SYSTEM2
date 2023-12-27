@@ -253,8 +253,8 @@ function timeslots(date, dataArray, speciality, clinic, DoctorID) {
             if (validateEmail(email)) {
               // All values are valid, proceed with booking appointment
               if (selectedTimeslotElement) {
-                console.log('Selected timeslot:',  email,startTime, date, dataArray, type_consultation, speciality, clinic, UserID);
-                book_appointment(startTime, date, type_consultation, speciality, clinic, UserID);
+                console.log('Selected timeslot:',  email,startTime, date, dataArray, speciality, clinic, UserID,DoctorID);
+                book_appointment(startTime, date, speciality, clinic, DoctorID, UserID);
               } else {
                 alert("Please select a timeslot before booking.");
               }

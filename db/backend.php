@@ -108,6 +108,35 @@ class Appointmentsinfo
         }
     }
 
+        public function get_next_appointments($dbo, $UserID)
+    {
+        try {
+            // Use placeholders in the SQL query
+            $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, d.FirstName, d.LastName, c.Name
+            FROM appointments a
+            JOIN timeslots t ON a.TimeSlotID = t.SlotID
+            JOIN doctors d ON a.DoctorID = d.DoctorID
+            JOIN clinics c ON a.ClinicID = c.ClinicID
+            WHERE a.UserID = :UserID
+            ");
+
+            // Bind parameters
+            $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+            // Execute statement
+            $statement->execute();
+            // Fetch results
+            $appointments = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            echo json_encode($appointments);
+
+            
+        } catch (PDOException $e) {
+            // Handle exceptions, log errors, or return an error message
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+
 
 
 }
