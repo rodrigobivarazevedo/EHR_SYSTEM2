@@ -1,10 +1,11 @@
 <?php
-/*session_start();
+session_start();
 if (!isset($_SESSION["UserID"])) {
-     Handle the case where the user is not logged in
-    echo json_encode(["error" => "User not logged in"]);
+     //Handle the case where the user is not logged in
+     header('Location: ../ui/MyFastCARE/login.php');
     exit();
-}*/
+}
+
 $root = $_SERVER["DOCUMENT_ROOT"];
 include_once $root . "/EHR_system/db/database.php";
 include_once $root . "/EHR_system/db/backend.php";
@@ -12,10 +13,9 @@ include_once $root . "/EHR_system/db/backend.php";
 $action = $_POST["action"];
 
 if ($action === "appointments") {
-    //$UserID = $_SESSION["UserID"];
+    $UserID = $_SESSION["UserID"];
     $dbo = new Database();
     $pdo = new Appointmentsinfo();
-    $UserID = 3;
     $result = $pdo->get_appointments($dbo, $UserID);
 
     // Check if the result is an error
@@ -29,8 +29,8 @@ if ($action === "appointments") {
 }
 
 if ($action === "medications") {
-    //$UserID = $_SESSION["UserID"];
-    $UserID = 3;
+    $UserID = $_SESSION["UserID"];
+    
     $dbo = new Database();
     $pdo = new History();
 

@@ -416,7 +416,7 @@ class Users{
         
                     if (password_verify($password, $hashed_password)) {
                         // Password is correct, user authenticated successfully
-                        return json_encode(["message" => "Login successful", "user" => $user["UserID"], "username" => $user["Username"]]);
+                        return json_encode(["message" => "Login successful", "UserID" => $user["UserID"], "username" => $user["Username"]]);
                     } else {
                         // Incorrect password
                         return json_encode(["error" => "Invalid login credentials"]);

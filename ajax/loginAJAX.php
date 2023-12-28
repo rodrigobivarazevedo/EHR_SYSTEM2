@@ -19,19 +19,22 @@ if ($action === "login") {
     // Check if the result is an error
     if (isset($result["error"])) {
         // Handle the error, for example, send an appropriate response to the client
-        echo json_encode($result);
+        echo $result;
         exit();
     }
 
+    $data = json_decode($result, true);
+
     // Check if the login was successful
-    if (isset($result["user"])) {
+    if (isset($data['UserID'])) {
         // Store user information in session variables
-        $_SESSION["UserID"] = $result["user"]["UserID"];
-        $_SESSION["Username"] = $result["user"]["Username"];
+        $_SESSION["UserID"] = $data['UserID'];
+        $_SESSION["Username"] = $data["username"];
+
     }
 
-    // Respond to the client with the result
-    echo json_encode($result);
+    echo $result;
+
     exit();
 }
 
