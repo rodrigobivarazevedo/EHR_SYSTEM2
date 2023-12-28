@@ -386,6 +386,7 @@ class Users{
 
         public function check_user($dbo, $UsernameOrEmail) {
             try {
+                
                 // Check if the username or email exists
                 $checkUserStatement = $dbo->conn->prepare("SELECT UserID FROM users WHERE Username = :UsernameOrEmail OR Email = :UsernameOrEmail");
                 $checkUserStatement->bindParam(':UsernameOrEmail', $UsernameOrEmail, PDO::PARAM_STR);

@@ -70,6 +70,7 @@ if ($action === "register") {
 if ($action === "check_user") {
 
     $UsernameOrEmail = $_POST["UsernameOrEmail"];
+    $password = $_POST["password"];
     $action = $_POST["action"];
 
     $dbo = new Database();

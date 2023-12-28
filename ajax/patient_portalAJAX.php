@@ -1,10 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION["UserID"])) {
-     //Handle the case where the user is not logged in
-     header('Location: ../ui/MyFastCARE/login.php');
-    exit();
-}
 
 $root = $_SERVER["DOCUMENT_ROOT"];
 include_once $root . "/EHR_system/db/database.php";

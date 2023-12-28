@@ -227,11 +227,13 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
     createTimeslotGroup(morningTimeslots, 'Morning');
     createTimeslotGroup(afternoonTimeslots, 'Afternoon');
     
-    // Create input fields for phone number, email, and citizen ID
-    const emailInput = createInputField("emailInput", 'Email');
+    // Create input fields for  email, and password
+    const emailInput = createInputField("emailInput", 'Email',"text");
+    const passwordInput = createInputField("passwordInput", 'password',"password");
     
     // Append input fields to the modal body
     modalContent.appendChild(emailInput);
+    modalContent.appendChild(passwordInput);
     
     document.getElementById('bookAppointmentBtn').addEventListener('click', async () => {
       try {
@@ -240,13 +242,15 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
         const selectedTimeslotElement = document.querySelector('.timeslot.selected');
         const startTime = selectedTimeslotElement ? selectedTimeslotElement.textContent.trim().split(' ')[0] : '';
         const email = emailElement ? emailElement.value.trim() : '';
+        const password = document.getElementById("passwordInput").value;
         
     
         // Check if the required elements exist
-        if (email !== '' && startTime !== '') {
-          const UserID = await check_user(email);
-    
-          if (UserID) {
+        if (email !== '' && startTime !== '' && password !== '') {
+          const response = await check_user(email, password);
+          UserID = response.UserID;
+
+          if (UserID && response.message ==="Login successful") {
             // Proceed with booking appointment or display an error message
             if (validateEmail(email)) {
               // All values are valid, proceed with booking appointment
@@ -261,9 +265,9 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
               alert("Invalid input. Please check your information.");
             }
           } else {
-            alert("You are not registered. Please create an account before booking.");
+            alert("Invalid credentials. If not registered please create account");
             // Give a direction to the registration.php page
-            window.location.href = "/EHR_system/ui/MyFastCARE/registration.php";
+            //window.location.href = "/EHR_system/ui/MyFastCARE/registration.php";
           }
         } else {
           alert("Please fill in all the required information before booking.");
@@ -281,10 +285,10 @@ function timeslots(date, dataArray, type_consultation, speciality, clinic) {
 }
 
 // Helper function to create input fields
-function createInputField(input_name, placeholder) {
+function createInputField(input_name, placeholder,type) {
   const form = document.createElement('input');
   form.id = input_name;
-  form.type = 'text';
+  form.type = type;
   form.placeholder = placeholder;
   form.classList.add('form-control', 'mb-3');
   return form;
@@ -315,16 +319,16 @@ function handleTimeslotSelection(timeslotElement, startTime, date, dataArray, ty
 }
 
 // Return a promise from the check_user function
-function check_user(email) {
+function check_user(email,password) {
   return new Promise((resolve, reject) => {
     $.ajax({
       url: "/EHR_system/ajax/loginAJAX.php",
       type: "POST",
       dataType: "json",
-      data: { UsernameOrEmail: email, action: "check_user" },
+      data: { UsernameOrEmail: email, password: password, action: "login" },
       success: function (response) {
         // Resolve the promise with the response
-        resolve(response.UserID);
+        resolve(response);
       },
       error: function (xhr) {
         console.log(xhr.responseText);
