@@ -19,6 +19,7 @@ function sendMessage() {
     // Add your logic to send the message here
     // For example, you can use AJAX to send the data to the server
     const recipient = $('#Doctor_name').val();
+    console.log(recipient)
     const messageContent = $('#messageContent').val();
 
     $.ajax({
@@ -27,14 +28,18 @@ function sendMessage() {
         dataType: 'json',
         data: {Doctor_name: recipient, content: messageContent, action: "send_message"},
         success: function (sendMessagesData) {
-            alert(sendMessagesData);
+            if(sendMessagesData.success){
+                alert(sendMessagesData.success);
+                // Close the modal after sending the message
+                $('#messageModal').modal('hide');
+            } else if (sendMessagesData.error) {
+                alert(sendMessagesData.error);
+            }
         },
         error: function (error) {
             console.error('Error fetching messages:', error);
         }
     });
-    // Close the modal after sending the message
-    $('#messageModal').modal('hide');
 }
 
 // Function to fetch and display messages

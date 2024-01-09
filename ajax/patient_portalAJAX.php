@@ -61,13 +61,44 @@ if ($action === "get_messages") {
 
 if ($action === "send_message") {
     $UserID = $_SESSION["UserID"];
-    $doctors_name = $_SESSION["Doctor_name"];
-    $content = $_SESSION["content"];
+    $doctors_name = $_POST["Doctor_name"];
+    $content = $_POST["content"];
 
     $dbo = new Database();
     $pdo = new Messages();
 
-    $result = $pdo->send_message($dbo, $UserID, $receiverID, $content); // Add semicolon here
+    
+    $nameArray = explode(' ', $doctors_name);
+
+    // Check if the array has at least two elements
+    if (count($nameArray) >= 2) {
+        // Now $nameArray will contain two elements, the first and last name
+        $FirstName = $nameArray[0];
+        $LastName = $nameArray[1];
+
+        // Rest of your code here
+    } else {
+        // Handle the case where the name is not in the expected format
+        echo json_encode(["error" => "Invalid name format"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+    $statement = $dbo->conn->prepare(
+        "SELECT UserID FROM doctors WHERE FirstName = :FirstName AND LastName = :LastName"
+    );
+    $statement->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
+    $statement->bindParam(':LastName', $LastName, PDO::PARAM_STR);
+    $statement->execute();
+
+    $Doctor_User_ID = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($Doctor_User_ID)) {
+        echo json_encode(["error" => "Doctor not found"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+
+    $result = $pdo->send_message($dbo, $UserID, $Doctor_User_ID, $content);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -78,6 +109,7 @@ if ($action === "send_message") {
     }
     exit();
 }
+
 
 
 ?>

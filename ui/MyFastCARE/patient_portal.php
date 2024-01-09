@@ -130,7 +130,7 @@
         <form id="sendMessageForm">
           <div class="mb-3">
             <label for="recipientId" class="form-label">Recipient:</label>
-            <input type="text" class="form-control" id="Doctor_name" placeholder="Your Doctor's Name..." required>
+            <input type="text" class="form-control" id="Doctor_name" placeholder="Doctor first and last Name..." required>
           </div>
           <div class="mb-3">
             <label for="messageContent" class="form-label">Message:</label>

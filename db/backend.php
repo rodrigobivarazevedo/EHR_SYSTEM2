@@ -487,7 +487,7 @@ class Messages
             $result = $statement->execute();
 
             if ($result) {
-                return json_encode(["message" => "Message sent successfully to {$receiver['Username']}"]);
+                return json_encode(["success" => "Message sent successfully to {$receiver['Username']}"]);
             } else {
                 return json_encode(["error" => "Failed to send the message"]);
             }
