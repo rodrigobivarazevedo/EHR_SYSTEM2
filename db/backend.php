@@ -516,7 +516,7 @@ class Messages
             }
 
             $statement = $dbo->conn->prepare(
-                "SELECT m.Content, d.FirstName, d.LastName FROM Messages m JOIN Doctors d ON m.SenderID = d.DoctorID WHERE m.ReceiverID = :userID"
+                "SELECT m.Content, m.Timestamp, d.FirstName, d.LastName FROM Messages m JOIN Doctors d ON m.SenderID = d.DoctorID WHERE m.ReceiverID = :userID"
             );
             $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
             $statement->execute();

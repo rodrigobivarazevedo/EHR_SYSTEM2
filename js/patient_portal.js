@@ -19,7 +19,6 @@ function sendMessage() {
     // Add your logic to send the message here
     // For example, you can use AJAX to send the data to the server
     const recipient = $('#Doctor_name').val();
-    console.log(recipient)
     const messageContent = $('#messageContent').val();
 
     $.ajax({
@@ -50,6 +49,7 @@ function loadMessages() {
         dataType: 'json',
         data: {action: "get_messages"},
         success: function (messagesData) {
+            console.log(messagesData)
             renderMessages(messagesData);
         },
         error: function (error) {
@@ -168,6 +168,10 @@ function renderMessages(data) {
         listItem.classList.add('list-group-item');
 
         const contentDiv = document.createElement('div');
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = `Date: ${item.Timestamp}`; // 
+        contentDiv.appendChild(dateParagraph);
 
         const contentParagraph = document.createElement('p');
         contentParagraph.textContent = `Content: ${item.Content}`;
