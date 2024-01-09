@@ -121,3 +121,15 @@ CREATE TABLE MedicationPrescriptions (
     FOREIGN KEY (PatientID) REFERENCES patients(PatientID),
     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
 );
+
+
+CREATE TABLE Messages (
+    MessageID INT AUTO_INCREMENT PRIMARY KEY,
+    SenderID INT,
+    ReceiverID INT,
+    Content TEXT,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IsRead BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (SenderID) REFERENCES Users(UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES Users(UserID)
+);

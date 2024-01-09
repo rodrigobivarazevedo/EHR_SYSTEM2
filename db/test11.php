@@ -10,7 +10,7 @@ $pdo = new Messages();
 
 
 // Assuming you have the sender ID, receiver ID, and message content
-$userID = 3;
+$userID = 19;
 
 
 $response = $pdo->get_messages($dbo, $userID);
