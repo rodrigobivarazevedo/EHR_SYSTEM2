@@ -73,217 +73,99 @@
 
     <main>
 
-        <section class="py-5 text-center container">
-          <div class="container mt-1">
+  <section class="py-5 text-center container">
+    <div class="container mt-5">
 
-              <h1>MAKE A APPOINTMENT</h1>
+        <h1>MAKE A APPOINTMENT</h1>
 
-              <div class="findcaredropdowns">
-
-                <div>
-                  <select class=".form-control-file dropdown_item">
-                      <option><a href="#">Type of Consultation...</a></option>
-                      <option><a href="#">Appointment</a></option>
-                      <option><a href="#">Exam</a></option>
-                      <option><a href="#Cardiology">Teleconsultation</a></option>
-                  </select>
-                </div>
-    
-                <div>
-                    <select class=".form-control-file dropdown_item" >
-                        <option>Specialities...</option>
-                        <option>Cardiology</option>
-                        <option>Oncology</option>
-                        <option>Neurology</option>
-                        <option>Psychiatry</option>
-                        <option>Dermatology</option>
-                        <option>Gastroenterology</option>
-                        <option>Pediatrics</option>
-                        <option>Ophthalmology</option>
-                        <option>Urology</option>
-                    </select>
-                </div>
+        <div class="findcaredropdowns">
+          <div>
+              
+              <select id="consultationType" class="form-control-file dropdown_item">
+                  <option disabled selected value="">Select Type Consultation...</option>
+                  <option value="Appointment">Appointment</option>
+                  <option value="Exam">Exam</option>
+                  <option value="Teleconsultation">Teleconsultation</option>
+              </select>
+          </div>
+      
+          <div>
+              <select id="specialities" class="form-control-file dropdown_item">
+                  <option disabled selected value="">Select Speciality...</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Nephrology">Nephrology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Gynecology">Gynecology</option>
+                  <option value="Obstetriciology">Obstetriciology</option>
+                  <option value="Dentist">Dentist</option>
+                  <option value="Rheumatology">Rheumatology</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Family Medicine">Family Medicine</option>
+              </select>
+          </div>
+      
+          
+      </div>
+      
+      
             
-                <div>
-                    <select class=".form-control-file dropdown_item">
-                        <option><a href="#">Clinics...</a></option>
-                        <option><a href="#">Rottal In Clinic</a></option>
-                        <option><a href="#">Passau Clinic</a></option>
-                        <option><a href="#">Eggenfelden Clinic</a></option>
-                        <option><a href="#">Munchen Clinic</a></option>
-                        <option><a href="#">Mühldorf Clinic</a></option>
-                        <option><a href="#">Burghausen Clinic</a></option>
-                    </select>
-                </div>
+    </div>
+  </section>
+
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <h2>Available Consultations</h2>
+      <div id="calendar" class="container mt-5 mb-3"> </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
+        <!-- Cards will be updated dynamically  -->
+        
+      
+      </div>
+    </div>
+  </div>
+
+
+  <div id="timeslots" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Available TimeSlots</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-                   
+              <div class="modal-body">
+                  <p>Available TimeSlots:</p>
+                  <!-- Timeslots will be dynamically added here by JavaScript -->
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" id="bookAppointmentBtn">Book Appointment</button>
+              </div>
           </div>
-        </section>
-      
-        <div class="album py-5 bg-light">
-          <div class="container">
-
-            <h2>Available Consultations</h2>
-      
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-               
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                     
-                    </div>
-                  </div>
-                </div>
-              </div>
-      
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-      
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                        
-                      </div>
-                     
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-      
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View/Book Appointement</button>
-                    
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
+  </div>
 
 
 
-  <!-- JavaScript links for bootstrap functions -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
-  
+<!-- FOOTER -->
+
+<footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+    <p>© 2023 FastCARE, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer>
+</main>
+
+<script>
+
+
+
+</script>
+
+
+<script src="/EHR_system/global/jquery.js"></script>
+<script src="/EHR_system/js/booking.js"></script>
+
+
 </body>
 
 </html>

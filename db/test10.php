@@ -10,7 +10,7 @@ $pdo = new Messages();
 
 
 // Assuming you have the sender ID, receiver ID, and message content
-$senderID = 1; // replace with actual sender ID
+$senderID = 22; // replace with actual sender ID
 $receiverID = 3; // replace with actual receiver ID
 $content = "Hello, this is a test message."; // replace with actual message content
 

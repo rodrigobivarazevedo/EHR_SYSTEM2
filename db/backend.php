@@ -466,11 +466,14 @@ class History{
 
 class Messages
 {
-    public function send_message($dbo, $senderID, $receiverID, $content)
+        public function send_message($dbo, $senderID, $receiverID, $content)
     {
         try {
+            $sender = $this->userExists($dbo, $senderID);
+            $receiver = $this->userExists($dbo, $receiverID); // Add a semicolon at the end
+
             // Check if sender and receiver IDs exist in the Users table
-            if (!$this->userExists($dbo, $senderID) || !$this->userExists($dbo, $receiverID)) {
+            if (!$sender || !$receiver) {
                 return json_encode(["error" => "Sender or receiver not found"]);
             }
 
@@ -484,7 +487,7 @@ class Messages
             $result = $statement->execute();
 
             if ($result) {
-                return json_encode(["message" => "Message sent successfully"]);
+                return json_encode(["message" => "Message sent successfully to {$receiver['Username']}"]);
             } else {
                 return json_encode(["error" => "Failed to send the message"]);
             }
@@ -496,11 +499,40 @@ class Messages
     // Helper method to check if a user exists in the Users table
     private function userExists($dbo, $userID)
     {
-        $statement = $dbo->conn->prepare("SELECT UserID FROM Users WHERE UserID = :userID");
+        $statement = $dbo->conn->prepare("SELECT UserID, Username FROM Users WHERE UserID = :userID");
         $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetch(PDO::FETCH_ASSOC) !== false;
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    public function get_messages($dbo, $userID)
+    {
+        try {
+            // Check if the user ID exists in the Users table
+            if (!$this->userExists($dbo, $userID)) {
+                return json_encode(["error" => "User not found"]);
+            }
+
+            $statement = $dbo->conn->prepare(
+                "SELECT m.Content, d.FirstName, d.LastName FROM Messages m JOIN Doctors d ON m.SenderID = d.DoctorID WHERE m.ReceiverID = :userID"
+            );
+            $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $statement->execute();
+
+            $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    
+
+            if ($messages) {
+                return json_encode($messages);
+            } else {
+                return json_encode(["message" => "No messages found for the user"]);
+            }
+        } catch (PDOException $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
     }
 }
 

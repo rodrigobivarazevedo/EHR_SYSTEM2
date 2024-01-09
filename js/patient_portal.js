@@ -5,9 +5,28 @@ $(document).ready(
     loadAppointments();
     loadPrescriptions();  
     //loadMessages();
+
+    // Handle TeleMed button click
+    $('#teleMedButton').on('click', function() {
+        // Open the message modal
+        $('#messageModal').modal('show');
+    });
   
   });
 
+// Function to handle sending a message
+function sendMessage() {
+    // Add your logic to send the message here
+    // For example, you can use AJAX to send the data to the server
+    const recipientId = $('#recipientId').val();
+    const messageContent = $('#messageContent').val();
+
+    // Add AJAX code here to send the message data to the server
+    // ...
+
+    // Close the modal after sending the message
+    $('#messageModal').modal('hide');
+}
 
 // Function to fetch and display appointments
 function loadAppointments() {
@@ -36,7 +55,23 @@ function loadPrescriptions() {
             renderMedications(medicationsData);
         },
         error: function (error) {
-            console.error('Error fetching appointments:', error);
+            console.error('Error fetching prescriptions:', error);
+        }
+    });
+}
+
+// Function to fetch and display prescriptions
+function loadMessages() {
+    $.ajax({
+        url: '/EHR_system/ajax/patient_portalAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {action: "messages"},
+        success: function (messagesData) {
+            renderMessages(messagesData);
+        },
+        error: function (error) {
+            console.error('Error fetching messages:', error);
         }
     });
 }
@@ -107,6 +142,44 @@ function renderMedications(data) {
         listGroup.appendChild(listItem);
     });
 }
+
+
+function renderMessages(data) {
+    const medicationTab = document.getElementById('messagesTab');
+    const listGroup = medicationTab.querySelector('.list-group');
+    listGroup.innerHTML = '';
+
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+
+        const contentDiv = document.createElement('div');
+
+        const nameParagraph = document.createElement('p');
+        nameParagraph.textContent = `Medication: ${item.MedicationName}`;
+        contentDiv.appendChild(nameParagraph);
+
+        const dosageParagraph = document.createElement('p');
+        dosageParagraph.textContent = `Dosage: ${item.Dosage}`;
+        contentDiv.appendChild(dosageParagraph);
+
+        const frequencyParagraph = document.createElement('p');
+        frequencyParagraph.textContent = `Frequency: ${item.Frequency}`;
+        contentDiv.appendChild(frequencyParagraph);
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = `Prescription Date: ${item.PrescriptionDate}`;
+        contentDiv.appendChild(dateParagraph);
+
+        const instructionsParagraph = document.createElement('p');
+        instructionsParagraph.textContent = `Instructions: ${item.Instructions}`;
+        contentDiv.appendChild(instructionsParagraph);
+
+        listItem.appendChild(contentDiv);
+        listGroup.appendChild(listItem);
+    });
+}
+
 
 
 
