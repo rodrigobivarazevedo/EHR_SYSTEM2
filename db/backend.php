@@ -463,4 +463,49 @@ class History{
 }
 
 
+
+class Messages
+{
+    public function send_message($dbo, $senderID, $receiverID, $content)
+    {
+        try {
+            // Check if sender and receiver IDs exist in the Users table
+            if (!$this->userExists($dbo, $senderID) || !$this->userExists($dbo, $receiverID)) {
+                return json_encode(["error" => "Sender or receiver not found"]);
+            }
+
+            $statement = $dbo->conn->prepare(
+                "INSERT INTO Messages (SenderID, ReceiverID, Content) VALUES (:senderID, :receiverID, :content)"
+            );
+            $statement->bindParam(':senderID', $senderID, PDO::PARAM_INT);
+            $statement->bindParam(':receiverID', $receiverID, PDO::PARAM_INT);
+            $statement->bindParam(':content', $content, PDO::PARAM_STR);
+
+            $result = $statement->execute();
+
+            if ($result) {
+                return json_encode(["message" => "Message sent successfully"]);
+            } else {
+                return json_encode(["error" => "Failed to send the message"]);
+            }
+        } catch (PDOException $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+    // Helper method to check if a user exists in the Users table
+    private function userExists($dbo, $userID)
+    {
+        $statement = $dbo->conn->prepare("SELECT UserID FROM Users WHERE UserID = :userID");
+        $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+}
+
+
+
+
+
 ?>
