@@ -4,7 +4,7 @@ $(document).ready(
     // Use AJAX to fetch user data
     loadAppointments();
     loadPrescriptions();  
-    //loadMessages();
+    loadMessages();
 
     // Handle TeleMed button click
     $('#teleMedButton').on('click', function() {
@@ -18,14 +18,39 @@ $(document).ready(
 function sendMessage() {
     // Add your logic to send the message here
     // For example, you can use AJAX to send the data to the server
-    const recipientId = $('#recipientId').val();
+    const recipient = $('#Doctor_name').val();
     const messageContent = $('#messageContent').val();
 
-    // Add AJAX code here to send the message data to the server
-    // ...
-
+    $.ajax({
+        url: '/EHR_system/ajax/patient_portalAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {Doctor_name: recipient, content: messageContent, action: "send_message"},
+        success: function (sendMessagesData) {
+            alert(sendMessagesData);
+        },
+        error: function (error) {
+            console.error('Error fetching messages:', error);
+        }
+    });
     // Close the modal after sending the message
     $('#messageModal').modal('hide');
+}
+
+// Function to fetch and display messages
+function loadMessages() {
+    $.ajax({
+        url: '/EHR_system/ajax/patient_portalAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {action: "get_messages"},
+        success: function (messagesData) {
+            renderMessages(messagesData);
+        },
+        error: function (error) {
+            console.error('Error fetching messages:', error);
+        }
+    });
 }
 
 // Function to fetch and display appointments
@@ -56,22 +81,6 @@ function loadPrescriptions() {
         },
         error: function (error) {
             console.error('Error fetching prescriptions:', error);
-        }
-    });
-}
-
-// Function to fetch and display prescriptions
-function loadMessages() {
-    $.ajax({
-        url: '/EHR_system/ajax/patient_portalAJAX.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {action: "messages"},
-        success: function (messagesData) {
-            renderMessages(messagesData);
-        },
-        error: function (error) {
-            console.error('Error fetching messages:', error);
         }
     });
 }
@@ -145,8 +154,8 @@ function renderMedications(data) {
 
 
 function renderMessages(data) {
-    const medicationTab = document.getElementById('messagesTab');
-    const listGroup = medicationTab.querySelector('.list-group');
+    const messagesTab = document.getElementById('messagesTab');
+    const listGroup = messagesTab.querySelector('.list-group');
     listGroup.innerHTML = '';
 
     data.forEach(item => {
@@ -155,30 +164,19 @@ function renderMessages(data) {
 
         const contentDiv = document.createElement('div');
 
+        const contentParagraph = document.createElement('p');
+        contentParagraph.textContent = `Content: ${item.Content}`;
+        contentDiv.appendChild(contentParagraph);
+
         const nameParagraph = document.createElement('p');
-        nameParagraph.textContent = `Medication: ${item.MedicationName}`;
+        nameParagraph.textContent = `From: ${item.FirstName} ${item.LastName}`;
         contentDiv.appendChild(nameParagraph);
-
-        const dosageParagraph = document.createElement('p');
-        dosageParagraph.textContent = `Dosage: ${item.Dosage}`;
-        contentDiv.appendChild(dosageParagraph);
-
-        const frequencyParagraph = document.createElement('p');
-        frequencyParagraph.textContent = `Frequency: ${item.Frequency}`;
-        contentDiv.appendChild(frequencyParagraph);
-
-        const dateParagraph = document.createElement('p');
-        dateParagraph.textContent = `Prescription Date: ${item.PrescriptionDate}`;
-        contentDiv.appendChild(dateParagraph);
-
-        const instructionsParagraph = document.createElement('p');
-        instructionsParagraph.textContent = `Instructions: ${item.Instructions}`;
-        contentDiv.appendChild(instructionsParagraph);
 
         listItem.appendChild(contentDiv);
         listGroup.appendChild(listItem);
     });
 }
+
 
 
 

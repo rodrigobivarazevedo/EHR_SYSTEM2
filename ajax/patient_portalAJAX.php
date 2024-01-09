@@ -47,7 +47,7 @@ if ($action === "get_messages") {
     $dbo = new Database();
     $pdo = new Messages();
 
-    $result = $pdo->get_messages($dbo, $userID);
+    $result = $pdo->get_messages($dbo, $UserID);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -59,14 +59,15 @@ if ($action === "get_messages") {
     exit();
 }
 
-if ($action === "send_messages") {
+if ($action === "send_message") {
     $UserID = $_SESSION["UserID"];
     $doctors_name = $_SESSION["Doctor_name"];
+    $content = $_SESSION["content"];
 
     $dbo = new Database();
     $pdo = new Messages();
 
-    $result = $pdo->send_message($dbo, $UserID, $receiverID, $content)
+    $result = $pdo->send_message($dbo, $UserID, $receiverID, $content); // Add semicolon here
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -77,5 +78,6 @@ if ($action === "send_messages") {
     }
     exit();
 }
+
 
 ?>
