@@ -65,6 +65,7 @@
             <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send Message</button>
             <a href="MyFastCARE_booking.php"><button type="button" class="btn btn-primary">Booking</button></a>
             </div>
+            
         
         </div>
     </header>
