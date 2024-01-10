@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Check if the user is not logged in
+if (!isset($_SESSION['UserID'])) {
+    // Redirect to the login page
+    header('Location: /EHR_SYSTEM/ui/MyFastCARE/login.php');
+    exit(); // Make sure to stop execution after the redirect
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
