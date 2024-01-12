@@ -102,7 +102,7 @@ $(document).ready(
         dataType: "json",
         data: { speciality: speciality, clinic: clinic, Doctor_FirstName: Doctor_FirstName, Doctor_LastName: Doctor_LastName, action: "booking_doctor"},
         success: function (response) {
-          //console.log(response)
+          console.log(response)
           createCalendar(response, speciality, clinic, response[0].DoctorID);
         },
         error: function (xhr) {

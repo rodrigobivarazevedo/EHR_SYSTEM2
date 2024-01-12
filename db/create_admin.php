@@ -4,13 +4,13 @@ try {
     $dboject = new Database(); // creating a database instance to connect to the database
 
     // Get user input (replace these with your actual input methods)
-    $username = 'David Johnson';
+    $username = 'Emily Turner';
     $user_password = '123'; // Replace this with the actual user-inputted password
-    $ContactNumber = "0545032212";
+    $ContactNumber = "111111111111";
     // Hash the user-inputted password
     $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
-    $email = 'davidjohnson@gmail.com';
+    $email = 'emily.turner@gmail.com';
     $role = 'doctor';
 
     // Use placeholders in the SQL query

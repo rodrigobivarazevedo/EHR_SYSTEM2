@@ -97,7 +97,7 @@ if ($action === "send_message") {
         exit(); // Terminate script execution after sending the response
     }
 
-
+    
     $result = $pdo->send_message($dbo, $UserID, $Doctor_User_ID["UserID"], $content);
 
     // Check if the result is an error

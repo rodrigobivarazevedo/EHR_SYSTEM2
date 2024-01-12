@@ -417,7 +417,7 @@ class Users{
         
                     if (password_verify($password, $hashed_password)) {
                         // Password is correct, user authenticated successfully
-                        return json_encode(["message" => "Login successful", "UserID" => $user["UserID"], "username" => $user["Username"]]);
+                        return json_encode(["message" => "Login successful", "UserID" => $user["UserID"], "username" => $user["Username"], "role" => $user["Role"]]);
                     } else {
                         // Incorrect password
                         return json_encode(["error" => "Invalid login credentials"]);
@@ -469,12 +469,13 @@ class Messages
         public function send_message($dbo, $senderID, $receiverID, $content)
     {
         try {
+            
             $sender = $this->userExists($dbo, $senderID);
             $receiver = $this->userExists($dbo, $receiverID); // Add a semicolon at the end
 
             // Check if sender and receiver IDs exist in the Users table
             if (!$sender || !$receiver) {
-                return json_encode(["error" => "Sender or receiver not found"]);
+                return json_encode(["error" => "Sender or receiver not found", "UserID" =>$sender, "DoctorID" =>$receiver]);
             }
 
             $statement = $dbo->conn->prepare(

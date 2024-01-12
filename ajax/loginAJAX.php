@@ -24,12 +24,12 @@ if ($action === "login") {
     }
 
     $data = json_decode($result, true);
-
     // Check if the login was successful
     if (isset($data['UserID'])) {
         // Store user information in session variables
         $_SESSION["UserID"] = $data['UserID'];
         $_SESSION["Username"] = $data["username"];
+        $_SESSION["Role"] = $data["role"];
 
     }
 

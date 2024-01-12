@@ -43,6 +43,8 @@ function sendMessage() {
                 $('#messageModal').modal('hide');
             } else if (sendMessagesData.error) {
                 alert(sendMessagesData.error);
+                console.log(sendMessagesData.UserID);
+                console.log(sendMessagesData.DoctorID);
             }
         },
         error: function (error) {
