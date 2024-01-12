@@ -51,6 +51,7 @@ CREATE TABLE Appointments (
     UserID INT,
     DoctorID INT,
     ClinicID INT,
+    TimeSlotID INT, -- New column referencing SlotID in TimeSlots table
     AppointmentDateTime DATETIME,
     ConsultationType VARCHAR(255), -- Assuming consultation type is a string
     Speciality VARCHAR(255),
@@ -58,7 +59,8 @@ CREATE TABLE Appointments (
     -- Add other appointment-related information as needed
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
-    FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID)
+    FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID),
+    FOREIGN KEY (TimeSlotID) REFERENCES TimeSlots(SlotID) -- Reference TimeSlotID to SlotID in TimeSlots table
 );
 
 CREATE TABLE TimeSlots (

@@ -92,15 +92,17 @@ $(document).ready(
     // Extract only the first two words from the string
     const speciality = card.find('.card-text').text().trim().split(',').slice(0,1).join(',');
     const clinic = card.find('.card-text').text().trim().split(',').slice(1).join(',').trim();
-
+    const Doctor_FirstName = card.find('.card-title').text().trim().split(' ').slice(0,1);
+    const Doctor_LastName = card.find('.card-title').text().trim().split(' ').slice(1,2);
+  
     // Make the POST request
     $.ajax({
         url: "/EHR_system/ajax/calendarAJAX.php",
         type: "POST",
         dataType: "json",
-        data: { speciality: speciality, clinic: clinic, Doctor_Name: Doctor_Name, action: "booking_doctor"},
+        data: { speciality: speciality, clinic: clinic, Doctor_FirstName: Doctor_FirstName, Doctor_LastName: Doctor_LastName, action: "booking_doctor"},
         success: function (response) {
-          
+          //console.log(response)
           createCalendar(response, speciality, clinic, response[0].DoctorID);
         },
         error: function (xhr) {

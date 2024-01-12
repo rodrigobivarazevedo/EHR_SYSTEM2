@@ -52,19 +52,14 @@ if ($action === "booking_doctor") {
 
     $speciality = $_POST['speciality'];
     $clinicName = $_POST['clinic'];
-    $Doctor_Name = $_POST['Doctor_Name'];
-
-    // Split the full name into an array using a space as the delimiter
-    $nameParts = explode(' ', $Doctor_Name, 2);
-    $names = explode(' ', $nameParts[1], 2);
-
-    $FirstName = $nameParts[0] . ' ' . $names[0];
-    $LastName = $names[1];
+    $Doctor_FirstName = $_POST['Doctor_FirstName'];
+    $Doctor_LastName = $_POST['Doctor_LastName'];
+    
 
     // Fetch DoctorID from the database based on the first and last name
     $statement = $dbo->conn->prepare("SELECT DoctorID FROM doctors WHERE FirstName = :FirstName AND LastName = :LastName");
-    $statement->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
-    $statement->bindParam(':LastName', $LastName, PDO::PARAM_STR);
+    $statement->bindParam(':FirstName', $Doctor_FirstName[0], PDO::PARAM_STR);
+    $statement->bindParam(':LastName', $Doctor_LastName[0], PDO::PARAM_STR);
 
     // Execute statement
     $statement->execute();
@@ -90,14 +85,15 @@ if ($action === "booking_doctor") {
 
     // Fetch results
     $clinicReturn = $clinicStatement->fetch(PDO::FETCH_ASSOC);
-
+    
     if (!$clinicReturn) {
         // Clinic not found, handle appropriately (e.g., send an error response)
         echo json_encode(array('error' => 'Clinic not found'));
         exit();
     }
 
-    $clinicID = $clinicReturn['ClinicID'];
+    $clinicID = $clinicReturn["ClinicID"];
+    
     // Perform database queries and get the result
     $result = $pdo->check_available_timeslots($dbo, $clinicID, $speciality, $DoctorID);
     

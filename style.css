@@ -1,0 +1,139 @@
+/* Custom CSS for the Hospital Website */
+
+/* Style the navbar */
+.navbar {
+    background-color: #3ED715; /* Change the background color to match your branding */
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+/* Style the header */
+.jumbotron {
+    background-image: url('https://www.shutterstock.com/shutterstock/photos/1392193913/display_1500/stock-photo-portrait-of-smiling-young-friends-walking-outdoors-together-1392193913.jpg'); /* Add a background image */
+    background-size: 70% auto; /* Adjust the size as needed */
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative; /* Required for absolute positioning of overlay */
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.jumbotron h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.jumbotron p {
+    font-size: 24px;
+}
+
+
+body {
+    background: white;
+    /* Adjust the color codes (#00FF00 and #00AA00) as needed for your desired green shades */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+/* Style the service cards */
+.card {
+    border: none;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+/* Style the doctor cards */
+#doctors .card-title {
+    font-size: 20px;
+}
+
+/* Style the contact section */
+#contact {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 3rem;
+    border-top: 1px solid #dee2e6;
+}
+
+#contact button {
+    font-size: 24px;
+    padding: 10px 30px;
+    border-radius: 25px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#contact button:hover {
+    background-color: #0056b3;
+}
+
+/* Style the footer */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .jumbotron h1 {
+        font-size: 36px;
+    }
+
+    .jumbotron p {
+        font-size: 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    #doctors .card-title {
+        font-size: 16px;
+    }
+
+    #contact button {
+        font-size: 20px;
+        padding: 10px 20px;
+    }
+}
+
+
+.search-form {
+    margin-top: 20px;
+}
+
+.search-form form {
+    display: flex;
+    justify-content: center;
+}
+
+.search-form .form-group {
+    margin-right: 10px;
+}
+
+.search-form .form-control {
+    width: 400px;
+}
+
+
+
+.card {
+    margin: 10px; /* Adjust the margin as needed for spacing */
+    padding: 15px; /* Adjust the padding as needed for spacing */
+    text-align: center; /* Center align the card content */
+}
+
+.card-img-top {
+    max-width: 100%; /* Ensure images don't overflow the card */
+}

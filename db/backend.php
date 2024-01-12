@@ -62,18 +62,18 @@ class Appointmentsinfo
                 $statement->bindParam(':speciality', $speciality, PDO::PARAM_STR);
 
             }
-    
+            
             // Execute statement
             $statement->execute();
 
            // Fetch results
            $returned_value = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+            
            // Encode the array as JSON and return it
            return json_encode($returned_value);
         } catch (PDOException $e) {
             // Handle exceptions, log errors, or return an error message
-            echo json_encode(["error" => "Error inserting appointment: " . $e->getMessage()]);
+            echo json_encode(["error" => "Error search timeslots: " . $e->getMessage()]);
         }
     }
 

@@ -92,7 +92,6 @@ $(document).ready(
       // Clear existing cards
       const content = document.getElementById('content');
       content.innerHTML = '';
-  
       // Create and append new cards based on the data from the backend
       data.forEach(appointment => {
           const card = `
@@ -327,6 +326,7 @@ function check_user(email,password) {
       dataType: "json",
       data: { UsernameOrEmail: email, password: password, action: "login" },
       success: function (response) {
+        console.log(response)
         // Resolve the promise with the response
         resolve(response);
       },
@@ -348,7 +348,7 @@ function book_appointment(startTime, date, type_consultation, speciality, clinic
       dataType: "json",
       data: { UserID: UserID , speciality: speciality, clinic: clinic, type_consultation : type_consultation, date: date, startTime: startTime, action: "action1" },
       success: function (response) {
-
+        console.log(response)
         // Reload the current page
         alert(response.message);
         location.reload();

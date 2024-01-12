@@ -131,12 +131,11 @@
                         <option value="Cardiology">Cardiology</option>
                         <option value="Nephrology">Nephrology</option>
                         <option value="Gastroenterology">Gastroenterology</option>
-                        <option value="Gynecology">Gynecology</option>
-                        <option value="Obstetriciology">Obstetriciology</option>
+                        <option value="Gynecology and Obstetrics">Gynecology and Obstetrics</option>
                         <option value="Dentistry">Dentistry</option>
                         <option value="Rheumatology">Rheumatology</option>
                         <option value="Dermatology">Dermatology</option>
-                        <option value="Family Medicine">Family Medicine</option>
+                        <option value="Family Doctor">Family Doctor</option>
                     </select>
                 </div>
 
