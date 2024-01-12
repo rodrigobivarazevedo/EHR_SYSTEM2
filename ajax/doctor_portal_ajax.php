@@ -28,7 +28,7 @@ if ($action === "create_patient") {
     $statement->execute();
     
     $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
-    $doctorID = $DoctorID["DoctorID"]
+    $doctorID = $DoctorID["DoctorID"];
     
     if (!$doctorID) {
         echo json_encode(["error" => "DoctorID not found"]);
@@ -54,9 +54,18 @@ if ($action === "update_patient") {
     $UserID = $_SESSION["UserID"];
     
     $dbo = new Database();
-    $pdo = new History();
+    $patients = new Patients();
+    $newData = $_POST["newData"];
 
-    $result = $pdo->medication($dbo, $UserID);
+    $patientID = 2; // Replace with an existing patient ID
+    $newData = [
+        'FirstName' => 'Alexandra',
+        'LastName' => 'Doe',
+        'ContactNumber' => '1234567895',
+        "Email" => "Alexandra.Doe@gmail.com"
+    ];
+
+    $result = $patients->update_patient($dbo, $patientID, $newData);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -72,60 +81,28 @@ if ($action === "delete_patient") {
     $UserID = $_SESSION["UserID"];
     
     $dbo = new Database();
-    $pdo = new Messages();
+    $patients = new Patients();
 
-    $result = $pdo->get_messages($dbo, $UserID);
-
-    // Check if the result is an error
-    if (isset($result["error"])) {
-        // Handle the error, for example, send an appropriate response to the client
-        echo json_encode($result);
-    } else {
-        echo $result;
-    }
-    exit();
-}
-
-if ($action === "get_patients") {
-    $UserID = $_SESSION["UserID"];
-    $doctors_name = $_POST["Doctor_name"];
-    $content = $_POST["content"];
-
-    $dbo = new Database();
-    $pdo = new Messages();
-
-    
-    $nameArray = explode(' ', $doctors_name);
-
-    // Check if the array has at least two elements
-    if (count($nameArray) >= 2) {
-        // Now $nameArray will contain two elements, the first and last name
-        $FirstName = $nameArray[0];
-        $LastName = $nameArray[1];
-
-        // Rest of your code here
-    } else {
-        // Handle the case where the name is not in the expected format
-        echo json_encode(["error" => "Invalid name format"]);
-        exit(); // Terminate script execution after sending the response
-    }
+    $patientID = $_POST["patientID"];
 
     $statement = $dbo->conn->prepare(
-        "SELECT UserID FROM doctors WHERE FirstName = :FirstName AND LastName = :LastName"
+        "SELECT DoctorID FROM doctors WHERE UserID = :UserID"
     );
-    $statement->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
-    $statement->bindParam(':LastName', $LastName, PDO::PARAM_STR);
+    $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
     $statement->execute();
     
-    $Doctor_User_ID = $statement->fetch(PDO::FETCH_ASSOC);
+    $DoctorID = $statement->fetch(PDO::FETCH_ASSOC);
     
-    if (!$Doctor_User_ID) {
+    if (!$DoctorID) {
         echo json_encode(["error" => "Doctor not found"]);
         exit(); // Terminate script execution after sending the response
     }
 
-    
-    $result = $pdo->send_message($dbo, $UserID, $Doctor_User_ID["UserID"], $content);
+
+    // Test post_patient function
+    $doctorID = $DoctorID["DoctorID"];
+
+    $result = $patients->delete_patient($dbo, $patientID, $doctorID);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -137,6 +114,38 @@ if ($action === "get_patients") {
     exit();
 }
 
+if ($action === "get_all_patients") {
+    $UserID = $_SESSION["UserID"];
 
+    $dbo = new Database();
+    $patients = new Patients();
+
+    $statement = $dbo->conn->prepare(
+        "SELECT DoctorID FROM doctors WHERE UserID = :UserID"
+    );
+    $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+    $statement->execute();
+
+    $DoctorID = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$DoctorID) {
+        echo json_encode(["error" => "Doctor not found"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+    // Test get_patients function
+    $doctorID = $DoctorID["DoctorID"];
+
+    $result = $patients->get_all_patients($dbo, $doctorID);
+
+    // Check if the result is an error
+    if (isset($result["error"])) {
+        // Handle the error, for example, send an appropriate response to the client
+        echo json_encode($result);
+    } else {
+        echo $result;
+    }
+    exit();
+}
 
 ?>

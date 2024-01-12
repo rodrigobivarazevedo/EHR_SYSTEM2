@@ -575,7 +575,7 @@ class Patients
     }
 
 
-    public function get_patients($dbo, $doctorID)
+    public function get_all_patients($dbo, $doctorID)
     {
         try {
             // Check if the doctor ID exists in the Doctors table
@@ -689,7 +689,7 @@ class Patients
         }
     }
 
-
+    
 
 }
 

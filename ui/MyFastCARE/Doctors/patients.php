@@ -78,7 +78,7 @@ if (!isset($_SESSION['UserID'])) {
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send Message</button>
+        
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#messageModal">Add New Patient</button>
 
             </div>
@@ -94,7 +94,7 @@ if (!isset($_SESSION['UserID'])) {
   <section class="py-5 text-center container">
     <div class="container mt-5">
 
-        <h1>Search Patient</h1>
+        <h1>Patients editor</h1>
 
         <div class="findcaredropdowns">
             <div>
@@ -107,11 +107,11 @@ if (!isset($_SESSION['UserID'])) {
             </div>
 
             <div>
-                <select id="searchField" class="form-select" onchange="updatePlaceholder()">
-                    <option disabled selected value="">Select More...</option>
+                <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
+                    <option disabled selected value="">Select parameter...</option>
                     <option value="firstName">First Name</option>
                     <option value="lastName">Last Name</option>
-                    <option value="dob">Date of Birth</option>
+                    <option value="Email">Email</option>
                     <option value="contactNumber">Contact Number</option>
                     <!-- Add more options based on your needs -->
                 </select>
@@ -136,39 +136,6 @@ if (!isset($_SESSION['UserID'])) {
   </section>
 
 
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <h2>Search Results</h2>
-      <div id="calendar" class="container mt-5 mb-3"> </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
-        <!-- Cards will be updated dynamically  -->
-        
-      
-      </div>
-    </div>
-  </div>
-
-
-  <div id="timeslots" class="modal" tabindex="-1">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Available TimeSlots</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <p>Available TimeSlots:</p>
-                  <!-- Timeslots will be dynamically added here by JavaScript -->
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-secondary" id="bookAppointmentBtn">Book Appointment</button>
-              </div>
-          </div>
-      </div>
-  </div>
-
-
 
     <!-- Create Patient Modal -->
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
@@ -182,8 +149,12 @@ if (!isset($_SESSION['UserID'])) {
             <!-- Patient Creation Form -->
             <form id="createPatientForm" class="mt-3">
                 <div class="mb-3">
-                    <label for="patientName" class="form-label">Patient Name:</label>
-                    <input type="text" class="form-control" id="patientName" placeholder="Enter patient name" required>
+                    <label for="firstname" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="Enter patient first name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Enter patient last name" required>
                 </div>
                 <div class="mb-3">
                     <label for="patientEmail" class="form-label">Patient Email:</label>
