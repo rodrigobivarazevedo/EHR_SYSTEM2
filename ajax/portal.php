@@ -15,7 +15,7 @@ if (!isset($_SESSION['UserID'])) {
             header('Location: /EHR_SYSTEM/ui/MyFastCARE/Doctors/doctor_portal.php'); // Redirect doctors to the doctor's dashboard
             exit();
         case 'user':
-            header('Location: /EHR_SYSTEM/ui/MyFastCARE/patient_portal.php'); // Redirect regular users to the user's dashboard
+            header('Location: /EHR_SYSTEM/ui/MyFastCARE/Patients/patient_portal.php'); // Redirect regular users to the user's dashboard
             exit();
         default:
             // Handle other roles or unexpected cases

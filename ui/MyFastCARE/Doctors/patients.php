@@ -138,7 +138,7 @@ if (!isset($_SESSION['UserID'])) {
 
   <div class="album py-5 bg-light">
     <div class="container">
-      <h2>Your Patients</h2>
+      <h2>Search Results</h2>
       <div id="calendar" class="container mt-5 mb-3"> </div>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
         <!-- Cards will be updated dynamically  -->

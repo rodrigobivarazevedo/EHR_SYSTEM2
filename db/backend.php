@@ -610,6 +610,87 @@ class Patients
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function update_patient($dbo, $patientID, $newData)
+    {
+        try {
+            // Check if the patient ID exists in the Patients table
+            if (!$this->patientExists($dbo, $patientID)) {
+                return json_encode(["error" => "Patient not found"]);
+            }
+
+            // Construct the UPDATE query based on the provided data
+            $updateQuery = "UPDATE Patients SET ";
+            foreach ($newData as $key => $value) {
+                $updateQuery .= "$key = :$key, ";
+            }
+            $updateQuery = rtrim($updateQuery, ", "); // Remove the trailing comma and space
+            $updateQuery .= " WHERE PatientID = :patientID";
+
+            $statement = $dbo->conn->prepare($updateQuery);
+
+            // Bind parameters
+            $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+            foreach ($newData as $key => &$value) {
+                // Use bindValue to bind the actual variable, not just its value
+                $statement->bindValue(":$key", $value);
+            }
+
+            $result = $statement->execute();
+
+            if ($result) {
+                return json_encode(["success" => "Patient updated successfully"]);
+            } else {
+                return json_encode(["error" => "Failed to update the patient"]);
+            }
+        } catch (PDOException $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+
+// Helper method to check if a patient exists in the Patients table
+    private function patientExists($dbo, $patientID)
+    {
+        $statement = $dbo->conn->prepare("SELECT PatientID FROM Patients WHERE PatientID = :patientID");
+        $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+
+
+    public function delete_patient($dbo, $patientID, $doctorID)
+    {
+        try {
+            // Check if the doctor ID exists in the Doctors table
+            if (!$this->doctorExists($dbo, $doctorID)) {
+                return json_encode(["error" => "Doctor not found"]);
+            }
+
+            // Check if the patient ID exists in the Patients table
+            if (!$this->patientExists($dbo, $patientID)) {
+                return json_encode(["error" => "Patient not found"]);
+            }
+
+            $statement = $dbo->conn->prepare(
+                "DELETE FROM Patients WHERE PatientID = :patientID"
+            );
+            $statement->bindParam(':patientID', $patientID, PDO::PARAM_INT);
+            $result = $statement->execute();
+
+            if ($result) {
+                return json_encode(["success" => "Patient deleted successfully"]);
+            } else {
+                return json_encode(["error" => "Failed to delete the patient"]);
+            }
+        } catch (PDOException $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+
+
 }
 
 
