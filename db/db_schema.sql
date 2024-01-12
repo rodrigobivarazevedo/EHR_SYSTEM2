@@ -140,22 +140,19 @@ CREATE TABLE Messages (
 
 
 
-
-
-
--- Doctors table
-CREATE TABLE Doctors (
-    DoctorID INT PRIMARY KEY AUTO_INCREMENT,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    Password VARCHAR(255) NOT NULL, -- Hashed password
-    Speciality VARCHAR(100) NOT NULL,
-    -- Add other relevant doctor information
+-- Patients table
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY,
+    UserID INT,
+    FirstName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    DateOfBirth DATE,
+    ContactNumber VARCHAR(20),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
 -- Patients table
-CREATE TABLE Patients (
+CREATE TABLE patients (
     PatientID INT PRIMARY KEY AUTO_INCREMENT,
     DoctorID INT,
     FirstName VARCHAR(50) NOT NULL,

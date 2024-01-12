@@ -540,74 +540,75 @@ class Messages
 
 class Patients
 {
-        public function post_patient($dbo, $senderID, $receiverID, $content)
+        public function post_patient($dbo, $doctorID, $firstName, $lastName, $email, $birthdate, $gender, $address, $contactNumber)
     {
         try {
-            
-            $sender = $this->userExists($dbo, $senderID);
-            $receiver = $this->userExists($dbo, $receiverID); // Add a semicolon at the end
-
-            // Check if sender and receiver IDs exist in the Users table
-            if (!$sender || !$receiver) {
-                return json_encode(["error" => "Sender or receiver not found", "UserID" =>$sender, "DoctorID" =>$receiver]);
+            // Check if doctorID exists in the Doctors table
+            $doctorExists = $this->doctorExists($dbo, $doctorID);
+            if (!$doctorExists) {
+                return json_encode(["error" => "Doctor not found"]);
             }
 
             $statement = $dbo->conn->prepare(
-                "INSERT INTO Messages (SenderID, ReceiverID, Content) VALUES (:senderID, :receiverID, :content)"
+                "INSERT INTO Patients (DoctorID, FirstName, LastName, Email, Birthdate, Gender, Address, ContactNumber) 
+                VALUES (:doctorID, :firstName, :lastName, :email, :birthdate, :gender, :address, :contactNumber)"
             );
-            $statement->bindParam(':senderID', $senderID, PDO::PARAM_INT);
-            $statement->bindParam(':receiverID', $receiverID, PDO::PARAM_INT);
-            $statement->bindParam(':content', $content, PDO::PARAM_STR);
+            $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
+            $statement->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+            $statement->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
+            $statement->bindParam(':gender', $gender, PDO::PARAM_STR);
+            $statement->bindParam(':address', $address, PDO::PARAM_STR);
+            $statement->bindParam(':contactNumber', $contactNumber, PDO::PARAM_STR);
 
             $result = $statement->execute();
 
             if ($result) {
-                return json_encode(["success" => "Message sent successfully to {$receiver['Username']}"]);
+                return json_encode(["success" => "Patient added successfully"]);
             } else {
-                return json_encode(["error" => "Failed to send the message"]);
+                return json_encode(["error" => "Failed to add patient"]);
             }
         } catch (PDOException $e) {
             return json_encode(["error" => $e->getMessage()]);
         }
     }
 
-    // Helper method to check if a user exists in the Users table
-    private function userExists($dbo, $userID)
-    {
-        $statement = $dbo->conn->prepare("SELECT UserID, Username FROM Users WHERE UserID = :userID");
-        $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
-        $statement->execute();
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
-    }
-
-
-    public function get_messages($dbo, $userID)
+    public function get_patients($dbo, $doctorID)
     {
         try {
-            // Check if the user ID exists in the Users table
-            if (!$this->userExists($dbo, $userID)) {
-                return json_encode(["error" => "User not found"]);
+            // Check if the doctor ID exists in the Doctors table
+            if (!$this->doctorExists($dbo, $doctorID)) {
+                return json_encode(["error" => "Doctor not found"]);
             }
 
             $statement = $dbo->conn->prepare(
-                "SELECT m.Content, m.Timestamp, d.FirstName, d.LastName FROM Messages m JOIN Doctors d ON m.SenderID = d.UserID WHERE m.ReceiverID = :userID"
+                "SELECT * FROM Patients WHERE DoctorID = :doctorID"
             );
-            $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
             $statement->execute();
 
-            $messages = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $patients = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    
-
-            if ($messages) {
-                return json_encode($messages);
+            if ($patients) {
+                return json_encode($patients);
             } else {
-                return json_encode(["message" => "No messages found for the user"]);
+                return json_encode(["message" => "No patients found for the doctor"]);
             }
         } catch (PDOException $e) {
             return json_encode(["error" => $e->getMessage()]);
         }
+    }
+
+    // Helper method to check if a doctor exists in the Doctors table
+    private function doctorExists($dbo, $doctorID)
+    {
+        $statement = $dbo->conn->prepare("SELECT DoctorID FROM Doctors WHERE DoctorID = :doctorID");
+        $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 }
 
