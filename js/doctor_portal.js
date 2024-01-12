@@ -27,6 +27,19 @@ function updatePlaceholder() {
 
 
 function createPatient() {
+    // Check if all required values are filled
+    const firstName = document.getElementById('firstname').value;
+    const lastName = document.getElementById('lastname').value;
+    const email = document.getElementById('patientEmail').value;
+    const birthdate = document.getElementById('patientBirthdate').value;
+    const gender = document.getElementById('patientGender').value;
+
+    if (!firstName || !lastName || !email || !birthdate || !gender) {
+        // Display an alert if any required field is empty
+        alert('Please fill in all required fields.');
+        return;
+    }
+
     // Show a confirmation alert
     const confirmResult = window.confirm('Are you sure you want to create this patient?');
 
@@ -37,14 +50,10 @@ function createPatient() {
             event.preventDefault();
             // Implement your logic for creating a patient
             
-            firstName = document.getElementById('firstname').value,
-            lastName = document.getElementById('lastname').value,
-            email = document.getElementById('patientEmail').value,
-            birthdate = document.getElementById('patientBirthdate').value,
-            gender = document.getElementById('patientGender').value,
-            address = document.getElementById('patientAddress').value,
-            contactNumber = document.getElementById('patientContactNumber').value,
+            const address = document.getElementById('patientAddress').value;
+            const contactNumber = document.getElementById('patientContactNumber').value;
             // Add more patient data properties as needed
+
             post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber);
             console.log('Creating patient:', patientData);
             // You may submit the form via AJAX or perform other actions
@@ -54,6 +63,7 @@ function createPatient() {
         });
     }
 }
+
 
 
 
