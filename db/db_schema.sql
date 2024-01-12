@@ -135,3 +135,52 @@ CREATE TABLE Messages (
     FOREIGN KEY (SenderID) REFERENCES Users(UserID),
     FOREIGN KEY (ReceiverID) REFERENCES Users(UserID)
 );
+
+
+
+
+
+
+
+
+-- Doctors table
+CREATE TABLE Doctors (
+    DoctorID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL, -- Hashed password
+    Speciality VARCHAR(100) NOT NULL,
+    -- Add other relevant doctor information
+);
+
+-- Patients table
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY AUTO_INCREMENT,
+    DoctorID INT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
+    Birthdate DATE NOT NULL,
+    Gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    Address VARCHAR(255),
+    ContactNumber VARCHAR(20),
+    PRIMARY KEY (PatientID, DoctorID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+    -- Add other relevant patient information
+);
+
+-- Health Records table
+CREATE TABLE HealthRecords (
+    RecordID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    DoctorID INT,
+    DateRecorded DATE NOT NULL,
+    Diagnosis TEXT,
+    Medications TEXT,
+    Procedures TEXT,
+    Comments TEXT,
+    PRIMARY KEY (RecordID, PatientID, DoctorID),
+    FOREIGN KEY (PatientID, DoctorID) REFERENCES Patients(PatientID, DoctorID)
+    -- Add other relevant health record information
+);

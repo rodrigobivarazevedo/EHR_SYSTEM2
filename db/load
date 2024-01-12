@@ -1,0 +1,78 @@
+<?php
+try {
+    require_once "database.php";
+    $dboject = new Database(); // creating a database instance to connect to the database
+
+    // Sample data for doctors
+    $doctors = [
+        "Emily Turner",
+        "Benjamin Hayes",
+        "Sarah Mitchell",
+        "Kevin Rodriguez",
+        "Amanda Foster",
+        "Robert Hughes",
+        "Jessica Wong",
+        "Michael Patel",
+        "Laura Reynolds",
+        "Brian Lewis",
+        "Rachel Carter",
+        "Jonathan Kim",
+        "Melissa Thompson",
+        "Christopher Harris",
+        "Kimberly Davis",
+        "Jordan Carter",
+        "Alexandra Taylor",
+        "Samuel Rodriguez",
+        "Jennifer White",
+        "David Johnson"
+    ];
+
+    // Iterate through doctors and insert into Users table
+    foreach ($doctors as $doctor) {
+        // Extract first and last names
+        list($firstName, $lastName) = explode(" ", $doctor, 2);
+
+        // Generate a random contact number and password
+        $contactNumber = "049" . mt_rand(10000000, 99999999);
+        $password = "123";
+
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Generate email based on full name
+        $email = strtolower(str_replace(" ", ".", $doctor)) . "@gmail.com";
+
+        // Check if the user already exists (you may need to adjust this based on your schema)
+        $checkUserCmd = "SELECT COUNT(*) FROM Users WHERE Username = :username OR Email = :email";
+        $checkUserStmt = $dboject->conn->prepare($checkUserCmd);
+        $checkUserStmt->bindParam(':username', $doctor, PDO::PARAM_STR);
+        $checkUserStmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $checkUserStmt->execute();
+
+        $userExists = $checkUserStmt->fetchColumn();
+
+        if ($userExists) {
+            echo json_encode(["message" => "User $doctor already exists"]);
+        } else {
+            // Use placeholders in the SQL query
+            $cmd = "INSERT INTO Users (Username, Password, Email, Role, ContactNumber) VALUES (:username, :password, :email, :role, :ContactNumber)";
+            $statement = $dboject->conn->prepare($cmd);
+
+            // Bind parameters
+            $statement->bindParam(':username', $doctor, PDO::PARAM_STR);
+            $statement->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindValue(':role', 'doctor', PDO::PARAM_STR);
+            $statement->bindParam(':ContactNumber', $contactNumber, PDO::PARAM_INT);
+
+            // Execute statement
+            $statement->execute();
+
+            echo json_encode(["message" => "User $doctor inserted successfully"]);
+        }
+    }
+} catch (PDOException $e) {
+    // Handle exceptions, log errors, or return an error message
+    echo json_encode(["error" => "Error inserting user: " . $e->getMessage()]);
+}
+?>
