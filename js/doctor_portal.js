@@ -47,14 +47,13 @@ function handleInput() {
     // Filter patients based on the search query
     const filteredPatients = patients.filter(patient =>
         patient.firstName.toLowerCase().includes(searchQuery) ||
-        patient.lastName.toLowerCase().includes(searchQuery) ||
-        patient.email.toLowerCase().includes(searchQuery)
+        patient.lastName.toLowerCase().includes(searchQuery) 
     );
 
     // Display autocomplete results
     filteredPatients.forEach(patient => {
         const resultItem = document.createElement('div');
-        resultItem.textContent = `${patient.firstName} ${patient.lastName} - ${patient.email}`;
+        resultItem.textContent = `${patient.firstName} ${patient.lastName}`;
         resultItem.addEventListener('click', () => selectPatient(patient));
         autocompleteResults.appendChild(resultItem);
     });
@@ -76,35 +75,19 @@ function searchPatients() {
 }
 
 
-
-
-// Event listener for form submission
-document.getElementById('createPatientForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    // Implement your logic for creating a patient
-    const patientData = {
-        name: document.getElementById('patientName').value,
-        email: document.getElementById('patientEmail').value,
-        birthdate: document.getElementById('patientBirthdate').value,
-        gender: document.getElementById('patientGender').value,
-        address: document.getElementById('patientAddress').value,
-        contactNumber: document.getElementById('patientContactNumber').value,
-        // Add more patient data properties as needed
-    };
-    console.log('Creating patient:', patientData);
-    // You may submit the form via AJAX or perform other actions
-});
-
-
-
-
  // Event listener for form submission
  document.getElementById('createPatientForm').addEventListener('submit', function (event) {
     event.preventDefault();
     // Implement your logic for creating a patient
-    const patientData = {
-        // Retrieve form data similar to the previous example
-    };
+    
+    name =  document.getElementById('patientName').value,
+    email =  document.getElementById('patientEmail').value,
+    birthdate = document.getElementById('patientBirthdate').value,
+    gender = document.getElementById('patientGender').value,
+    address =  document.getElementById('patientAddress').value,
+    contactNumber = document.getElementById('patientContactNumber').value,
+    // Add more patient data properties as needed
+    post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber)
     console.log('Creating patient:', patientData);
     // You may submit the form via AJAX or perform other actions
 
@@ -115,20 +98,36 @@ document.getElementById('createPatientForm').addEventListener('submit', function
 
 
 
-$firstName = $_POST["firstName"];
-    $lastName = $_POST["lastName"];
-    $email = $_POST["email"];
-    $birthdate = $_POST["birthdate"];
-    $gender = $_POST["gender"];
-    $address = $_POST["address"];
-    $contactNumber = $_POST["contactNumber"];
-
-function get_patients(selectedSpeciality="", selectedConsultationType="",action="get_all") {
+function post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
     $.ajax({
-        url: "/EHR_system/ajax/bookingAJAX.php",
+        url: "/EHR_system/ajax/doctor_portal_ajax.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { speciality: selectedSpeciality, consultationType: selectedConsultationType, action: action },
+        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
+        beforeSend: function() {
+            // Add any code to run before the request is sent (optional)
+        },
+        success: function(response) {
+            alert(response);
+            
+        },
+        error: function(xhr) {
+            // Log detailed error information to the console
+            console.log(xhr.responseText);
+            
+            // Display a user-friendly error message
+            alert("AJAX request failed. Check the console for details.");
+        }
+    });
+}
+
+
+function get_patients() {
+    $.ajax({
+        url: "/EHR_system/ajax/doctor_portal_ajax.phpp",
+        type: "POST",
+        dataType: "json", // Changed "JSON" to "json"
+        data: { action: "get_patients" },
         beforeSend: function() {
             // Add any code to run before the request is sent (optional)
         },
@@ -148,7 +147,7 @@ function get_patients(selectedSpeciality="", selectedConsultationType="",action=
 
 $(document).ready(
   function() {
-  get_appointmentInfo();  
+    get_patients();  
 
   // Variable to keep track of the selected card
   let selectedCard = null;
@@ -173,10 +172,10 @@ $(document).ready(
     const type_consultation = card.find('.card-text').text().trim().split(',').slice(1).join('');;
     // Make the POST request
     $.ajax({
-        url: "/EHR_system/ajax/calendarAJAX.php",
+        url: "/EHR_system/ajax/AJAX.php",
         type: "POST",
         dataType: "json",
-        data: { speciality: speciality, clinic: clinic, action: "booking" },
+        data: { speciality: speciality, clinic: clinic, action: "patientinfo" },
         success: function (response) {
             createCalendar(response, type_consultation, speciality, clinic);
         },
