@@ -712,13 +712,13 @@ class Patients
 
             $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
             if (isset($FirstName) && isset($LastName)) {
-                $searchParameterFirstName = '%' . $FirstName . '%';
-                $searchParameterLastName = '%' . $LastName . '%';
+                $searchParameterFirstName =  $FirstName . '%';
+                $searchParameterLastName = $LastName . '%';
                 $statement->bindParam(':searchParameterFirstName', $searchParameterFirstName, PDO::PARAM_STR);
                 $statement->bindParam(':searchParameterLastName', $searchParameterLastName, PDO::PARAM_STR);
             } else {
                 // Dynamically bind the search parameter based on the selected parameter
-                $searchParameter = '%' . $input . '%';
+                $searchParameter = $input . '%';
                 $statement->bindParam(':searchParameter', $searchParameter, PDO::PARAM_STR);
             }
             

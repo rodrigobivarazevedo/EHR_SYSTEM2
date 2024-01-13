@@ -13,7 +13,7 @@ $patients = new Patients();
 // Replace these values with actual data for testing
 $doctorID = 1; // Replace with an existing doctor ID from your database
 $parameter = 'contactNumber'; // Choose the search parameter ('name', 'contactNumber', or 'email')
-$input = '961929298'; // Replace with the input data based on the chosen parameter
+$input = '96'; // Replace with the input data based on the chosen parameter
 
 // Test the search_patients function
 $result = $patients->search_patients($dbo, $doctorID, $parameter, $input);
