@@ -126,6 +126,27 @@
         <div class="card-body">
             <form id="registrationForm">
                 <div class="form-group">
+                    <label for="FirstName">Fist Name</label>
+                    <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="birthdate" class="form-label">Date of Birth:</label>
+                    <input type="date" class="form-control" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender" class="form-label">Gender:</label>
+                    <select id="gender" class="form-select" required>
+                        <option disabled selected value="">Select gender...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Create your username">
                 </div>
@@ -147,12 +168,15 @@
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
                 </div>
                 <button type="button" class="btn btn-primary mt-3" id="registerButton" onclick="register()">Register</button>
-                <!-- Login button -->
-                <a class="btn btn-primary mt-3" href="login.php">Login</a>
+                
             </form>
         </div>
     </div>
 </div>
+
+
+
+    
 
 <!-- JavaScript links for bootstrap functions -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

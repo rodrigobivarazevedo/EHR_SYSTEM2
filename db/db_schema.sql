@@ -8,17 +8,6 @@ CREATE TABLE Users (
 );
 
 
--- Patients table
-CREATE TABLE Patients (
-    PatientID INT PRIMARY KEY,
-    UserID INT,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL,
-    DateOfBirth DATE,
-    ContactNumber VARCHAR(20),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
-
 -- Doctors table
 CREATE TABLE Doctors (
     DoctorID INT PRIMARY KEY AUTO_INCREMENT,
@@ -138,18 +127,6 @@ CREATE TABLE Messages (
 
 
 
-
-
--- Patients table
-CREATE TABLE Patients (
-    PatientID INT PRIMARY KEY,
-    UserID INT,
-    FirstName VARCHAR(255) NOT NULL,
-    LastName VARCHAR(255) NOT NULL,
-    DateOfBirth DATE,
-    ContactNumber VARCHAR(20),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
 
 -- Patients table
 CREATE TABLE patients (

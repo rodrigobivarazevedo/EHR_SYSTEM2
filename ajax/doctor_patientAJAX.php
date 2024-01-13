@@ -37,7 +37,7 @@ if ($action === "create_patient") {
 
 
     
-    $result = $patients->post_patient($dbo, $doctorID, $firstName, $lastName, $email, $birthdate, $gender, $address, $contactNumber);
+    $result = $patients->post_patient($dbo, $doctorID, $firstName, $lastName, $email, $birthdate, $gender, $address, $contactNumber, $user ="");
 
     // Check if the result is an error
     if (isset($result["error"])) {

@@ -62,9 +62,15 @@ function register() {
     var contactNumber = document.getElementById("contactNumber").value;
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
-
+    
+    var FirstName = document.getElementById("FirstName").value;
+    var LastName = document.getElementById("LastName").value;
+    var gender = document.getElementById("gender").value;
+    var birthdate = document.getElementById("birthdate").value;
+    
+     
     // Check if any of the required fields are empty
-    if (!username || !email || !contactNumber || !password || !confirmPassword) {
+    if (!username || !email || !contactNumber || !password || !confirmPassword || !FirstName || !LastName || !gender || !birthdate) {
         alert("All required fields must be provided.");
         submitButton.disabled = false;  // Re-enable the submit button
         return;
@@ -101,6 +107,10 @@ function register() {
             email: email,
             contactNumber: contactNumber,
             password: password,
+            FirstName: FirstName, 
+            LastName: LastName, 
+            gender: gender, 
+            birthdate: birthdate,      
             action: "register"  // Adjust the action for registration
         },
         success: function (response) {

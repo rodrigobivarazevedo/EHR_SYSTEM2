@@ -73,19 +73,12 @@ if (!isset($_SESSION['UserID'])) {
         </div>
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
-            <div class="container d-flex flex-wrap justify-content-center">
-                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                    <input type="search" class="form-control" placeholder="Search clinic..." aria-label="Search">
-                </form>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send Message</button>
-                    <a href="health_records.php"><button type="button" class="btn btn-primary">View Health Record</button></a>
-                </div>
+            <div class="text-end">
+                        <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send Message</button>
+                        <a href="health_records.php"><button type="button" class="btn btn-primary">View Health Record</button></a>
+                    </div>
+                    
             </div>
-
-                
-        </div>
             
     
             
@@ -169,7 +162,7 @@ if (!isset($_SESSION['UserID'])) {
         <form id="sendMessageForm">
           <div class="mb-3">
             <label for="recipientId" class="form-label">Recipient:</label>
-            <input type="text" class="form-control" id="Patient_name" placeholder="Patient first and last Name..." required>
+            <input type="text" class="form-control" id="Patient_name" placeholder="Doctor first and last Name..." required>
           </div>
           <div class="mb-3">
             <label for="messageContent" class="form-label">Message:</label>
