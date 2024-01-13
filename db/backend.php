@@ -657,6 +657,7 @@ class Patients
                     break;
                 case 'PatientID':
                     $query .= "PatientID = :searchParameter";
+                    $ID = True;
                     break;
                 default:
                     return json_encode(["error" => "Invalid search parameter"]);
@@ -672,6 +673,11 @@ class Patients
                 $searchParameterLastName = '%' . $LastName . '%';
                 $statement->bindParam(':searchParameterFirstName', $searchParameterFirstName, PDO::PARAM_STR);
                 $statement->bindParam(':searchParameterLastName', $searchParameterLastName, PDO::PARAM_STR);
+            
+            } elseif ($ID){
+                $searchParameter = $input;
+                $statement->bindParam(':searchParameter', $searchParameter, PDO::PARAM_STR);
+
             } else {
                 // Dynamically bind the search parameter based on the selected parameter
                 $searchParameter = '%' . $input . '%';
@@ -755,11 +761,6 @@ class Patients
             // Check if the doctor ID exists in the Doctors table
             if (!$this->doctorExists($dbo, $doctorID)) {
                 return json_encode(["error" => "Doctor not found"]);
-            }
-
-            // Check if the patient ID exists in the Patients table
-            if (!$this->patientExists($dbo, $patientID)) {
-                return json_encode(["error" => "Patient not found"]);
             }
 
             $statement = $dbo->conn->prepare(

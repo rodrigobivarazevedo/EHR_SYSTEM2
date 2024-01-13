@@ -116,6 +116,71 @@ function createPatient() {
 }
 
 
+function deletePatient() {
+    // Check if all required values are filled
+    const patientID = document.getElementById('patientID').value;
+    if (!patientID) {
+        // Display an alert if any required field is empty
+        alert('Please enter patient ID.');
+        return;
+    }
+
+    $.ajax({
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
+        type: "POST",
+        dataType: "json",
+        data: { parameter: "PatientID", searchQueryInputValue: patientID, action: "advanced_search_patients" },
+        success: function(response) {
+            console.log(response)
+            const FirstName = response[0].FirstName; 
+            const LastName = response[0].LastName;
+            confirmation(FirstName, LastName, patientID);
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+            alert("AJAX request failed. Check the console for details.");
+        }
+    });
+}
+
+function confirmation(firstName, lastName, patientID) {
+    const confirmResult = window.confirm(`Are you sure you want to delete ${firstName} ${lastName}?`);
+
+    if (confirmResult) {
+        // Trigger the form submission
+        delete_patient(patientID);
+    }
+}
+
+// Event listener for form submission
+document.getElementById('deletePatientForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    // Handle form submission if needed
+});
+
+function delete_patient(patientID) {
+    $.ajax({
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
+        type: "POST",
+        dataType: "json",
+        data: { patientID: patientID, action: "delete_patient" },
+        success: function(response) {
+            if (response.success){
+                alert(response.success);
+                // Close the modal after submission
+                $('#deleteModal').modal('hide');
+            } else if (response.error){
+                alert(response.error);
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+            alert("AJAX request failed. Check the console for details.");
+        }
+    });
+}
+
+
 
 
 function post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
@@ -166,26 +231,4 @@ function update_patient() {
 }
 
 
-function delete_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
-    $.ajax({
-        url: "/EHR_system/ajax/doctor_patientAJAX.php",
-        type: "POST",
-        dataType: "json", // Changed "JSON" to "json"
-        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
-        success: function(response) {
-            alert(response);
-            
-        },
-        error: function(xhr) {
-            // Log detailed error information to the console
-            console.log(xhr.responseText);
-            
-            // Display a user-friendly error message
-            alert("AJAX request failed. Check the console for details.");
-        }
-    });
-}
 

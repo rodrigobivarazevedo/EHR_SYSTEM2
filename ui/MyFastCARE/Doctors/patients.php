@@ -75,7 +75,7 @@ if (!isset($_SESSION['UserID'])) {
         
 
             <div class="text-end">
-        
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete a Patient</button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#messageModal">Add New Patient</button>
 
             </div>
@@ -122,8 +122,24 @@ if (!isset($_SESSION['UserID'])) {
         <div class="album py-5 bg-light">
 
             <div class="row">
+
+
+                <div class="col-md-7">
+                        <div class="container p-4">
+                            <h3 class="mb-4">Search Results</h3>
+                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
+                                <!-- Cards will be updated dynamically  -->
+                                
+                                </div>
+                        </div>
+                                    
+                </div>
+
+
                 <div class="col-md-5">
-                    <div class="container p-5">
+                
+                    <div class="container p-4">
+                    <h3 class="mb-4">Edit Patient</h3>
                             <!-- Patient Creation Form -->
                             <form id="createPatientForm" class="mt-3">
                                 <div class="mb-3">
@@ -160,18 +176,10 @@ if (!isset($_SESSION['UserID'])) {
                                     <input type="tel" class="form-control" id="patientContactNumber" placeholder="Enter contact number">
                                 </div>
                             </form>
+                            <button type="button" class="btn btn-primary mt-3" onclick="updatePatient()">Update Patient</button>
                     </div>
                 </div>
     
-                        <div class="col-md-7">
-                            <div class="container">
-                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
-                                <!-- Cards will be updated dynamically  -->
-                                
-                                </div>
-                            </div>
-                                    
-                        </div>
             </div>
         </div>
             
@@ -226,6 +234,31 @@ if (!isset($_SESSION['UserID'])) {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-secondary" onclick="createPatient()">Create Patient</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Delete Patient Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="deleteModalLabel">Delete a Patient</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <!-- Patient Creation Form -->
+            <form id="deletePatientForm" class="mt-3">
+                <div class="mb-3">
+                    <label for="patientID" class="form-label">Patient ID:</label>
+                    <input type="text" class="form-control" id="patientID" placeholder="Enter patient ID" required>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="deletePatient()">Delete Patient</button>
       </div>
     </div>
   </div>
