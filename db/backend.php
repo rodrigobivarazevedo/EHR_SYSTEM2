@@ -113,7 +113,7 @@ class Appointmentsinfo
         try {
             if ($DoctorID == "") {
                 // Use placeholders in the SQL query
-                $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, d.FirstName, d.LastName, c.Name
+                $statement = $dbo->conn->prepare("SELECT a.AppointmentID, a.ConsultationType, a.Speciality, t.DATE, t.StartTime, d.FirstName, d.LastName, c.Name
                 FROM appointments a
                 JOIN timeslots t ON a.TimeSlotID = t.SlotID
                 JOIN doctors d ON a.DoctorID = d.DoctorID
@@ -125,7 +125,7 @@ class Appointmentsinfo
                 $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
     
             } elseif ($UserID == "") {
-                $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, u.username, c.Name
+                $statement = $dbo->conn->prepare("SELECT a.AppointmentID, a.ConsultationType, a.Speciality, t.DATE, t.StartTime, u.username, c.Name
                 FROM appointments a
                 JOIN timeslots t ON a.TimeSlotID = t.SlotID
                 JOIN users u ON a.UserID = u.UserID
@@ -384,13 +384,6 @@ class Users{
             // Get the UserID of the newly created user
             $userID = $dbo->conn->lastInsertId();
 
-            // Create a new patient with the same UserID
-            $patients = new Patients();
-          
-            // Create a new patient with the same UserID
-            $patients->post_patient($dbo, "", $FirstName, $LastName, $Email, $birthdate, $gender, "", $ContactNumber, $userID);
-            
-
             // Return success message or any other information
             return json_encode(["message" => "Registration successful,", "patient" => $patients]);
         } catch (PDOException $e) {
@@ -572,70 +565,30 @@ class Messages
 
 class Patients
 {
-    public function post_patient($dbo, $doctorID, $firstName, $lastName, $email, $birthdate, $gender, $address, $contactNumber, $UserID)
+    public function post_patient($dbo, $doctorID, $firstName, $lastName, $email, $birthdate, $gender, $address, $contactNumber)
     {
         try {
             // Check if doctorID exists in the Doctors table
-            $patientExists = $this->patientExists($dbo, $email, $contactNumber);
-    
-            if ($doctorID !== "" && $patientExists) {
-                $statement = $dbo->conn->prepare(
-                    "UPDATE Patients 
-                    SET DoctorID = :doctorID, FirstName = :firstName, LastName = :lastName, 
-                    Email = :email, Birthdate = :birthdate, Gender = :gender, 
-                    Address = :address, ContactNumber = :contactNumber, UserID = :userID
-                    WHERE PatientID = :patientID"
-                );
-    
-                $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
-                $statement->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-                $statement->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-                $statement->bindParam(':email', $email, PDO::PARAM_STR);
-                $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
-                $statement->bindParam(':gender', $gender, PDO::PARAM_STR);
-                $statement->bindParam(':address', $address, PDO::PARAM_STR);
-                $statement->bindParam(':contactNumber', $contactNumber, PDO::PARAM_STR);
-                $statement->bindParam(':userID', $patientExists["UserID"], PDO::PARAM_INT);
-                $statement->bindParam(':patientID', $patientExists["PatientID"], PDO::PARAM_INT);
-    
-            } elseif ($doctorID !== "" && !$patientExists) {
-                $pdo = new Users();
-                $result = $pdo->create_user($dbo, $firstName, $contactNumber, $email, $contactNumber, $firstName, $lastName, $gender, $birthdate);
-                // Get the UserID of the newly created user
-                $userID = $dbo->conn->lastInsertId();
-                $statement = $dbo->conn->prepare(
-                    "INSERT INTO Patients (DoctorID, FirstName, LastName, Email, Birthdate, Gender, Address, ContactNumber, UserID) 
-                    VALUES (:doctorID, :firstName, :lastName, :email, :birthdate, :gender, :address, :contactNumber, :userID)"
-                );
-                $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
-                $statement->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-                $statement->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-                $statement->bindParam(':email', $email, PDO::PARAM_STR);
-                $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
-                $statement->bindParam(':gender', $gender, PDO::PARAM_STR);
-                $statement->bindParam(':address', $address, PDO::PARAM_STR);
-                $statement->bindParam(':contactNumber', $contactNumber, PDO::PARAM_STR);
-                $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
-    
-            } elseif ($doctorID == "" && $patientExists) {
-                return json_encode(["success" => "Patient added successfully and account created"]);
-    
-            } else {
-                $statement = $dbo->conn->prepare(
-                    "INSERT INTO Patients (FirstName, LastName, Email, Birthdate, Gender, ContactNumber, UserID) 
-                    VALUES (:firstName, :lastName, :email, :birthdate, :gender, :contactNumber, :userID)"
-                );
-                $statement->bindParam(':firstName', $firstName, PDO::PARAM_STR);
-                $statement->bindParam(':lastName', $lastName, PDO::PARAM_STR);
-                $statement->bindParam(':email', $email, PDO::PARAM_STR);
-                $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
-                $statement->bindParam(':gender', $gender, PDO::PARAM_STR);
-                $statement->bindParam(':contactNumber', $contactNumber, PDO::PARAM_STR);
-                $statement->bindParam(':userID', $UserID, PDO::PARAM_INT);
+            $doctorExists = $this->doctorExists($dbo, $doctorID);
+            if (!$doctorExists) {
+                return json_encode(["error" => "Doctor not found"]);
             }
-    
+
+            $statement = $dbo->conn->prepare(
+                "INSERT INTO Patients (DoctorID, FirstName, LastName, Email, Birthdate, Gender, Address, ContactNumber) 
+                VALUES (:doctorID, :firstName, :lastName, :email, :birthdate, :gender, :address, :contactNumber)"
+            );
+            $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
+            $statement->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+            $statement->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
+            $statement->bindParam(':gender', $gender, PDO::PARAM_STR);
+            $statement->bindParam(':address', $address, PDO::PARAM_STR);
+            $statement->bindParam(':contactNumber', $contactNumber, PDO::PARAM_STR);
+
             $result = $statement->execute();
-    
+
             if ($result) {
                 return json_encode(["success" => "Patient added successfully"]);
             } else {

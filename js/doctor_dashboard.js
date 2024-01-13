@@ -149,12 +149,16 @@ function renderAppointments(data) {
         dateParagraph.textContent = `Date: ${item.DATE}`; // Update property name
         contentDiv.appendChild(dateParagraph);
 
+        const timeParagraph = document.createElement('p');
+        timeParagraph.textContent = `Time: ${item.StartTime}`; // Update property name
+        contentDiv.appendChild(timeParagraph);
+
         const titleHeading = document.createElement('h6');
         titleHeading.textContent = `Appointment: ${item.ConsultationType}`; // Update property name
         contentDiv.appendChild(titleHeading);
 
         const doctorParagraph = document.createElement('p');
-        doctorParagraph.textContent = `Patient: ${item.username}`; // Update property names
+        doctorParagraph.textContent = `AppointmentID: ${item.AppointmentID}`; // Update property names
         contentDiv.appendChild(doctorParagraph);
 
         listItem.appendChild(contentDiv);
