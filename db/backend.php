@@ -522,18 +522,26 @@ class Messages
     }
 
 
-    public function get_messages($dbo, $userID)
+    public function get_messages($dbo, $userID, $action)
     {
         try {
             // Check if the user ID exists in the Users table
             if (!$this->userExists($dbo, $userID)) {
                 return json_encode(["error" => "User not found"]);
             }
+            if ($action == "user"){
 
             $statement = $dbo->conn->prepare(
                 "SELECT m.Content, m.Timestamp, d.FirstName, d.LastName FROM Messages m JOIN Doctors d ON m.SenderID = d.UserID WHERE m.ReceiverID = :userID"
             );
             $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
+            } elseif ($action == "doctor"){
+                $statement = $dbo->conn->prepare(
+                    "SELECT m.Content, m.Timestamp, u.username FROM Messages m JOIN Users u ON m.SenderID = u.UserID WHERE m.ReceiverID = :userID"
+                );
+                $statement->bindParam(':userID', $userID, PDO::PARAM_INT);
+            }
+
             $statement->execute();
 
             $messages = $statement->fetchAll(PDO::FETCH_ASSOC);

@@ -77,7 +77,7 @@ if ($action === "get_messages") {
     $dbo = new Database();
     $pdo = new Messages();
 
-    $result = $pdo->get_messages($dbo, $UserID);
+    $result = $pdo->get_messages($dbo, $UserID, $action = "doctor");
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -91,44 +91,39 @@ if ($action === "get_messages") {
 
 if ($action === "send_message") {
     $UserID = $_SESSION["UserID"];
-    $patient_name = $_POST["Doctor_name"];
+    $patient_name = $_POST["patient_name"];
     $content = $_POST["content"];
 
     $dbo = new Database();
     $pdo = new Messages();
 
     
-    $nameArray = explode(' ', $doctors_name);
+    $nameArray = explode(' ', $patient_name);
 
     // Check if the array has at least two elements
-    if (count($nameArray) >= 2) {
-        // Now $nameArray will contain two elements, the first and last name
-        $FirstName = $nameArray[0];
-        $LastName = $nameArray[1];
-
-        // Rest of your code here
-    } else {
+    if (!count($nameArray) >= 1) {
+        
         // Handle the case where the name is not in the expected format
         echo json_encode(["error" => "Invalid name format"]);
         exit(); // Terminate script execution after sending the response
     }
 
     $statement = $dbo->conn->prepare(
-        "SELECT UserID FROM doctors WHERE FirstName = :FirstName AND LastName = :LastName"
+        "SELECT UserID FROM users WHERE Username = :username"
     );
-    $statement->bindParam(':FirstName', $FirstName, PDO::PARAM_STR);
-    $statement->bindParam(':LastName', $LastName, PDO::PARAM_STR);
+    $statement->bindParam(':username', $patient_name, PDO::PARAM_STR);
+    
     $statement->execute();
     
-    $Doctor_User_ID = $statement->fetch(PDO::FETCH_ASSOC);
+    $userID = $statement->fetch(PDO::FETCH_ASSOC);
     
-    if (!$Doctor_User_ID) {
-        echo json_encode(["error" => "Doctor not found"]);
+    if (!$userID) {
+        echo json_encode(["error" => "Patient not found"]);
         exit(); // Terminate script execution after sending the response
     }
 
     
-    $result = $pdo->send_message($dbo, $UserID, $Doctor_User_ID["UserID"], $content);
+    $result = $pdo->send_message($dbo, $UserID, $userID["UserID"], $content);
 
     // Check if the result is an error
     if (isset($result["error"])) {

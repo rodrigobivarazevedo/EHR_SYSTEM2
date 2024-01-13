@@ -67,15 +67,6 @@ function get_all_patients() {
     $('#messageModal').modal('show');
 });
 
-function confirmSignOut() {
-    // Display a confirmation dialog
-    var confirmed = confirm("Are you sure you want to sign out?");
-    
-    // If the user clicks "OK," redirect to signout.php
-    if (confirmed) {
-        window.location.href = "/EHR_system/ajax/signout.php";
-    }
-}
 
 // Function to handle sending a message
 function sendMessage() {
@@ -88,7 +79,7 @@ function sendMessage() {
         url: '/EHR_system/ajax/doctor_dashboardAJAX.php',
         type: 'POST',
         dataType: 'json',
-        data: {Doctor_name: recipient, content: messageContent, action: "send_message"},
+        data: {patient_name: recipient, content: messageContent, action: "send_message"},
         success: function (sendMessagesData) {
             if(sendMessagesData.success){
                 alert(sendMessagesData.success);
@@ -159,7 +150,7 @@ function renderAppointments(data) {
         contentDiv.appendChild(dateParagraph);
 
         const titleHeading = document.createElement('h6');
-        titleHeading.textContent = `Appointment Title: ${item.ConsultationType}`; // Update property name
+        titleHeading.textContent = `Appointment: ${item.ConsultationType}`; // Update property name
         contentDiv.appendChild(titleHeading);
 
         const doctorParagraph = document.createElement('p');
@@ -184,16 +175,19 @@ function renderMessages(data) {
         const contentDiv = document.createElement('div');
 
         const dateParagraph = document.createElement('p');
-        dateParagraph.textContent = `Date: ${item.Timestamp}`; // 
+        dateParagraph.textContent = `Date: ${item.Timestamp}`;
         contentDiv.appendChild(dateParagraph);
 
+        const nameParagraph = document.createElement('h6');
+        nameParagraph.textContent = `From: ${item.username} `;
+        contentDiv.appendChild(nameParagraph);
+
+        
         const contentParagraph = document.createElement('p');
         contentParagraph.textContent = `Content: ${item.Content}`;
         contentDiv.appendChild(contentParagraph);
 
-        const nameParagraph = document.createElement('p');
-        nameParagraph.textContent = `From: ${item.FirstName} ${item.LastName}`;
-        contentDiv.appendChild(nameParagraph);
+        
 
         listItem.appendChild(contentDiv);
         listGroup.appendChild(listItem);

@@ -47,7 +47,7 @@ if ($action === "get_messages") {
     $dbo = new Database();
     $pdo = new Messages();
 
-    $result = $pdo->get_messages($dbo, $UserID);
+    $result = $pdo->get_messages($dbo, $UserID , $action = "user");
 
     // Check if the result is an error
     if (isset($result["error"])) {
