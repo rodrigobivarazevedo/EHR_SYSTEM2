@@ -116,7 +116,7 @@ if ($action === "delete_patient") {
 
 
 
-if ($action === "search_patients") {
+if ($action === "advanced_search_patients") {
     $UserID = $_SESSION["UserID"];
     $parameter = $_POST["parameter"];
     $input = $_POST["searchQueryInputValue"];

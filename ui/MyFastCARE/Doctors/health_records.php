@@ -159,12 +159,8 @@ if (!isset($_SESSION['UserID'])) {
 
 
 
-<!-- FOOTER -->
 
-<footer class="container">
-    <p class="float-end"><a href="#">Back to top</a></p>
-    <p>© 2023 FastCARE, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-</footer>
+
 </main>
 
 <script>

@@ -72,19 +72,13 @@ if (!isset($_SESSION['UserID'])) {
         </div>
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
-        <div class="container d-flex flex-wrap justify-content-center">
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-            <input type="search" class="form-control" placeholder="Search by patientID..." aria-label="Search">
-            </form>
+        
 
             <div class="text-end">
         
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#messageModal">Add New Patient</button>
 
             </div>
-
-            
-        </div>
         </div>
     </header>
 
@@ -92,7 +86,7 @@ if (!isset($_SESSION['UserID'])) {
     <main>
 
   <section class="py-5 text-center container">
-    <div class="container mt-5">
+    <div class="container">
 
         <h1>Patient editor</h1>
 
@@ -101,33 +95,86 @@ if (!isset($_SESSION['UserID'])) {
             <div>
                 <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
                     <option disabled selected value="">Select search parameter...</option>
-                    <option value="Name">Name</option>
-                    <option value="Email">Email</option>
+                    <option value="name">Name</option>
+                    <option value="email">Email</option>
                     <option value="contactNumber">Contact Number</option>
                     <!-- Add more options based on your needs -->
                 </select>
             </div>
-
-            <!-- Updated Input Group with Dynamic Placeholder -->
-            <div class="input-group mt-3">
-                <input type="text" class="form-control" id="searchQuery" placeholder="Select search parameter">
-                <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
-            </div>
-                 
-            <!-- Autocomplete Results Container -->
-            <div id="autocompleteResults" class="mt-3"></div>
-          
-
-          
         </div>
-      
-      
-            
+            <div class="input-group mt-3">
+                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
+                <input type="search" class="form-control" placeholder="Search by patientID..." aria-label="Search">
+                </form>
+            </div>
+            <!-- Updated Input Group with Dynamic Placeholder -->
+            <div class="col-md-6 mt-3"> <!-- Adjust the column width as needed -->
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchQuery" placeholder="Select search parameter">
+                            <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
+                        </div>
+            </div>
+
     </div>
   </section>
 
 
+        <div class="album py-5 bg-light">
 
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="container p-5">
+                            <!-- Patient Creation Form -->
+                            <form id="createPatientForm" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="firstname" class="form-label">First Name:</label>
+                                    <input type="text" class="form-control" id="firstname" placeholder="Enter patient first name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastname" class="form-label">First Name:</label>
+                                    <input type="text" class="form-control" id="lastname" placeholder="Enter patient last name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientEmail" class="form-label">Patient Email:</label>
+                                    <input type="email" class="form-control" id="patientEmail" placeholder="Enter patient email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientBirthdate" class="form-label">Date of Birth:</label>
+                                    <input type="date" class="form-control" id="patientBirthdate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientGender" class="form-label">Gender:</label>
+                                    <select id="patientGender" class="form-select" required>
+                                        <option disabled selected value="">Select gender...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientAddress" class="form-label">Address:</label>
+                                    <input type="text" class="form-control" id="patientAddress" placeholder="Enter patient address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientContactNumber" class="form-label">Contact Number:</label>
+                                    <input type="tel" class="form-control" id="patientContactNumber" placeholder="Enter contact number">
+                                </div>
+                            </form>
+                    </div>
+                </div>
+    
+                        <div class="col-md-7">
+                            <div class="container">
+                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
+                                <!-- Cards will be updated dynamically  -->
+                                
+                                </div>
+                            </div>
+                                    
+                        </div>
+            </div>
+        </div>
+            
     <!-- Create Patient Modal -->
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -184,12 +231,7 @@ if (!isset($_SESSION['UserID'])) {
   </div>
 </div>
 
-<!-- FOOTER -->
 
-<footer class="container">
-    <p class="float-end"><a href="#">Back to top</a></p>
-    <p>© 2023 FastCARE, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-</footer>
 </main>
 
 <script>

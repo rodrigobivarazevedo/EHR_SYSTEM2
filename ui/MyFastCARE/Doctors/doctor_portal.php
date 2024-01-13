@@ -74,7 +74,7 @@ if (!isset($_SESSION['UserID'])) {
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
             <div class="text-end">
-                        <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send Message</button>
+                        <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send a Message</button>
                         <a href="health_records.php"><button type="button" class="btn btn-primary">View Health Record</button></a>
                     </div>
                     
@@ -109,7 +109,7 @@ if (!isset($_SESSION['UserID'])) {
     <div class="tab-content">
         <!-- Appointments Tab Content -->
         <div id="appointmentsTab" class="tab-pane fade show active">
-            <h2>Appointments</h2>
+            <h2 class="mb-5">Appointments</h2>
             <ul class="list-group">
                 <!-- Data will be populated here dynamically -->
             </ul>
@@ -117,18 +117,19 @@ if (!isset($_SESSION['UserID'])) {
 
         <!-- Documentation Tab Content -->
         <div id="patientsTab" class="tab-pane fade">
-            <h2>Your Patients</h2>
+            <h2 class="mb-5">Your Patients</h2>
             
                 <div class="album py-5 bg-light">
-                <div>
-                    <select id="consultationType" class="form-control-file dropdown_item">
-                        <option disabled selected value="">Filter by Gender...</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+            
                     <div class="container">
+                        <div>
+                            <select id="consultationType" class="form-control-file dropdown_item mb-3">
+                                <option disabled selected value="">Filter by Gender...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                         <div id="calendar" class="container mt-5 mb-3"> </div>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
                         <!-- Cards will be updated dynamically  -->
@@ -140,7 +141,7 @@ if (!isset($_SESSION['UserID'])) {
 
         <!-- Tests/Exams Tab Content -->
         <div id="messagesTab" class="tab-pane fade">
-            <h2>Messages</h2>
+            <h2 class="mb-5">Messages</h2>
             <ul class="list-group">
                 <!-- Data will be populated here dynamically -->
             </ul>
@@ -162,7 +163,7 @@ if (!isset($_SESSION['UserID'])) {
         <form id="sendMessageForm">
           <div class="mb-3">
             <label for="recipientId" class="form-label">Recipient:</label>
-            <input type="text" class="form-control" id="Patient_name" placeholder="Doctor first and last Name..." required>
+            <input type="text" class="form-control" id="Patient_name" placeholder="Patients's first and last name..." required>
           </div>
           <div class="mb-3">
             <label for="messageContent" class="form-label">Message:</label>
@@ -171,7 +172,7 @@ if (!isset($_SESSION['UserID'])) {
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="sendMessage()">Send Message</button>
       </div>
     </div>
