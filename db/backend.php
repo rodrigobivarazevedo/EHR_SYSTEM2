@@ -108,33 +108,47 @@ class Appointmentsinfo
         }
     }
 
-        public function get_appointments($dbo, $UserID)
+    public function get_appointments($dbo, $UserID, $DoctorID)
     {
         try {
-            // Use placeholders in the SQL query
-            $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, d.FirstName, d.LastName, c.Name
-            FROM appointments a
-            JOIN timeslots t ON a.TimeSlotID = t.SlotID
-            JOIN doctors d ON a.DoctorID = d.DoctorID
-            JOIN clinics c ON a.ClinicID = c.ClinicID
-            WHERE a.UserID = :UserID
-            ");
-
-            // Bind parameters
-            $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+            if ($DoctorID == "") {
+                // Use placeholders in the SQL query
+                $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, d.FirstName, d.LastName, c.Name
+                FROM appointments a
+                JOIN timeslots t ON a.TimeSlotID = t.SlotID
+                JOIN doctors d ON a.DoctorID = d.DoctorID
+                JOIN clinics c ON a.ClinicID = c.ClinicID
+                WHERE a.UserID = :UserID
+                ");
+    
+                // Bind parameters
+                $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+    
+            } elseif ($UserID == "") {
+                $statement = $dbo->conn->prepare("SELECT a.ConsultationType, a.Speciality, t.DATE, t.StartTime, u.username, c.Name
+                FROM appointments a
+                JOIN timeslots t ON a.TimeSlotID = t.SlotID
+                JOIN users u ON a.UserID = u.UserID
+                JOIN clinics c ON a.ClinicID = c.ClinicID
+                WHERE a.DoctorID = :DoctorID
+                ");
+    
+                // Bind parameters
+                $statement->bindParam(':DoctorID', $DoctorID, PDO::PARAM_INT);
+            }
             // Execute statement
             $statement->execute();
             // Fetch results
             $appointments = $statement->fetchAll(PDO::FETCH_ASSOC);
-            
+    
             echo json_encode($appointments);
-
-            
+    
         } catch (PDOException $e) {
             // Handle exceptions, log errors, or return an error message
             echo json_encode(["error" => $e->getMessage()]);
         }
     }
+    
 
 
 
@@ -600,6 +614,71 @@ class Patients
             return json_encode(["error" => $e->getMessage()]);
         }
     }
+
+    public function search_patients($dbo, $doctorID, $parameter, $input)
+    {
+        try {
+            // Check if the doctor ID exists in the Doctors table
+            if (!$this->doctorExists($dbo, $doctorID)) {
+                return json_encode(["error" => "Doctor not found"]);
+            }
+
+            // Construct the SQL query dynamically based on the selected parameter
+            $query = "SELECT * FROM Patients WHERE DoctorID = :doctorID AND (";
+            switch ($parameter) {
+                case 'name':
+                    $nameArray = explode(' ', $input);
+                    // Check if the array has at least two elements
+                    if (count($nameArray) >= 2) {
+                        // Now $nameArray will contain two elements, the first and last name
+                        $FirstName = $nameArray[0];
+                        $LastName = $nameArray[1];
+                        $query .= "FirstName LIKE :searchParameterFirstName AND LastName LIKE :searchParameterLastName";
+                    }
+                    break;
+
+                case 'contactNumber':
+                    $query .= "ContactNumber LIKE :searchParameter";
+                    break;
+                case 'email':
+                    $query .= "Email LIKE :searchParameter";
+                    break;
+                default:
+                    return json_encode(["error" => "Invalid search parameter"]);
+            }
+            $query .= ")";
+
+            // Prepare and execute the SQL query
+            $statement = $dbo->conn->prepare($query);
+            $statement->bindParam(':doctorID', $doctorID, PDO::PARAM_INT);
+
+            // Dynamically bind the search parameter based on the selected parameter
+            $searchParameter = '%' . $input . '%';
+            $statement->bindParam(':searchParameter', $searchParameter, PDO::PARAM_STR);
+
+            if (isset($searchParameterFirstName) && isset($searchParameterLastName)) {
+                $searchParameterFirstName = '%' . $FirstName . '%';
+                $searchParameterLastName = '%' . $LastName . '%';
+                $statement->bindParam(':searchParameterFirstName', $searchParameterFirstName, PDO::PARAM_STR);
+                $statement->bindParam(':searchParameterLastName', $searchParameterLastName, PDO::PARAM_STR);
+            }
+
+            $statement->execute();
+
+            $patients = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($patients) {
+                return json_encode($patients);
+            } else {
+                return json_encode(["message" => "No patients found for the doctor"]);
+            }
+        } catch (PDOException $e) {
+            return json_encode(["error" => $e->getMessage()]);
+        }
+    }
+
+    
+
 
     // Helper method to check if a doctor exists in the Doctors table
     private function doctorExists($dbo, $doctorID)

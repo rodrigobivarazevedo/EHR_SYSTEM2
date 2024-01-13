@@ -74,7 +74,7 @@ if (!isset($_SESSION['UserID'])) {
         <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
             <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-            <input type="search" class="form-control" placeholder="Search by patient name..." aria-label="Search">
+            <input type="search" class="form-control" placeholder="Search by patientID..." aria-label="Search">
             </form>
 
             <div class="text-end">
@@ -94,23 +94,14 @@ if (!isset($_SESSION['UserID'])) {
   <section class="py-5 text-center container">
     <div class="container mt-5">
 
-        <h1>Patients editor</h1>
+        <h1>Patient editor</h1>
 
         <div class="findcaredropdowns">
-            <div>
-                <select id="consultationType" class="form-control-file dropdown_item">
-                    <option disabled selected value="">Select Gender...</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-
+            
             <div>
                 <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
-                    <option disabled selected value="">Select parameter...</option>
-                    <option value="firstName">First Name</option>
-                    <option value="lastName">Last Name</option>
+                    <option disabled selected value="">Select search parameter...</option>
+                    <option value="Name">Name</option>
                     <option value="Email">Email</option>
                     <option value="contactNumber">Contact Number</option>
                     <!-- Add more options based on your needs -->
@@ -119,7 +110,7 @@ if (!isset($_SESSION['UserID'])) {
 
             <!-- Updated Input Group with Dynamic Placeholder -->
             <div class="input-group mt-3">
-                <input type="text" class="form-control" id="searchQuery" placeholder="Search for a patient">
+                <input type="text" class="form-control" id="searchQuery" placeholder="Select search parameter">
                 <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
             </div>
                  
@@ -209,7 +200,7 @@ if (!isset($_SESSION['UserID'])) {
 
 
 <script src="/EHR_system/global/jquery.js"></script>
-<script src="/EHR_system/js/doctor_portal.js"></script>
+<script src="/EHR_system/js/doctor_patients.js"></script>
 
 
 </body>

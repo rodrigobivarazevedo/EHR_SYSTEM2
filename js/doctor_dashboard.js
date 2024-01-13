@@ -1,10 +1,13 @@
 $(document).ready(function() {
+    // Use AJAX to fetch user data
+    loadAppointments();  
+    loadMessages()
     get_all_patients();  
 });
 
 function get_all_patients() {
     $.ajax({
-        url: "/EHR_system/ajax/doctor_portal_ajax.php",
+        url: "/EHR_system/ajax/doctor_dashboardAJAX.php",
         type: "POST",
         dataType: "json",
         data: { action: "get_all_patients" },
@@ -42,7 +45,7 @@ function get_all_patients() {
                         
                           <div class="d-flex justify-content-between align-items-center">
                               <div class="btn-group">
-                                  <button type="button" class="btn btn-sm btn-outline-secondary" id="view-book-btn">View/Book</button>
+                                  <button type="button" class="btn btn-sm btn-outline-secondary" id="view-book-btn">View/Edit</button>
                               </div>
                           </div>
                       </div>
@@ -55,3 +58,144 @@ function get_all_patients() {
           content.appendChild(cardElement);
       });
   }
+
+
+    
+  // Handle TeleMed button click
+  $('#teleMedButton').on('click', function() {
+    // Open the message modal
+    $('#messageModal').modal('show');
+});
+
+function confirmSignOut() {
+    // Display a confirmation dialog
+    var confirmed = confirm("Are you sure you want to sign out?");
+    
+    // If the user clicks "OK," redirect to signout.php
+    if (confirmed) {
+        window.location.href = "/EHR_system/ajax/signout.php";
+    }
+}
+
+// Function to handle sending a message
+function sendMessage() {
+    // Add your logic to send the message here
+    // For example, you can use AJAX to send the data to the server
+    const recipient = $('#Patient_name').val();
+    const messageContent = $('#messageContent').val();
+
+    $.ajax({
+        url: '/EHR_system/ajax/doctor_dashboardAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {Doctor_name: recipient, content: messageContent, action: "send_message"},
+        success: function (sendMessagesData) {
+            if(sendMessagesData.success){
+                alert(sendMessagesData.success);
+                // Close the modal after sending the message
+                $('#messageModal').modal('hide');
+            } else if (sendMessagesData.error) {
+                alert(sendMessagesData.error);
+                console.log(sendMessagesData.UserID);
+                console.log(sendMessagesData.DoctorID);
+            }
+        },
+        error: function (error) {
+            console.error('Error fetching messages:', error);
+        }
+    });
+}
+
+// Function to fetch and display messages
+function loadMessages() {
+    $.ajax({
+        url: '/EHR_system/ajax/doctor_dashboardAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {action: "get_messages"},
+        success: function (messagesData) {
+            console.log(messagesData)
+            renderMessages(messagesData);
+        },
+        error: function (error) {
+            console.error('Error fetching messages:', error);
+        }
+    });
+}
+
+// Function to fetch and display appointments
+function loadAppointments() {
+    $.ajax({
+        url: '/EHR_system/ajax/doctor_dashboardAJAX.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {action: "appointments"},
+        success: function (appointmentsData) {
+            console.log(appointmentsData)
+            renderAppointments(appointmentsData);
+        },
+        error: function (error) {
+            console.error('Error fetching appointments:', error);
+        }
+    });
+}
+
+
+
+// Helper functions to render data in a tab
+function renderAppointments(data) {
+    const appointmentsTab = document.getElementById('appointmentsTab');
+    const listGroup = appointmentsTab.querySelector('.list-group');
+    listGroup.innerHTML = '';
+
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+
+        const contentDiv = document.createElement('div');
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = `Date: ${item.DATE}`; // Update property name
+        contentDiv.appendChild(dateParagraph);
+
+        const titleHeading = document.createElement('h6');
+        titleHeading.textContent = `Appointment Title: ${item.ConsultationType}`; // Update property name
+        contentDiv.appendChild(titleHeading);
+
+        const doctorParagraph = document.createElement('p');
+        doctorParagraph.textContent = `Patient: ${item.username}`; // Update property names
+        contentDiv.appendChild(doctorParagraph);
+
+        listItem.appendChild(contentDiv);
+        listGroup.appendChild(listItem);
+    });
+}
+
+
+function renderMessages(data) {
+    const messagesTab = document.getElementById('messagesTab');
+    const listGroup = messagesTab.querySelector('.list-group');
+    listGroup.innerHTML = '';
+
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+
+        const contentDiv = document.createElement('div');
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = `Date: ${item.Timestamp}`; // 
+        contentDiv.appendChild(dateParagraph);
+
+        const contentParagraph = document.createElement('p');
+        contentParagraph.textContent = `Content: ${item.Content}`;
+        contentDiv.appendChild(contentParagraph);
+
+        const nameParagraph = document.createElement('p');
+        nameParagraph.textContent = `From: ${item.FirstName} ${item.LastName}`;
+        contentDiv.appendChild(nameParagraph);
+
+        listItem.appendChild(contentDiv);
+        listGroup.appendChild(listItem);
+    });
+}

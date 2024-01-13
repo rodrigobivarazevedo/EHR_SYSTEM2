@@ -28,7 +28,7 @@ if ($action === "create_patient") {
     $statement->execute();
     
     $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
-    $doctorID = $DoctorID["DoctorID"];
+    $doctorID = $Doctor["DoctorID"];
     
     if (!$doctorID) {
         echo json_encode(["error" => "DoctorID not found"]);
@@ -91,16 +91,16 @@ if ($action === "delete_patient") {
     $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
     $statement->execute();
     
-    $DoctorID = $statement->fetch(PDO::FETCH_ASSOC);
+    $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
     
-    if (!$DoctorID) {
+    if (!$Doctor) {
         echo json_encode(["error" => "Doctor not found"]);
         exit(); // Terminate script execution after sending the response
     }
 
 
     // Test post_patient function
-    $doctorID = $DoctorID["DoctorID"];
+    $doctorID = $Doctor["DoctorID"];
 
     $result = $patients->delete_patient($dbo, $patientID, $doctorID);
 
@@ -114,8 +114,12 @@ if ($action === "delete_patient") {
     exit();
 }
 
-if ($action === "get_all_patients") {
+
+
+if ($action === "search_patients") {
     $UserID = $_SESSION["UserID"];
+    $parameter = $_POST["parameter"];
+    $input = $_POST["searchQueryInputValue"];
 
     $dbo = new Database();
     $patients = new Patients();
@@ -126,17 +130,17 @@ if ($action === "get_all_patients") {
     $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
     $statement->execute();
 
-    $DoctorID = $statement->fetch(PDO::FETCH_ASSOC);
+    $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
 
-    if (!$DoctorID) {
+    if (!$Doctor) {
         echo json_encode(["error" => "Doctor not found"]);
         exit(); // Terminate script execution after sending the response
     }
 
     // Test get_patients function
-    $doctorID = $DoctorID["DoctorID"];
+    $doctorID = $Doctor["DoctorID"];
 
-    $result = $patients->get_all_patients($dbo, $doctorID);
+    $result = $patients->search_patients($dbo, $doctorID, $parameter, $input);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -147,5 +151,7 @@ if ($action === "get_all_patients") {
     }
     exit();
 }
+
+
 
 ?>

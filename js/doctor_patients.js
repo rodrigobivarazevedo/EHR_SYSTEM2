@@ -1,26 +1,28 @@
 function updatePlaceholder() {
     const searchField = document.getElementById('searchField').value;
-    const genderField = document.getElementById('consultationType').value;
     const searchQueryInput = document.getElementById('searchQuery');
 
     // Update the placeholder based on the selected search field and gender
     switch (searchField) {
-        case 'firstName':
-            searchQueryInput.placeholder = `Enter ${genderField ? genderField + " Patient's " : ""}first name`;
-            break;
-        case 'lastName':
-            searchQueryInput.placeholder = `Enter ${genderField ? genderField + " Patient's " : ""}last name`;
+        case 'Name':
+            searchQueryInput.placeholder = `Enter Patient's first and last name`;
             break;
         case 'Email':
-            searchQueryInput.placeholder = `Enter ${genderField ? genderField + " Patient's " : ""}email`;
+            searchQueryInput.placeholder = `Enter Patient's email`;
             break;
         case 'contactNumber':
-            searchQueryInput.placeholder = `Enter ${genderField ? genderField + " Patient's " : ""}contact number`;
+            searchQueryInput.placeholder = `Enter Patient's contact number`;
             break;
         // Add more cases as needed
         default:
             searchQueryInput.placeholder = 'Enter search query';
     }
+}
+
+function searchPatients(){
+    const searchQueryInputValue = document.getElementById('searchQuery').value;
+    const parameter = document.getElementById('searchField').value;
+    get_patients(parameter, searchQueryInputValue);
 }
 
 
@@ -69,7 +71,7 @@ function createPatient() {
 
 function post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
     $.ajax({
-        url: "/EHR_system/ajax/doctor_portal_ajax.php",
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
         data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
@@ -90,15 +92,12 @@ function post_patient(firstName, lastName, email, birthdate, gender, address, co
     });
 }
 
-function get_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
+function get_patients(parameter, searchQueryInputValue) {
     $.ajax({
-        url: "/EHR_system/ajax/doctor_portal_ajax.php",
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "get_patient" },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
+        data: { parameter: parameter, searchQueryInputValue: searchQueryInputValue, action: "search_patients" },
         success: function(response) {
             alert(response);
             
@@ -115,7 +114,7 @@ function get_patient(firstName, lastName, email, birthdate, gender, address, con
 
 function update_patient() {
     $.ajax({
-        url: "/EHR_system/ajax/doctor_portal_ajax.php",
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
         data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
@@ -139,7 +138,7 @@ function update_patient() {
 
 function delete_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
     $.ajax({
-        url: "/EHR_system/ajax/doctor_portal_ajax.php",
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
         data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },

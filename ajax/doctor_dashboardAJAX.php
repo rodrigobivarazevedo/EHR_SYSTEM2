@@ -7,29 +7,58 @@ include_once $root . "/EHR_system/db/backend.php";
 
 $action = $_POST["action"];
 
+
+if ($action === "get_all_patients") {
+    $UserID = $_SESSION["UserID"];
+
+    $dbo = new Database();
+    $patients = new Patients();
+
+    $statement = $dbo->conn->prepare(
+        "SELECT DoctorID FROM doctors WHERE UserID = :UserID"
+    );
+    $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+    $statement->execute();
+
+    $DoctorID = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (!$DoctorID) {
+        echo json_encode(["error" => "Doctor not found"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+    // Test get_patients function
+    $doctorID = $DoctorID["DoctorID"];
+
+    $result = $patients->get_all_patients($dbo, $doctorID);
+
+    // Check if the result is an error
+    if (isset($result["error"])) {
+        // Handle the error, for example, send an appropriate response to the client
+        echo json_encode($result);
+    } else {
+        echo $result;
+    }
+    exit();
+}
+
+
+
 if ($action === "appointments") {
     $UserID = $_SESSION["UserID"];
     $dbo = new Database();
     $pdo = new Appointmentsinfo();
-    $result = $pdo->get_appointments($dbo, $UserID, $DoctorID="");
 
-    // Check if the result is an error
-    if (isset($result["error"])) {
-        // Handle the error, for example, send an appropriate response to the client
-        echo json_encode($result);
-    } else {
-        echo $result;
-    }
-    exit();
-}
-
-if ($action === "medications") {
-    $UserID = $_SESSION["UserID"];
+    $statement = $dbo->conn->prepare(
+        "SELECT DoctorID FROM doctors WHERE UserID = :UserID"
+    );
+    $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+ 
+    $statement->execute();
     
-    $dbo = new Database();
-    $pdo = new History();
-
-    $result = $pdo->medication($dbo, $UserID);
+    $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
+    $DoctorID = $Doctor["DoctorID"];
+    $result = $pdo->get_appointments($dbo, $patient = "", $DoctorID);
 
     // Check if the result is an error
     if (isset($result["error"])) {
@@ -40,6 +69,7 @@ if ($action === "medications") {
     }
     exit();
 }
+
 
 if ($action === "get_messages") {
     $UserID = $_SESSION["UserID"];
@@ -61,7 +91,7 @@ if ($action === "get_messages") {
 
 if ($action === "send_message") {
     $UserID = $_SESSION["UserID"];
-    $doctors_name = $_POST["Doctor_name"];
+    $patient_name = $_POST["Doctor_name"];
     $content = $_POST["content"];
 
     $dbo = new Database();
@@ -109,7 +139,6 @@ if ($action === "send_message") {
     }
     exit();
 }
-
 
 
 ?>
