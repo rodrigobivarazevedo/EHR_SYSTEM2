@@ -95,7 +95,7 @@ if (!isset($_SESSION['UserID'])) {
             <div>
                 <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
                     <option disabled selected value="">Select search parameter...</option>
-                    <option value="name">Name</option>
+                    <option value="name">Full Name</option>
                     <option value="email">Email</option>
                     <option value="contactNumber">Contact Number</option>
                     <!-- Add more options based on your needs -->
@@ -103,14 +103,14 @@ if (!isset($_SESSION['UserID'])) {
             </div>
         </div>
             <div class="input-group mt-3">
-                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                <input type="search" class="form-control" placeholder="Search by patientID..." aria-label="Search">
+                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" id="searchQueryID" role="search">
+                <input type="search" class="form-control" id="searchQueryID_input"placeholder="Search by patientID..." aria-label="Search">
                 </form>
             </div>
             <!-- Updated Input Group with Dynamic Placeholder -->
             <div class="col-md-6 mt-3"> <!-- Adjust the column width as needed -->
                         <div class="input-group">
-                            <input type="text" class="form-control" id="searchQuery" placeholder="Select search parameter">
+                            <input type="text" class="form-control" id="searchQuery" placeholder="Search by first or last name">
                             <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
                         </div>
             </div>
@@ -141,13 +141,13 @@ if (!isset($_SESSION['UserID'])) {
                     <div class="container p-4">
                     <h3 class="mb-4">Edit Patient</h3>
                             <!-- Patient Creation Form -->
-                            <form id="createPatientForm" class="mt-3">
+                            <form id="updatePatientForm" class="mt-3">
                                 <div class="mb-3">
                                     <label for="firstname" class="form-label">First Name:</label>
                                     <input type="text" class="form-control" id="firstname" placeholder="Enter patient first name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="lastname" class="form-label">First Name:</label>
+                                    <label for="lastname" class="form-label">Last Name:</label>
                                     <input type="text" class="form-control" id="lastname" placeholder="Enter patient last name" required>
                                 </div>
                                 <div class="mb-3">

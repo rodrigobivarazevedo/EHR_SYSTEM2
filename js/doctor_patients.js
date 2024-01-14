@@ -19,11 +19,35 @@ function updatePlaceholder() {
     }
 }
 
-function searchPatients(){
+
+// Event listener for search patient by ID
+document.getElementById('searchQueryID').addEventListener('input', function () {
+    const patientID = document.getElementById('searchQueryID_input').value;
+    console.log(patientID)
+    // Call your AJAX function
+    get_patients("PatientID", patientID);
+});
+
+
+function searchPatients() {
     const searchQueryInputValue = document.getElementById('searchQuery').value;
     const parameter = document.getElementById('searchField').value;
-    get_patients(parameter, searchQueryInputValue);
+    let isSingleWord = false;
+
+    // Check if the value is a single word (no whitespaces)
+    if (parameter == "" || parameter == "name") {
+        isSingleWord = !/\s/.test(searchQueryInputValue);
+    }
+
+    // If it's a single word, consider it as the first name
+    if (isSingleWord) {
+        get_patients("FirstName", searchQueryInputValue);
+    } else {
+        // Otherwise, use the original parameter and value
+        get_patients(parameter, searchQueryInputValue);
+    }
 }
+
 
 
 function get_patients(parameter, searchQueryInputValue) {
@@ -31,7 +55,7 @@ function get_patients(parameter, searchQueryInputValue) {
         url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json", // Changed "JSON" to "json"
-        data: { parameter: parameter, searchQueryInputValue: searchQueryInputValue, action: "advanced_search_patients" },
+        data: { parameter: parameter, searchQueryInputValue: searchQueryInputValue, action: "search_patients" },
         success: function(response) {
             updateCardUI(response)
             
@@ -129,9 +153,8 @@ function deletePatient() {
         url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",
         dataType: "json",
-        data: { parameter: "PatientID", searchQueryInputValue: patientID, action: "advanced_search_patients" },
+        data: { parameter: "PatientID", searchQueryInputValue: patientID, action: "search_patients" },
         success: function(response) {
-            console.log(response)
             const FirstName = response[0].FirstName; 
             const LastName = response[0].LastName;
             confirmation(FirstName, LastName, patientID);
@@ -148,7 +171,7 @@ function confirmation(firstName, lastName, patientID) {
 
     if (confirmResult) {
         // Trigger the form submission
-        delete_patient(patientID);
+        delete_patient_ajax(patientID);
     }
 }
 
@@ -158,7 +181,7 @@ document.getElementById('deletePatientForm').addEventListener('submit', function
     // Handle form submission if needed
 });
 
-function delete_patient(patientID) {
+function delete_patient_ajax(patientID) {
     $.ajax({
         url: "/EHR_system/ajax/doctor_patientAJAX.php",
         type: "POST",

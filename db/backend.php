@@ -634,10 +634,14 @@ class Patients
             if (!$this->doctorExists($dbo, $doctorID)) {
                 return json_encode(["error" => "Doctor not found"]);
             }
-
+            $ID = False;
             // Construct the SQL query dynamically based on the selected parameter
             $query = "SELECT * FROM Patients WHERE DoctorID = :doctorID AND (";
             switch ($parameter) {
+                case 'FirstName':
+                    $query .= "FirstName LIKE :searchParameter OR LastName LIKE :searchParameter";
+                    break;
+
                 case 'name':
                     $nameArray = explode(' ', $input);
                     // Check if the array has at least two elements
