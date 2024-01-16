@@ -39,7 +39,7 @@ if (!isset($_SESSION['UserID'])) {
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                <h3>MyFastCARE</h3>
             </a>
 
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
@@ -75,7 +75,6 @@ if (!isset($_SESSION['UserID'])) {
             <div class="text-end">
             <!-- Sign Out Button -->
             <button type="button" onclick="confirmSignOut();" class="btn btn-light text-dark me-2">Sign Out</button>
-            <a href="MyFastCARE_booking.php"><button type="button" class="btn btn-primary">Booking</button></a>
             </div>
         </div>
     </header>
@@ -89,12 +88,7 @@ if (!isset($_SESSION['UserID'])) {
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#personalDataTab">Personal Data</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#insuranceTab">Insurance</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#walletTab">Wallet</a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#securityTab">Security</a>
             </li>
@@ -107,113 +101,113 @@ if (!isset($_SESSION['UserID'])) {
             <!-- Personal Data Tab Content -->
             <div id="personalDataTab" class="tab-pane fade show active mt-3">
             
-                <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Username">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="phoneNumber">Phone Number</label>
-                            <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address">
-                        </div>
-                    </div>
-                
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="postalCode">Postal Code</label>
-                            <input type="text" class="form-control" id="postalCode" placeholder="Postal Code">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control" id="city" placeholder="City">
-                        </div>
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="socialSecurityNumber">Social Security Number</label>
-                        <input type="text" class="form-control" id="socialSecurityNumber" placeholder="Social Security Number">
-                    </div>
-                </form>
-                
-            </div>
-            
-            
-            <!-- Insurance Tab Content -->
-            <div id="insuranceTab" class="tab-pane fade mt-3">
-                
-                <div class="insurance-info">
-                    <h2>Insurance Information</h2>
-                    <p>Your insurance details:</p>
-                    <ul>
-                        <li>Insurance provider: [Provider Name]</li>
-                        <li>Policy number: [Policy Number]</li>
-                        <li>Contact: [Contact Info]</li>
-                    </ul>
-                </div>
-            
+                <div class="album py-5 bg-light">
 
-                <form>
-                    <div class="form-group">
-                        <label for="insuranceProvider">Insurance Provider</label>
-                        <input type="text" class="form-control" id="insuranceProvider" placeholder="Insurance Provider">
-                    </div>
-                    <div class="form-group">
-                        <label for="policyNumber">Policy Number</label>
-                        <input type="text" class="form-control" id="policyNumber" placeholder="Policy Number">
-                    </div>
-                    <div class="form-group">
-                        <label for="insuranceContact">Contact</label>
-                        <input type="text" class="form-control" id="insuranceContact" placeholder="Insurance Contact Info">
-                    </div>
-                </form>
+                        <div class="col-md-5">
+                        
+                            <div class="container p-4">
+                            <h3 class="mb-4" id="editTitle">Personal Data</h3>
+                                    <!-- Patient Creation Form -->
+                                    <form id="updatePatientForm" class="mt-3">
+                                        <div class="mb-3">
+                                            <label for="PatientID_update" class="form-label">Patient ID:</label>
+                                            <input type="text" class="form-control" id="PatientID_update" placeholder="Enter patient ID" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="firstname_update" class="form-label">First Name:</label>
+                                            <input type="text" class="form-control" id="firstname_update" placeholder="Enter patient first name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lastname_update" class="form-label">Last Name:</label>
+                                            <input type="text" class="form-control" id="lastname_update" placeholder="Enter patient last name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="patientEmail_update" class="form-label">Patient Email:</label>
+                                            <input type="email" class="form-control" id="patientEmail_update" placeholder="Enter patient email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="patientBirthdate_update" class="form-label">Date of Birth:</label>
+                                            <input type="date" class="form-control" id="patientBirthdate_update" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="patientGender_update" class="form-label">Gender:</label>
+                                            <select id="patientGender_update" class="form-select" required>
+                                                <option disabled selected value="">Select gender...</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="patientAddress_update" class="form-label">Address:</label>
+                                            <input type="text" class="form-control" id="patientAddress_update" placeholder="Enter patient address">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="patientContactNumber_update" class="form-label">Contact Number:</label>
+                                            <input type="tel" class="form-control" id="patientContactNumber_update" placeholder="Enter contact number">
+                                        </div>
+                                    </form>
+                                    <button type="button" class="btn btn-primary mt-3" onclick="update_patient()">Update Details</button>
+                            </div>
+                        </div>
+                </div> 
             </div>
-
-            <!-- Wallet Tab Content -->
-            <div id="walletTab" class="tab-pane fade mt-3">
             
-                <form>
-                    <div class="form-group">
-                        <label for="insuranceProvider">Card</label>
-                        <input type="text" class="form-control" id="insuranceProvider" placeholder="Insurance Provider">
-                    </div>
-                    <div class="form-group">
-                        <label for="policyNumber">Payment Method</label>
-                        <input type="text" class="form-control" id="policyNumber" placeholder="Policy Number">
-                    </div>
-                </form>
-            
-            </div>
-            
+       
             <!-- Security Tab Content -->
             <div id="securityTab" class="tab-pane fade mt-3">
             
-                <form>
-                    <div class="form-group">
-                        <label for="change-password">Change Password</label>
-                        <input type="text" class="form-control" id="change-password" placeholder="Change Password">
+                <div class="album py-5 bg-light">
+
+                    <div class="col-md-5">
+
+                        <div class="container p-4">
+                        <h3 class="mb-4" id="editTitle">Login Data</h3>
+                                <!-- Patient Creation Form -->
+                                <form id="updatePatientForm" class="mt-3">
+                                    <div class="mb-3">
+                                        <label for="PatientID_update" class="form-label">Patient ID:</label>
+                                        <input type="text" class="form-control" id="PatientID_update" placeholder="Enter patient ID" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="firstname_update" class="form-label">First Name:</label>
+                                        <input type="text" class="form-control" id="firstname_update" placeholder="Enter patient first name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lastname_update" class="form-label">Last Name:</label>
+                                        <input type="text" class="form-control" id="lastname_update" placeholder="Enter patient last name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="patientEmail_update" class="form-label">Patient Email:</label>
+                                        <input type="email" class="form-control" id="patientEmail_update" placeholder="Enter patient email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="patientBirthdate_update" class="form-label">Date of Birth:</label>
+                                        <input type="date" class="form-control" id="patientBirthdate_update" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="patientGender_update" class="form-label">Gender:</label>
+                                        <select id="patientGender_update" class="form-select" required>
+                                            <option disabled selected value="">Select gender...</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="patientAddress_update" class="form-label">Address:</label>
+                                        <input type="text" class="form-control" id="patientAddress_update" placeholder="Enter patient address">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="patientContactNumber_update" class="form-label">Contact Number:</label>
+                                        <input type="tel" class="form-control" id="patientContactNumber_update" placeholder="Enter contact number">
+                                    </div>
+                                </form>
+                                <button type="button" class="btn btn-primary mt-3" onclick="update_patient()">Update Details</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="policyNumber">Policy Number</label>
-                        <input type="text" class="form-control" id="policyNumber" placeholder="Policy Number">
-                    </div>
-                    <div class="form-group">
-                        <label for="insuranceContact">Contact</label>
-                        <input type="text" class="form-control" id="insuranceContact" placeholder="Insurance Contact Info">
-                    </div>
-                </form>
-            
+                </div> 
+                
             </div>
             
             <!-- Data Protection Tab Content -->

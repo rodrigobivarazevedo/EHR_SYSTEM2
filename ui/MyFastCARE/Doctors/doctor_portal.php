@@ -40,7 +40,7 @@ if (!isset($_SESSION['UserID'])) {
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                <h3>MyFastCARE</h3> 
             </a>
 
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
@@ -74,8 +74,7 @@ if (!isset($_SESSION['UserID'])) {
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
             <div class="text-end">
-                        <button type="button" class="btn btn-light text-dark me-2" id="teleMedButton">Send a Message</button>
-                        <a href="health_records.php"><button type="button" class="btn btn-primary">View Health Record</button></a>
+                        <button type="button" class="btn btn-primary" id="teleMedButton">Send a Message</button></a>
                     </div>
                     
             </div>

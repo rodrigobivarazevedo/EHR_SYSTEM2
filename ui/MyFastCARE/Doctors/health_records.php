@@ -39,7 +39,7 @@ if (!isset($_SESSION['UserID'])) {
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                <h3>MyFastCARE</h3>
             </a>
 
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
@@ -72,10 +72,8 @@ if (!isset($_SESSION['UserID'])) {
         </div>
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
-        <div class="container d-flex flex-wrap justify-content-center">
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-            <input type="search" class="form-control" placeholder="Search patient by ID..." aria-label="Search">
-            </form>
+        
+            
 
             <div class="text-end">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Record</button>
@@ -83,7 +81,7 @@ if (!isset($_SESSION['UserID'])) {
 
             </div>
             
-        </div>
+        
         </div>
     </header>
 
@@ -97,27 +95,11 @@ if (!isset($_SESSION['UserID'])) {
 
         <div class="findcaredropdowns">
             
-            <div>
-                <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
-                    <option disabled selected value="">Select search parameter...</option>
-                    <option value="name">Full Name</option>
-                    <option value="email">Email</option>
-                    <option value="contactNumber">Contact Number</option>
-                    <!-- Add more options based on your needs -->
-                </select>
-            </div>
         </div>
             <div class="input-group mt-3">
                 <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" id="searchQueryID" role="search">
                 <input type="search" class="form-control" id="searchQueryID_input"placeholder="Search by patientID..." aria-label="Search">
                 </form>
-            </div>
-            <!-- Updated Input Group with Dynamic Placeholder -->
-            <div class="col-md-6 mt-3"> <!-- Adjust the column width as needed -->
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="searchQuery" placeholder="Search by first or last name">
-                            <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
-                        </div>
             </div>
 
     </div>
@@ -132,7 +114,7 @@ if (!isset($_SESSION['UserID'])) {
                 <div class="col-md-7">
                         <div class="container p-4">
                             <h3 class="mb-4">Search Results</h3>
-                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
+                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="records">
                                 <!-- Cards will be updated dynamically  -->
                                 
                                 </div>
@@ -145,47 +127,41 @@ if (!isset($_SESSION['UserID'])) {
                 
                     <div class="container p-4">
                     <h3 class="mb-4" id="editTitle">Edit Record</h3>
-                            <!-- Patient Creation Form -->
+                            <!-- Record edit Form -->
                             <form id="updatePatientForm" class="mt-3">
                                 <div class="mb-3">
-                                    <label for="PatientID_update" class="form-label">PatientID:</label>
+                                    <label for="recordID_update" class="form-label">Patient ID:</label>
+                                    <input type="text" class="form-control" id="recordID_update" placeholder="Enter record ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="PatientID_update" class="form-label">Patient ID:</label>
                                     <input type="text" class="form-control" id="PatientID_update" placeholder="Enter patient ID" required>
                                 </div>
+                                <!-- Additional Health Record Information -->
                                 <div class="mb-3">
-                                    <label for="firstname_update" class="form-label">First Name:</label>
-                                    <input type="text" class="form-control" id="firstname_update" placeholder="Enter patient first name" required>
+                                    <label for="recordDate_update" class="form-label">Date Recorded:</label>
+                                    <input type="date" class="form-control" id="recordDate_update" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="lastname_update" class="form-label">Last Name:</label>
-                                    <input type="text" class="form-control" id="lastname_update" placeholder="Enter patient last name" required>
+                                    <label for="diagnosis_update" class="form-label">Diagnosis:</label>
+                                    <textarea class="form-control" id="diagnosis_update" placeholder="Enter diagnosis" rows="4"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientEmail_update" class="form-label">Patient Email:</label>
-                                    <input type="email" class="form-control" id="patientEmail_update" placeholder="Enter patient email" required>
+                                    <label for="medications_update" class="form-label">Medications:</label>
+                                    <textarea class="form-control" id="medications_update" placeholder="Enter medications"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientBirthdate_update" class="form-label">Date of Birth:</label>
-                                    <input type="date" class="form-control" id="patientBirthdate_update" required>
+                                    <label for="procedures_update" class="form-label">Procedures:</label>
+                                    <textarea class="form-control" id="procedures_update" placeholder="Enter procedures"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientGender_update" class="form-label">Gender:</label>
-                                    <select id="patientGender_update" class="form-select" required>
-                                        <option disabled selected value="">Select gender...</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                                    <label for="comments_update" class="form-label">Comments:</label>
+                                    <textarea class="form-control" id="comments_update" placeholder="Enter comments" rows="4"></textarea>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="patientAddress_update" class="form-label">Address:</label>
-                                    <input type="text" class="form-control" id="patientAddress_update" placeholder="Enter patient address">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="patientContactNumber_update" class="form-label">Contact Number:</label>
-                                    <input type="tel" class="form-control" id="patientContactNumber_update" placeholder="Enter contact number">
-                                </div>
+                                <!-- Add more health record fields as needed -->
                             </form>
-                            <button type="button" class="btn btn-primary mt-3" onclick="update_patient()">Update Patient</button>
+
+                            <button type="button" class="btn btn-primary mt-3" onclick="update_health_record()">Update Record</button>
                     </div>
                 </div>
     
@@ -197,51 +173,38 @@ if (!isset($_SESSION['UserID'])) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="messageModalLabel">Create a New Patient</h3>
+        <h3 class="modal-title" id="messageModalLabel">Create a New Health Record</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
             <!-- Patient Creation Form -->
-            <form id="createPatientForm" class="mt-3">
+            <form id="createRecordForm" class="mt-3">
                 <div class="mb-3">
-                    <label for="firstname_create" class="form-label">First Name:</label>
-                    <input type="text" class="form-control" id="firstname_create" placeholder="Enter patient first name" required>
+                    <label for="PatientID_create" class="form-label">Patient ID:</label>
+                    <input type="text" class="form-control" id="PatientID_create" placeholder="Enter patient ID" required>
                 </div>
                 <div class="mb-3">
-                    <label for="lastname_create" class="form-label">First Name:</label>
-                    <input type="text" class="form-control" id="lastname_create" placeholder="Enter patient last name" required>
+                    <label for="diagnosis_create" class="form-label">Diagnosis:</label>
+                    <textarea class="form-control" id="diagnosis_create" placeholder="Enter diagnosis" rows="4"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="patientEmail_create" class="form-label">Patient Email:</label>
-                    <input type="email" class="form-control" id="patientEmail_create" placeholder="Enter patient email" required>
+                    <label for="medications_create" class="form-label">Medications:</label>
+                    <textarea class="form-control" id="medications_create" placeholder="Enter medications"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="patientBirthdate_create" class="form-label">Date of Birth:</label>
-                    <input type="date" class="form-control" id="patientBirthdate_create" required>
+                    <label for="procedures_create" class="form-label">Procedures:</label>
+                    <textarea class="form-control" id="procedures_create" placeholder="Enter procedures"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="patientGender_create" class="form-label">Gender:</label>
-                    <select id="patientGender_create" class="form-select" required>
-                        <option disabled selected value="">Select gender...</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <label for="comments_create" class="form-label">Comments:</label>
+                    <textarea class="form-control" id="comments_create" placeholder="Enter comments" rows="4"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="patientAddress_create" class="form-label">Address:</label>
-                    <input type="text" class="form-control" id="patientAddress_create" placeholder="Enter patient address">
-                </div>
-                <div class="mb-3">
-                    <label for="patientContactNumber_create" class="form-label">Contact Number:</label>
-                    <input type="tel" class="form-control" id="patientContactNumber_create" placeholder="Enter contact number">
-                </div>
-    
+                <!-- Add more health record fields as needed -->
             </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-secondary" onclick="createPatient()">Create Patient</button>
+        <button type="button" class="btn btn-secondary" onclick="create_health_record()">Create Record</button>
       </div>
     </div>
   </div>
@@ -256,17 +219,21 @@ if (!isset($_SESSION['UserID'])) {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-            <!-- Patient Creation Form -->
+            <!-- Record Delete Form -->
             <form id="deletePatientForm" class="mt-3">
                 <div class="mb-3">
                     <label for="patientID" class="form-label">Patient ID:</label>
                     <input type="text" class="form-control" id="patientID" placeholder="Enter patient ID" required>
                 </div>
+                <div class="mb-3">
+                    <label for="recordID" class="form-label">Record ID:</label>
+                    <input type="text" class="form-control" id="recordID" placeholder="Enter record ID" required>
+                </div>
             </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-secondary" onclick="deletePatient()">Delete Patient</button>
+        <button type="button" class="btn btn-secondary" onclick="delete_health_record()">Delete Record</button>
       </div>
     </div>
   </div>
@@ -283,7 +250,7 @@ if (!isset($_SESSION['UserID'])) {
 
 
 <script src="/EHR_system/global/jquery.js"></script>
-
+<script src="/EHR_system/js/health_records.js"></script>
 
 
 </body>
