@@ -55,17 +55,49 @@ if ($action === "update_patient") {
     
     $dbo = new Database();
     $patients = new Patients();
-    $newData = $_POST["newData"];
-
-    $patientID = 2; // Replace with an existing patient ID
+    
     $newData = [
-        'FirstName' => 'Alexandra',
-        'LastName' => 'Doe',
-        'ContactNumber' => '1234567895',
-        "Email" => "Alexandra.Doe@gmail.com"
+        'PatientID' => $_POST["PatientID"],
+        'FirstName' => $_POST["firstName"],
+        'LastName' => $_POST["lastName"],
+        'Email' => $_POST["email"],
+        'Birthdate' => $_POST["birthdate"],
+        'Gender' => $_POST["gender"],
+        'Address' => $_POST["address"],
+        'ContactNumber' => $_POST["contactNumber"],
     ];
+    
 
-    $result = $patients->update_patient($dbo, $patientID, $newData);
+    $statement = $dbo->conn->prepare(
+        "SELECT DoctorID FROM doctors WHERE UserID = :UserID"
+    );
+    $statement->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+    $statement->execute();
+    
+    $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$Doctor) {
+        echo json_encode(["error" => "Doctor not found"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+    // Test post_patient function
+    $doctorID = $Doctor["DoctorID"];
+    $statement = $dbo->conn->prepare(
+        "SELECT DoctorID FROM patients WHERE PatientID = :patientID"
+    );
+    $statement->bindParam(':patientID', $PatientID, PDO::PARAM_INT);
+    $statement->execute();
+    
+    $Doctor = $statement->fetch(PDO::FETCH_ASSOC);
+    $patient_doctorID = $Doctor["DoctorID"];
+    if ($doctorID !== $patient_doctorID) {
+        echo json_encode(["error" => "Patient is not yours"]);
+        exit(); // Terminate script execution after sending the response
+    }
+
+
+    $result = $patients->update_patient($dbo, $PatientID, $newData);
 
     // Check if the result is an error
     if (isset($result["error"])) {

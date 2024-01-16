@@ -139,28 +139,32 @@ if (!isset($_SESSION['UserID'])) {
                 <div class="col-md-5">
                 
                     <div class="container p-4">
-                    <h3 class="mb-4">Edit Patient</h3>
+                    <h3 class="mb-4" id="editTitle">Edit Patient</h3>
                             <!-- Patient Creation Form -->
                             <form id="updatePatientForm" class="mt-3">
                                 <div class="mb-3">
-                                    <label for="firstname" class="form-label">First Name:</label>
-                                    <input type="text" class="form-control" id="firstname" placeholder="Enter patient first name" required>
+                                    <label for="PatientID_update" class="form-label">Patient ID:</label>
+                                    <input type="text" class="form-control" id="PatientID_update" placeholder="Enter patient ID" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="lastname" class="form-label">Last Name:</label>
-                                    <input type="text" class="form-control" id="lastname" placeholder="Enter patient last name" required>
+                                    <label for="firstname_update" class="form-label">First Name:</label>
+                                    <input type="text" class="form-control" id="firstname_update" placeholder="Enter patient first name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientEmail" class="form-label">Patient Email:</label>
-                                    <input type="email" class="form-control" id="patientEmail" placeholder="Enter patient email" required>
+                                    <label for="lastname_update" class="form-label">Last Name:</label>
+                                    <input type="text" class="form-control" id="lastname_update" placeholder="Enter patient last name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientBirthdate" class="form-label">Date of Birth:</label>
-                                    <input type="date" class="form-control" id="patientBirthdate" required>
+                                    <label for="patientEmail_update" class="form-label">Patient Email:</label>
+                                    <input type="email" class="form-control" id="patientEmail_update" placeholder="Enter patient email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientGender" class="form-label">Gender:</label>
-                                    <select id="patientGender" class="form-select" required>
+                                    <label for="patientBirthdate_update" class="form-label">Date of Birth:</label>
+                                    <input type="date" class="form-control" id="patientBirthdate_update" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientGender_update" class="form-label">Gender:</label>
+                                    <select id="patientGender_update" class="form-select" required>
                                         <option disabled selected value="">Select gender...</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -168,15 +172,15 @@ if (!isset($_SESSION['UserID'])) {
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientAddress" class="form-label">Address:</label>
-                                    <input type="text" class="form-control" id="patientAddress" placeholder="Enter patient address">
+                                    <label for="patientAddress_update" class="form-label">Address:</label>
+                                    <input type="text" class="form-control" id="patientAddress_update" placeholder="Enter patient address">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="patientContactNumber" class="form-label">Contact Number:</label>
-                                    <input type="tel" class="form-control" id="patientContactNumber" placeholder="Enter contact number">
+                                    <label for="patientContactNumber_update" class="form-label">Contact Number:</label>
+                                    <input type="tel" class="form-control" id="patientContactNumber_update" placeholder="Enter contact number">
                                 </div>
                             </form>
-                            <button type="button" class="btn btn-primary mt-3" onclick="updatePatient()">Update Patient</button>
+                            <button type="button" class="btn btn-primary mt-3" onclick="update_patient()">Update Patient</button>
                     </div>
                 </div>
     
@@ -195,24 +199,24 @@ if (!isset($_SESSION['UserID'])) {
             <!-- Patient Creation Form -->
             <form id="createPatientForm" class="mt-3">
                 <div class="mb-3">
-                    <label for="firstname" class="form-label">First Name:</label>
-                    <input type="text" class="form-control" id="firstname" placeholder="Enter patient first name" required>
+                    <label for="firstname_create" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="firstname_create" placeholder="Enter patient first name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="lastname" class="form-label">First Name:</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="Enter patient last name" required>
+                    <label for="lastname_create" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="lastname_create" placeholder="Enter patient last name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="patientEmail" class="form-label">Patient Email:</label>
-                    <input type="email" class="form-control" id="patientEmail" placeholder="Enter patient email" required>
+                    <label for="patientEmail_create" class="form-label">Patient Email:</label>
+                    <input type="email" class="form-control" id="patientEmail_create" placeholder="Enter patient email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="patientBirthdate" class="form-label">Date of Birth:</label>
-                    <input type="date" class="form-control" id="patientBirthdate" required>
+                    <label for="patientBirthdate_create" class="form-label">Date of Birth:</label>
+                    <input type="date" class="form-control" id="patientBirthdate_create" required>
                 </div>
                 <div class="mb-3">
-                    <label for="patientGender" class="form-label">Gender:</label>
-                    <select id="patientGender" class="form-select" required>
+                    <label for="patientGender_create" class="form-label">Gender:</label>
+                    <select id="patientGender_create" class="form-select" required>
                         <option disabled selected value="">Select gender...</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -220,14 +224,13 @@ if (!isset($_SESSION['UserID'])) {
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="patientAddress" class="form-label">Address:</label>
-                    <input type="text" class="form-control" id="patientAddress" placeholder="Enter patient address">
+                    <label for="patientAddress_create" class="form-label">Address:</label>
+                    <input type="text" class="form-control" id="patientAddress_create" placeholder="Enter patient address">
                 </div>
                 <div class="mb-3">
-                    <label for="patientContactNumber" class="form-label">Contact Number:</label>
-                    <input type="tel" class="form-control" id="patientContactNumber" placeholder="Enter contact number">
+                    <label for="patientContactNumber_create" class="form-label">Contact Number:</label>
+                    <input type="tel" class="form-control" id="patientContactNumber_create" placeholder="Enter contact number">
                 </div>
-
     
             </form>
       </div>

@@ -635,11 +635,13 @@ class Patients
                 return json_encode(["error" => "Doctor not found"]);
             }
             $ID = False;
+            $firstorlastname=False;
             // Construct the SQL query dynamically based on the selected parameter
             $query = "SELECT * FROM Patients WHERE DoctorID = :doctorID AND (";
             switch ($parameter) {
                 case 'FirstName':
                     $query .= "FirstName LIKE :searchParameter OR LastName LIKE :searchParameter";
+                    $firstorlastname=True;
                     break;
 
                 case 'name':
@@ -678,7 +680,11 @@ class Patients
                 $statement->bindParam(':searchParameterFirstName', $searchParameterFirstName, PDO::PARAM_STR);
                 $statement->bindParam(':searchParameterLastName', $searchParameterLastName, PDO::PARAM_STR);
             
-            } elseif ($ID){
+            } elseif ($firstorlastname){
+                $searchParameter = '%' . $input;
+                $statement->bindParam(':searchParameter', $searchParameter, PDO::PARAM_STR);
+
+            }elseif ($ID){
                 $searchParameter = $input;
                 $statement->bindParam(':searchParameter', $searchParameter, PDO::PARAM_STR);
 

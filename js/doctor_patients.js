@@ -35,7 +35,7 @@ function searchPatients() {
     let isSingleWord = false;
 
     // Check if the value is a single word (no whitespaces)
-    if (parameter == "" || parameter == "name") {
+    if (parameter == "") {
         isSingleWord = !/\s/.test(searchQueryInputValue);
     }
 
@@ -86,7 +86,7 @@ function updateCardUI(data) {
                       
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" id="view-edit-btn">View/Edit</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="view-edit-btn" onclick="editPatient("${patient.PatientID}",'${patient.FirstName}', '${patient.LastName}', '${patient.Email}', '${patient.Birthdate}', '${patient.Gender}', '${patient.Address}', '${patient.ContactNumber}')">View/Edit</button>
                             </div>
                         </div>
                     </div>
@@ -100,16 +100,75 @@ function updateCardUI(data) {
     });
 }
 
+function editPatient(PatientID,firstName, lastName, email, birthdate, gender, address, contactNumber) {
+    // Populate the form fields with the patient information
+    document.getElementById('editTitle').value = `Edit ${firstName} ${lastName}, PatientID: ${PatientID}      `;
+    document.getElementById('PatientID').value = PatientID;
+    document.getElementById('firstname').value = firstName;
+    document.getElementById('lastname').value = lastName;
+    document.getElementById('patientEmail').value = email;
+    document.getElementById('patientBirthdate').value = birthdate;
+    document.getElementById('patientGender').value = gender;
+    document.getElementById('patientAddress').value = address;
+    document.getElementById('patientContactNumber').value = contactNumber;
+
+    // Optionally, you can perform additional actions related to editing a patient
+}
+
+
+function update_patient() {
+    PatientID = document.getElementById('PatientID_update').value;
+    firstName = document.getElementById('firstname_update').value;
+    lastName = document.getElementById('lastname_update').value;
+    email = document.getElementById('patientEmail_update').value;
+    birthdate = document.getElementById('patientBirthdate_update').value;
+    gender = document.getElementById('patientGender_update').value;
+    address = document.getElementById('patientAddress_update').value;
+    contactNumber = document.getElementById('patientContactNumber_update').value;
+    if (!firstName || !lastName || !email || !birthdate || !gender || !address || !contactNumber) {
+        // Display an alert if any required field is empty
+        alert('Please select a Patient.');
+        return;
+    }
+
+    // Show a confirmation alert
+    const confirmResult = window.confirm('Are you sure you want to update this patient?');
+
+    // Check if the user clicked "OK" in the confirmation alert
+    if (confirmResult) {
+        $.ajax({
+            url: "/EHR_system/ajax/doctor_patientAJAX.php",
+            type: "POST",
+            dataType: "json", // Changed "JSON" to "json"
+            data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "update_patient" },
+            success: function(response) {
+                alert(response);
+                
+            },
+            error: function(xhr) {
+                // Log detailed error information to the console
+                console.log(xhr.responseText);
+                
+                // Display a user-friendly error message
+                alert("AJAX request failed. Check the console for details.");
+            }
+        });
+    }
+}
+
+
 
 function createPatient() {
     // Check if all required values are filled
-    const firstName = document.getElementById('firstname').value;
-    const lastName = document.getElementById('lastname').value;
-    const email = document.getElementById('patientEmail').value;
-    const birthdate = document.getElementById('patientBirthdate').value;
-    const gender = document.getElementById('patientGender').value;
+    firstName = document.getElementById('firstname_create').value;
+    lastName = document.getElementById('lastname_create').value;
+    email = document.getElementById('patientEmail_create').value;
+    birthdate = document.getElementById('patientBirthdate_create').value;
+    gender = document.getElementById('patientGender_create').value;
+    address = document.getElementById('patientAddress_create').value;
+    contactNumber = document.getElementById('patientContactNumber_create').value;
 
-    if (!firstName || !lastName || !email || !birthdate || !gender) {
+    if (!firstName || !lastName || !email || !birthdate || !gender || !address || !contactNumber) {
         // Display an alert if any required field is empty
         alert('Please fill in all required fields.');
         return;
@@ -137,6 +196,29 @@ function createPatient() {
             $('#createPatientModal').modal('hide');
         });
     }
+}
+
+function post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
+    $.ajax({
+        url: "/EHR_system/ajax/doctor_patientAJAX.php",
+        type: "POST",
+        dataType: "json", // Changed "JSON" to "json"
+        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
+        beforeSend: function() {
+            // Add any code to run before the request is sent (optional)
+        },
+        success: function(response) {
+            alert(response);
+            
+        },
+        error: function(xhr) {
+            // Log detailed error information to the console
+            console.log(xhr.responseText);
+            
+            // Display a user-friendly error message
+            alert("AJAX request failed. Check the console for details.");
+        }
+    });
 }
 
 
@@ -206,52 +288,9 @@ function delete_patient_ajax(patientID) {
 
 
 
-function post_patient(firstName, lastName, email, birthdate, gender, address, contactNumber) {
-    $.ajax({
-        url: "/EHR_system/ajax/doctor_patientAJAX.php",
-        type: "POST",
-        dataType: "json", // Changed "JSON" to "json"
-        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
-        success: function(response) {
-            alert(response);
-            
-        },
-        error: function(xhr) {
-            // Log detailed error information to the console
-            console.log(xhr.responseText);
-            
-            // Display a user-friendly error message
-            alert("AJAX request failed. Check the console for details.");
-        }
-    });
-}
 
 
-function update_patient() {
-    $.ajax({
-        url: "/EHR_system/ajax/doctor_patientAJAX.php",
-        type: "POST",
-        dataType: "json", // Changed "JSON" to "json"
-        data: { firstName: firstName, lastName: lastName, email: email, birthdate: birthdate, gender: gender, address: address, contactNumber: contactNumber, action: "create_patient" },
-        beforeSend: function() {
-            // Add any code to run before the request is sent (optional)
-        },
-        success: function(response) {
-            alert(response);
-            
-        },
-        error: function(xhr) {
-            // Log detailed error information to the console
-            console.log(xhr.responseText);
-            
-            // Display a user-friendly error message
-            alert("AJAX request failed. Check the console for details.");
-        }
-    });
-}
+
 
 
 

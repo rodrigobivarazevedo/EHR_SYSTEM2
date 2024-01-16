@@ -74,9 +74,14 @@ if (!isset($_SESSION['UserID'])) {
         <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-center">
             <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-            <input type="search" class="form-control" placeholder="Search clinic..." aria-label="Search">
+            <input type="search" class="form-control" placeholder="Search patient by ID..." aria-label="Search">
             </form>
 
+            <div class="text-end">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Record</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#messageModal">Add New Record</button>
+
+            </div>
             
         </div>
         </div>
@@ -85,80 +90,187 @@ if (!isset($_SESSION['UserID'])) {
 
     <main>
 
-  <section class="py-5 text-center container">
-    <div class="container mt-5">
+    <section class="py-5 text-center container">
+    <div class="container">
 
-        <h1>MAKE A APPOINTMENT</h1>
+        <h1>HealthRecords editor</h1>
 
         <div class="findcaredropdowns">
-          <div>
-              
-              <select id="consultationType" class="form-control-file dropdown_item">
-                  <option disabled selected value="">Select Type Consultation...</option>
-                  <option value="Appointment">Appointment</option>
-                  <option value="Exam">Exam</option>
-                  <option value="Teleconsultation">Teleconsultation</option>
-              </select>
-          </div>
-      
-          <div>
-              <select id="specialities" class="form-control-file dropdown_item">
-                  <option disabled selected value="">Select Speciality...</option>
-                  <option value="Cardiology">Cardiology</option>
-                  <option value="Nephrology">Nephrology</option>
-                  <option value="Gastroenterology">Gastroenterology</option>
-                  <option value="Gynecology">Gynecology</option>
-                  <option value="Obstetriciology">Obstetriciology</option>
-                  <option value="Dentist">Dentist</option>
-                  <option value="Rheumatology">Rheumatology</option>
-                  <option value="Dermatology">Dermatology</option>
-                  <option value="Family Medicine">Family Medicine</option>
-              </select>
-          </div>
-      
-          
-      </div>
-      
-      
             
+            <div>
+                <select id="searchField" class="form-control-file dropdown_item" onchange="updatePlaceholder()">
+                    <option disabled selected value="">Select search parameter...</option>
+                    <option value="name">Full Name</option>
+                    <option value="email">Email</option>
+                    <option value="contactNumber">Contact Number</option>
+                    <!-- Add more options based on your needs -->
+                </select>
+            </div>
+        </div>
+            <div class="input-group mt-3">
+                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" id="searchQueryID" role="search">
+                <input type="search" class="form-control" id="searchQueryID_input"placeholder="Search by patientID..." aria-label="Search">
+                </form>
+            </div>
+            <!-- Updated Input Group with Dynamic Placeholder -->
+            <div class="col-md-6 mt-3"> <!-- Adjust the column width as needed -->
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchQuery" placeholder="Search by first or last name">
+                            <button class="btn btn-primary" type="button" onclick="searchPatients()">Search</button>
+                        </div>
+            </div>
+
     </div>
   </section>
 
 
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <h2>Available Consultations</h2>
-      <div id="calendar" class="container mt-5 mb-3"> </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="content">
-        <!-- Cards will be updated dynamically  -->
-        
-      
+        <div class="album py-5 bg-light">
+
+            <div class="row">
+
+
+                <div class="col-md-7">
+                        <div class="container p-4">
+                            <h3 class="mb-4">Search Results</h3>
+                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="patients">
+                                <!-- Cards will be updated dynamically  -->
+                                
+                                </div>
+                        </div>
+                                    
+                </div>
+
+
+                <div class="col-md-5">
+                
+                    <div class="container p-4">
+                    <h3 class="mb-4" id="editTitle">Edit Record</h3>
+                            <!-- Patient Creation Form -->
+                            <form id="updatePatientForm" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="PatientID_update" class="form-label">PatientID:</label>
+                                    <input type="text" class="form-control" id="PatientID_update" placeholder="Enter patient ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="firstname_update" class="form-label">First Name:</label>
+                                    <input type="text" class="form-control" id="firstname_update" placeholder="Enter patient first name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastname_update" class="form-label">Last Name:</label>
+                                    <input type="text" class="form-control" id="lastname_update" placeholder="Enter patient last name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientEmail_update" class="form-label">Patient Email:</label>
+                                    <input type="email" class="form-control" id="patientEmail_update" placeholder="Enter patient email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientBirthdate_update" class="form-label">Date of Birth:</label>
+                                    <input type="date" class="form-control" id="patientBirthdate_update" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientGender_update" class="form-label">Gender:</label>
+                                    <select id="patientGender_update" class="form-select" required>
+                                        <option disabled selected value="">Select gender...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientAddress_update" class="form-label">Address:</label>
+                                    <input type="text" class="form-control" id="patientAddress_update" placeholder="Enter patient address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="patientContactNumber_update" class="form-label">Contact Number:</label>
+                                    <input type="tel" class="form-control" id="patientContactNumber_update" placeholder="Enter contact number">
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-primary mt-3" onclick="update_patient()">Update Patient</button>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+            
+    <!-- Create Patient Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="messageModalLabel">Create a New Patient</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <!-- Patient Creation Form -->
+            <form id="createPatientForm" class="mt-3">
+                <div class="mb-3">
+                    <label for="firstname_create" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="firstname_create" placeholder="Enter patient first name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname_create" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="lastname_create" placeholder="Enter patient last name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="patientEmail_create" class="form-label">Patient Email:</label>
+                    <input type="email" class="form-control" id="patientEmail_create" placeholder="Enter patient email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="patientBirthdate_create" class="form-label">Date of Birth:</label>
+                    <input type="date" class="form-control" id="patientBirthdate_create" required>
+                </div>
+                <div class="mb-3">
+                    <label for="patientGender_create" class="form-label">Gender:</label>
+                    <select id="patientGender_create" class="form-select" required>
+                        <option disabled selected value="">Select gender...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="patientAddress_create" class="form-label">Address:</label>
+                    <input type="text" class="form-control" id="patientAddress_create" placeholder="Enter patient address">
+                </div>
+                <div class="mb-3">
+                    <label for="patientContactNumber_create" class="form-label">Contact Number:</label>
+                    <input type="tel" class="form-control" id="patientContactNumber_create" placeholder="Enter contact number">
+                </div>
+    
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="createPatient()">Create Patient</button>
       </div>
     </div>
   </div>
+</div>
 
-
-  <div id="timeslots" class="modal" tabindex="-1">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Available TimeSlots</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <p>Available TimeSlots:</p>
-                  <!-- Timeslots will be dynamically added here by JavaScript -->
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-secondary" id="bookAppointmentBtn">Book Appointment</button>
-              </div>
-          </div>
+    <!-- Delete Patient Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="deleteModalLabel">Delete a Patient</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+            <!-- Patient Creation Form -->
+            <form id="deletePatientForm" class="mt-3">
+                <div class="mb-3">
+                    <label for="patientID" class="form-label">Patient ID:</label>
+                    <input type="text" class="form-control" id="patientID" placeholder="Enter patient ID" required>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="deletePatient()">Delete Patient</button>
+      </div>
+    </div>
   </div>
-
-
-
+</div>
 
 
 </main>

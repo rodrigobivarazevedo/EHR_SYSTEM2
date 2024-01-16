@@ -10,7 +10,14 @@ $dbo = new Database();
 
 // Create a new instance of the Patients class
 $patients = new Patients();
-
+$PatientID = $_POST["PatientID"];
+    $FirstName = $_POST["firstName"];
+    $LastName = $_POST["lastName"];
+    $Email = $_POST["email"];
+    $Birthdate = $_POST["birthdate"];
+    $Gender = $_POST["gender"];
+    $Address = $_POST["address"];
+    $ContactNumber = $_POST["contactNumber"];
 $patientID = 2; // Replace with an existing patient ID
 $newData = [
     'FirstName' => 'Alexandra',
