@@ -24,7 +24,7 @@ if (!isset($_SESSION['UserID'])) {
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../MyFastCARE_styles.css">
       
 </head>
 <body >   
@@ -34,7 +34,7 @@ if (!isset($_SESSION['UserID'])) {
     
     
     
-    <header>
+<header>
         <div class="px-3 py-2 text-bg-dark">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -71,15 +71,7 @@ if (!isset($_SESSION['UserID'])) {
             </div>
         </div>
         </div>
-        <div class="px-3 py-2 border-bottom mb-3">
-        <div class="container d-flex flex-wrap justify-content-center">
-            <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-            <input type="search" class="form-control" placeholder="Search clinic..." aria-label="Search">
-            </form>
-
-            
-        </div>
-        </div>
+        
     </header>
 
 
@@ -159,12 +151,8 @@ if (!isset($_SESSION['UserID'])) {
 
 
 
-<!-- FOOTER -->
 
-<footer class="container">
-    <p class="float-end"><a href="#">Back to top</a></p>
-    <p>© 2023 FastCARE, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-</footer>
+
 </main>
 
 <script>

@@ -283,7 +283,7 @@ if (!isset($_SESSION['UserID'])) {
 
 
 <script src="/EHR_system/global/jquery.js"></script>
-<script src="/EHR_system/js/booking.js"></script>
+
 
 
 </body>
